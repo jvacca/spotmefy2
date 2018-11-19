@@ -1,1 +1,1 @@
-Instructions to follow
+# SpotMefy
