@@ -2,7 +2,7 @@
   "name": "spotmefy2",
   "version": "1.0.0",
   "description": "practice app similar to Spotify but in React and Node",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "start": "webpack --mode development --watch",
     "build": "webpack --mode production",
@@ -14,43 +14,8 @@
   },
   "author": "John Vacca",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/jvacca/spotmefy2/issues"
-  },
-  "homepage": "https://github.com/jvacca/spotmefy2#readme",
+  "homepage": "https://github.com/jvacca/spotmefy2",
   "dependencies": {
-    "gulp": "^3.9.1"
-  },
-  "devDependencies": {
-    "@babel/core": "^7.1.6",
-    "@babel/preset-env": "^7.1.6",
-    "@babel/preset-react": "^7.0.0",
-    "babel-loader": "^8.0.4",
-    "css-loader": "^1.0.1",
-    "gulp-autoprefixer": "^6.0.0",
-    "gulp-concat": "^2.6.1",
-    "gulp-connect": "^5.6.1",
-    "gulp-copy": "^4.0.1",
-    "gulp-flatten": "^0.4.0",
-    "gulp-if": "^2.0.2",
-    "gulp-imagemin": "^5.0.3",
-    "gulp-notify": "^3.2.0",
-    "gulp-rename": "^1.4.0",
-    "gulp-replace": "^1.0.0",
-    "gulp-sass": "^4.0.2",
-    "gulp-sourcemaps": "^2.6.4",
-    "gulp-streamify": "^1.0.2",
-    "gulp-uglify": "^3.0.1",
-    "gulp-util": "^3.0.8",
-    "gulp-watch": "^5.0.1",
-    "react": "^16.6.3",
-    "react-dom": "^16.6.3",
-    "run-sequence": "^2.2.1",
-    "style-loader": "^0.23.1",
-    "vinyl-buffer": "^1.0.1",
-    "vinyl-source-stream": "^2.0.0",
-    "webpack": "^4.25.1",
-    "webpack-cli": "^3.1.2",
-    "yargs": "^12.0.4"
+    "express": "^4.17.1"
   }
 }
