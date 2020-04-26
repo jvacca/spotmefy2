@@ -2,9 +2,12 @@
   "name": "spotmefy2",
   "version": "1.0.0",
   "description": "practice app similar to Spotify but in React and Node",
+  "engines": {
+    "node": "10.16.3"
+  },
   "main": "server.js",
   "scripts": {
-    "start": "webpack --mode development --watch",
+    "start": "node index.js",
     "build": "webpack --mode production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

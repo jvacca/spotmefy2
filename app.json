@@ -1,0 +1,8 @@
+{
+  "name": "My first Heroku app",
+  "description": "test and practice",
+  "repository": "https://github.com/jvacca/spotmefy2",
+  "logo": "",
+  "keywords": ["node", "express", "heroku"],
+  "image": ""
+}
