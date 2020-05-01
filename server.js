@@ -82,34 +82,32 @@ app.get('/callback', (req, res) => {
     };
   }
   
-
-  request.post(authOptions, (error, response, body) => {
-    if (!error && response.statusCode === 200) {
-      console.log("Success!")
-      let access_token = body.access_token,
-          refresh_token = body.refresh_token;
-
-      let options = {
-        url: 'https://api.spotify.com/v1/me',
-        headers: { 'Authorization': 'Bearer ' + access_token },
-        json: true
-      };
-
-      request.get(options, (error, response, body) => {
+  return new Promise( (resolve, reject) => {
+    request.post(authOptions, (error, response, body) => {
+      if (!error && response.statusCode === 200) {
+        console.log("Success!");
         console.log('body: ',body);
 
-        res.redirect('/?' + querystring.stringify({
-          access_token: access_token,
-          refresh_token: refresh_token
-        }))
-      })
-    } else {
-      console.log("invalid token");
+        let access_token = body.access_token,
+            refresh_token = body.refresh_token;
 
-      res.redirect('/?' + querystring.stringify({
-        error: 'invalid_token'
-      }));
-    }
+        resolve(access_token, refresh_token)
+      } else {
+        console.log("invalid token");
+  
+        res.redirect('/?' + querystring.stringify({
+          error: 'invalid_token'
+        }));
+
+        reject();
+      }
+    });
+  })
+  .then((access_token, refresh_token) => {
+    res.redirect('/?' + querystring.stringify({
+      access_token: access_token,
+      refresh_token: refresh_token
+    }))
   });
 });
 
@@ -125,14 +123,28 @@ app.get('/refresh_token', (req, res) => {
     json: true
   };
 
-  request.post(authOptions, (error, response, body) => {
-    if (!error && response.statusCode === 200) {
-      console.log("token refreshed");
-      let access_token = body.access_token;
-      res.send({
-        'access_token': access_token
-      });
-    }
+  return new Promise( (resolve, reject) => {
+    request.post(authOptions, (error, response, body) => {
+      if (!error && response.statusCode === 200) {
+        console.log("token refreshed ", body.access_token);
+        let access_token = body.access_token;
+        
+        resolve(access_token);
+      } else {
+        console.log("invalid token");
+  
+        res.redirect('/?' + querystring.stringify({
+          error: 'invalid_token'
+        }));
+
+        reject();
+      }
+    })
+  })
+  .then((access_token) => {
+    res.send({
+      'access_token': access_token
+    });
   });
 });
 
