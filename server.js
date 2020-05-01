@@ -10,6 +10,7 @@ const redirect_uri = 'https://spotmefy2.herokuapp.com/callback';
 const authorize_uri = 'https://accounts.spotify.com/authorize?';
 const stateKey = 'spotify_auth_state';
 const scope = 'user-read-private user-read-email';
+const PORT = process.env.PORT || 1111;
 
 let generateRandomString = (length) => {
   let text = '';
@@ -128,6 +129,6 @@ app.get('/refresh_token', (req, res) => {
   });
 });
 
-app.listen(1111, () => {
-  console.log("listening on 1111");
+app.listen(PORT, () => {
+  console.log("listening on ", PORT);
 });
