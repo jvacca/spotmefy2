@@ -25,7 +25,7 @@ let generateRandomString = (length) => {
 
 app.use(express.static(__dirname + '/pubic')).use(cookieParser());
 
-app.get('/*', (req, res) => {
+app.get('/', (req, res) => {
   console.log("return page!");
 
   res.send("Duuude!!!")
