@@ -31,12 +31,11 @@ app.engine('hbs', handlebars({
   extname: 'hbs'
 }));
 
-app.use(express.static(__dirname + '/pubic')).use(cookieParser());
+app.use(express.static(__dirname + '/public')).use(cookieParser());
 
 app.get('/', (req, res) => {
-  console.log("return page!");
-  console.log("env: ", env);
-
+  console.log("index page!");
+  
   res.render('main', {layout: 'index', apiData:{version:'1.0.0'}});
 });
 
@@ -138,5 +137,7 @@ app.get('/refresh_token', (req, res) => {
 });
 
 app.listen(PORT, () => {
+  console.log("Wintermute ready")
+  console.log("env: ", env);
   console.log("listening on ", PORT);
 });
