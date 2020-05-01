@@ -4,13 +4,15 @@ const request = require('request');
 const querystring = require('querystring');
 const cookieParser = require('cookie-parser');
 
+const env = process.env.NODE_ENV || 'local';
 const client_id = 'fc26053f4a44411c9fc7077e35cec0e7';
 const client_secret = 'bd241b3266954b0da04cdb7f40a28fd0';
-const redirect_uri = 'https://spotmefy2.herokuapp.com/callback';
+const redirect_uri = (env === 'local')? 'http://localhost:1111/callback' : 'https://spotmefy2.herokuapp.com/callback';
 const authorize_uri = 'https://accounts.spotify.com/authorize?';
 const stateKey = 'spotify_auth_state';
 const scope = 'user-read-private user-read-email';
 const PORT = process.env.PORT || 1111;
+
 
 let generateRandomString = (length) => {
   let text = '';
@@ -28,7 +30,7 @@ app.use(express.static(__dirname + '/pubic')).use(cookieParser());
 
 app.get('/', (req, res) => {
   console.log("return page!");
-
+  console.log("env: ", env)
   res.send("Duuude!!!")
 });
 
