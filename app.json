@@ -1,6 +1,6 @@
 {
-  "name": "My first Heroku app",
-  "description": "test and practice",
+  "name": "Spotmefy2",
+  "description": "Spotify API expreiment",
   "repository": "https://github.com/jvacca/spotmefy2",
   "logo": "",
   "keywords": ["node", "express", "heroku"],
