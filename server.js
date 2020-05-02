@@ -13,6 +13,7 @@ const authorize_uri = 'https://accounts.spotify.com/authorize?';
 const stateKey = 'spotify_auth_state';
 const scope = 'user-read-private user-read-email';
 const PORT = process.env.PORT || 1111;
+let hasToken = false;
 
 
 let generateRandomString = (length) => {
@@ -36,7 +37,12 @@ app.use(express.static(__dirname + '/public')).use(cookieParser());
 app.get('/', (req, res) => {
   console.log("index page!");
   
-  res.render('main', {layout: 'index', apiData:{version:'1.0.0'}});
+  if (hasToken === true) {
+    res.render('main', {layout: 'index', apiData:{version:'1.0.0'}});
+    hasToken = false;
+  } else {
+    res.redirect('/login');
+  }
 });
 
 app.get('/login', (req, res) => {
@@ -91,6 +97,7 @@ app.get('/callback', (req, res) => {
         let access_token = body.access_token,
             refresh_token = body.refresh_token;
 
+        hasToken = true;
         resolve(access_token, refresh_token)
       } else {
         console.log("invalid token");
