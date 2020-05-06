@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-class ArtistDisplay extends Component {
+export default class ArtistDisplay extends Component {
   constructor() {
     super();
 
@@ -11,14 +11,17 @@ class ArtistDisplay extends Component {
   }
 
   render() {
+    let backgd = {
+      backgroundImage: 'url(' + this.props.artistData.images[0].url + ')'
+    }
     return (
-      <div>
-        <h1>Artist</h1>
-        <p>{this.props.name}</p>
-        <img src={this.props.image} />
+      <div className="artist-panel" style={backgd}>
+        <div className="heading">
+          <p>Artist</p>
+          <h1>{this.props.artistData.name}</h1>
+          
+        </div>
       </div>
     );
   }
 }
-
-export default ArtistDisplay;

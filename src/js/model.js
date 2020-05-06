@@ -15,14 +15,23 @@ export default class Model {
     this.refresh_token = getParameterByName('refresh_token');
 
     console.log('access_token ',this.access_token, 'refresh_token ', this.refresh_token);
+
+    this.endpoints = {
+      'albumTracks': {
+        uri: `https://api.spotify.com/v1/albums/`
+      },
+      'artist':{
+        uri: 'https://api.spotify.com/v1/artists/'
+      }
+    }
   }
 
-  fetch(id, resolve) {
-    //	
+  fetch(which, id, resolve) {
+    console.log(this.endpoints[which].uri + id)
 
     let ajaxConfig = {
       dataType: 'json',
-      url: `https://api.spotify.com/v1/albums/${id}`,
+      url: this.endpoints[which].uri + id,
       method: "GET",
       cache: false,
       headers: {

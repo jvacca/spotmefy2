@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 
-class AlbumTracksView extends Component {
+export default class AlbumTracksView extends Component {
   constructor() {
     super();
 
@@ -20,31 +20,45 @@ class AlbumTracksView extends Component {
     });
   }
 
-  
+  formatDuration(ms) {
+    return (Math.floor((ms/1000)/60) + ':' + Math.floor((ms/1000)%60));
+  }
 
   render() {
-
-    let tracks = this.props.albumData.tracks.items.map( (item) => {
+    let tracks = this.props.albumData.tracks.items.map( (item, index) => {
         return (
-          <li>
-            <p>{item.name} {item.duration_ms}</p>
+          <li key={index}>
+            <p>
+              <span className="index">{index + 1}</span> 
+              <span className="song-name">{item.name}</span> 
+              <span className="duration">{this.formatDuration(item.duration_ms)}</span>
+            </p>
           </li>
         )
       
     });
 
     return (
-      <div>
-        <h1>{this.props.albumData.name}</h1>
-        <p>{this.props.albumData.artists[0].name}</p>
-        <img src={this.props.albumData.images[1].url} />
-
-        <ul>
+      <div className="album-panel">
+        <div className="album-cover"><img src={this.props.albumData.images[1].url} /></div>
+        <div className="heading">
+          <p>ALBUM</p>
+          <h1>{this.props.albumData.name}</h1>
+          <p>By <span className="hilight">{this.props.albumData.artists[0].name}</span></p>
+          <p>{this.props.albumData.release_date} . {this.props.albumData.total_tracks} songs, {"47 min"}</p>
+        </div>
+        
+        <ol>
+          <li className="header">
+            <p>
+              <span className="index">#</span> 
+              <span className="song-name">TITLE</span> 
+              <span className="duration">DURATION</span>
+            </p>
+          </li>
           {tracks}
-        </ul>
+        </ol>
       </div>
     );
   }
 }
-
-export default AlbumTracksView;

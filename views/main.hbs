@@ -1,1 +1,18 @@
-<div id="page-container" data-version="{{apiData.version}}"></div>
+<div id="app" class="app-container" data-version="{{apiData.version}}">
+  <div class="frame">
+    <div class="side-panel">
+      <p>YOUR LIBRARY</p>
+      <ul>
+        <li><a id="recent" href="#">Recently Played</a></li>
+        <li><a id="songs" href="#">Liked Songs</a></li>
+        <li><a id="albums" href="#">Albums</a></li>
+        <li><a id="artists" href="#">Artists</a></li>
+      </ul>
+      <p>PLAYLISTS</p>
+      <div class="playlist-container"></div>
+    </div>
+
+    <div id="main-panel"></div>
+  </div>
+  <div class="media-player"></div>
+</div>
