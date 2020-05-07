@@ -37,30 +37,30 @@ export default class Model {
     }
   }
 
-  fetch(which, id, resolve) {
-    //console.log(this.endpoints[which].uri)
+  load(which, id, resolve) {
+    let url = (id !== null)? this.endpoints[which].uri + id : this.endpoints[which].uri;
 
-    let ajaxConfig = {
-      dataType: 'json',
-      url: (id !== null)? this.endpoints[which].uri + id : this.endpoints[which].uri,
-      method: "GET",
-      cache: false,
+    fetch(url, {
+      method: 'GET',
+      cache: 'no-cache',
       headers: {
-        Authorization: 'Bearer ' + this.access_token
-      }
-    };
-
-    let APIPromise = $.ajax(ajaxConfig)
-    .done((data) => {
-      console.log("Success: Call to " + ajaxConfig.url + " succeded");
-      
-      resolve(data);
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + this.access_token
+        }
+      })
+      .then((res) => res.json())
+      .then(
+        (data) => {
+          console.log("Success: Call to " + url + " succeded");
+          resolve(data);
+        },
+        (error) => {
+          console.error("Fail: Call to " + url + " ended in an error", error);
+        })
+      .catch((error) => {
+        console.error('Error:', error);
     })
-    .fail((error) => {
-      console.error("Fail: Call to " + ajaxConfig.url + " ended in an error", error);
     
-    });
-
-    return APIPromise;
   }
+  
 }

@@ -13,10 +13,9 @@ export default class ArtistDisplay extends Component {
   }
 
   componentDidMount() {
-    //let { match: { params } } = this.props;
     console.log('***************' + this.props.match.params.artist_id)
     let id = this.props.match.params.artist_id;
-    let callPromise = this.model.fetch('artist', id, (data) => {
+    let callPromise = this.model.load('artist', id, (data) => {
       console.log('data: ', data);
       this.setState({
         data: data

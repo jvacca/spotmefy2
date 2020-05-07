@@ -17,21 +17,10 @@ export default class Playlist extends Component {
     return (Math.floor((ms/1000)/60) + ':' + Math.floor((ms/1000)%60));
   }
 
-  handleArtist(e, id) {
-    e.preventDefault();
-    
-  }
-
-  handleAlbum(e, id) {
-    e.preventDefault();
-    
-  }
-
   componentDidMount() {
-    //let id = '1AxmCxi4kmVM3pwwqqq2sD'
     console.log('***************' + this.props.match.params.playlist_id)
     let id = this.props.match.params.playlist_id;
-    let callPromise = this.model.fetch('playlist', id, (data) => {
+    let callPromise = this.model.load('playlist', id, (data) => {
       console.log('data: ', data);
       this.setState({
         data: data

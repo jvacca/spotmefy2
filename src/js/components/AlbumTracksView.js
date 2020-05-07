@@ -12,10 +12,9 @@ export default class AlbumTracksView extends Component {
   }
 
   componentDidMount() {
-    //let { match: { params } } = this.props;
     console.log('***************' + this.props.match.params.album_id)
     let id = this.props.match.params.album_id;
-    let callPromise = this.model.fetch('albumTracks', id, (data) => {
+    let callPromise = this.model.load('albumTracks', id, (data) => {
       console.log('data: ', data);
       this.setState({
         data: data
