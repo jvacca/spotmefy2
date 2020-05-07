@@ -29,10 +29,9 @@ export default class Playlist extends Component {
   }
 
   render() {
-  
     if (this.state.data !== null) { return (
       <div className="playlist-panel">
-        <h1>Playlists</h1>
+        <h1>{this.state.data.name}</h1>
         <p></p>
 
         <ol>

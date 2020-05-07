@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import {Link} from 'react-router-dom';
 import Model from '../model';
 
 export default class ArtistDisplay extends Component {
@@ -7,7 +8,8 @@ export default class ArtistDisplay extends Component {
 
     this.model = new Model();
     this.state = {
-      data: null
+      albumData: null,
+      artistData: null
     };
 
   }
@@ -18,24 +20,47 @@ export default class ArtistDisplay extends Component {
     let callPromise = this.model.load('artist', id, (data) => {
       console.log('data: ', data);
       this.setState({
-        data: data
+        artistData: data
+      });
+    })
+
+    let callPromise2 = this.model.load('artistAlbums', id, (data) => {
+      console.log('data: ', data);
+      this.setState({
+        albumData: data
       });
     });
   }
 
   render() {
-    if (this.state.data !== null) { 
+    if (this.state.albumData && this.state.artistData) { 
+      
       let backgd = {
-        backgroundImage: 'url(' + this.state.data.images[0].url + ')'
+        backgroundImage: 'url(' + this.state.artistData.images[0].url + ')'
       }
 
       return (
-        <div className="artist-panel" style={backgd}>
-          <div className="heading">
+        <div className="artist-panel">
+          <div className="heading" style={backgd}>
             <p>Artist</p>
-            <h1>{this.state.data.name}</h1>
-            
+            <h1>{this.state.albumData.items[0].artists[0].name}</h1>
           </div>
+          <ul>
+            {
+              this.state.albumData.items.map( (item, index) => {
+                let album_link = "/album/" + item.id;
+                return (
+                  <li key={index}>
+                    <Link className="albumBox" to={album_link}>
+                      <img src={item.images[1].url} />
+                      <p className="hilight">{item.name}</p> 
+                      <p>{item.release_date}</p>
+                    </Link>
+                  </li>
+                )
+              })
+            }
+          </ul>
         </div>
       );
       } else {

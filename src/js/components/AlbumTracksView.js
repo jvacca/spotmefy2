@@ -36,7 +36,7 @@ export default class AlbumTracksView extends Component {
             <p>ALBUM</p>
             <h1>{name}</h1>
             <p>By <span className="hilight">{artists[0].name}</span></p>
-            <p>{release_date} . {total_tracks} songs, {"47 min"}</p>
+            <p>{release_date} . {total_tracks} songs</p>
           </div>
           
           <ol>

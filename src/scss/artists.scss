@@ -1,0 +1,42 @@
+.artist-panel {
+  padding: 2% 3%;
+
+  .heading {
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    background-position: top center;
+    margin-top: 30px;
+    height: 350px;
+
+    p {
+      font-size: 2em;
+    }
+
+    h1 {
+      color: #FFF;
+      font-size: 3em;;
+    }
+  }
+
+  ul {
+    margin-top: 20px;
+
+    li {
+      box-sizing: border-box;
+      display: inline-block;
+      vertical-align: top;
+      max-width: 350px;
+      width: 33%;
+      padding: 1% 1%;
+      margin-bottom: 20px;
+
+      img {
+        width: 100%;
+      }
+
+      p {
+        padding: 2%;
+      }
+    }
+  }
+}

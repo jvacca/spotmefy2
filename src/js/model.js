@@ -33,12 +33,16 @@ export default class Model {
       },
       'artist':{
         uri: 'https://api.spotify.com/v1/artists/'
+      },
+      'artistAlbums':{
+        uri: 'https://api.spotify.com/v1/artists/'
       }
     }
   }
 
   load(which, id, resolve) {
     let url = (id !== null)? this.endpoints[which].uri + id : this.endpoints[which].uri;
+    if (which === 'artistAlbums') url += '/albums';
 
     fetch(url, {
       method: 'GET',
