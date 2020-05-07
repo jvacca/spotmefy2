@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import ArtistDisplay from './ArtistDisplay';
-import AlbumTracksView from './AlbumTracksView';
+import {Link} from 'react-router-dom';
 
 export default class MainPanel extends Component {
   constructor() {
@@ -12,8 +11,12 @@ export default class MainPanel extends Component {
   }
 
   render() {
-    return (<div>{
-      (this.props.viewState === 'albums-view')? <AlbumTracksView albumData={this.props.data} /> : <ArtistDisplay artistData={this.props.data} />
-    }</div>);
+    let playlist_link = "/playlist/1AxmCxi4kmVM3pwwqqq2sD";
+    return (
+      <div>
+        <h1>SPOTMEFY</h1>
+        <Link to={playlist_link}>Playlist</Link>
+      </div>
+    );
   }
 }

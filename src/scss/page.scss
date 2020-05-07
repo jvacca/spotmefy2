@@ -49,6 +49,7 @@ ul, li {
 
     a:hover {
       color: #FFF;
+      text-decoration: none;
     }
 
     p {
@@ -69,8 +70,13 @@ ul, li {
     vertical-align: top;
   }
 
-  .album-panel {
+  .album-panel, .playlist-panel {
     padding: 2% 3%;
+
+    a {
+      color: #CCC;
+      text-decoration: none;
+    }
 
     .album-cover, .heading {
       display: inline-block;
@@ -128,7 +134,15 @@ ul, li {
 
       .song-name {
         color: #fff;
-        width: 85%;
+        width: 40%;
+      }
+
+      .artist-name {
+        width: 20%;
+      }
+
+      .album-name {
+        width: 20%;
       }
 
       .duration {
@@ -143,7 +157,7 @@ ul, li {
       font-size: 12px;
       .song-name {
         color: #AAA;
-        width: 85%;
+        width: 40%;
       }
 
       .duration {

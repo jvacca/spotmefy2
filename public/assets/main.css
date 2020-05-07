@@ -37,7 +37,8 @@ ul, li {
     line-height: 2.5em;
     text-decoration: none; }
   #app .side-panel a:hover {
-    color: #FFF; }
+    color: #FFF;
+    text-decoration: none; }
   #app .side-panel p {
     font-size: 12px;
     line-height: 2em;
@@ -53,58 +54,65 @@ ul, li {
   height: 100%;
   vertical-align: top; }
 
-#app .album-panel {
+#app .album-panel, #app .playlist-panel {
   padding: 2% 3%; }
-  #app .album-panel .album-cover, #app .album-panel .heading {
+  #app .album-panel a, #app .playlist-panel a {
+    color: #CCC;
+    text-decoration: none; }
+  #app .album-panel .album-cover, #app .album-panel .heading, #app .playlist-panel .album-cover, #app .playlist-panel .heading {
     display: inline-block;
     vertical-align: top; }
-  #app .album-panel .album-cover {
+  #app .album-panel .album-cover, #app .playlist-panel .album-cover {
     max-width: 200px; }
-  #app .album-panel .album-cover img {
+  #app .album-panel .album-cover img, #app .playlist-panel .album-cover img {
     width: 100%; }
-  #app .album-panel .heading {
+  #app .album-panel .heading, #app .playlist-panel .heading {
     margin-top: 20px;
     padding-left: 20px; }
-    #app .album-panel .heading h1, #app .album-panel .heading .hilight {
+    #app .album-panel .heading h1, #app .album-panel .heading .hilight, #app .playlist-panel .heading h1, #app .playlist-panel .heading .hilight {
       color: #FFF; }
-    #app .album-panel .heading h1 {
+    #app .album-panel .heading h1, #app .playlist-panel .heading h1 {
       font-size: 3em; }
-    #app .album-panel .heading p {
+    #app .album-panel .heading p, #app .playlist-panel .heading p {
       font-size: 1em;
       line-height: 2em; }
-  #app .album-panel ol {
+  #app .album-panel ol, #app .playlist-panel ol {
     margin-top: 20px;
     padding: 0;
     border-top: 1px solid #222; }
-  #app .album-panel li {
+  #app .album-panel li, #app .playlist-panel li {
     border-bottom: 1px solid #222; }
-    #app .album-panel li p {
+    #app .album-panel li p, #app .playlist-panel li p {
       line-height: 40px; }
-    #app .album-panel li span {
+    #app .album-panel li span, #app .playlist-panel li span {
       display: inline-block;
       vertical-align: top; }
-    #app .album-panel li .index {
+    #app .album-panel li .index, #app .playlist-panel li .index {
       padding-left: 10px;
       width: 30px; }
-    #app .album-panel li .song-name {
+    #app .album-panel li .song-name, #app .playlist-panel li .song-name {
       color: #fff;
-      width: 85%; }
-    #app .album-panel li .duration {
+      width: 40%; }
+    #app .album-panel li .artist-name, #app .playlist-panel li .artist-name {
+      width: 20%; }
+    #app .album-panel li .album-name, #app .playlist-panel li .album-name {
+      width: 20%; }
+    #app .album-panel li .duration, #app .playlist-panel li .duration {
       box-sizing: border-box;
       width: 10%;
       text-align: right;
       padding-right: 10px; }
-  #app .album-panel li.header {
+  #app .album-panel li.header, #app .playlist-panel li.header {
     font-size: 12px; }
-    #app .album-panel li.header .song-name {
+    #app .album-panel li.header .song-name, #app .playlist-panel li.header .song-name {
       color: #AAA;
-      width: 85%; }
-    #app .album-panel li.header .duration {
+      width: 40%; }
+    #app .album-panel li.header .duration, #app .playlist-panel li.header .duration {
       box-sizing: border-box;
       width: 10%;
       text-align: right;
       padding-right: 10px; }
-  #app .album-panel li:hover {
+  #app .album-panel li:hover, #app .playlist-panel li:hover {
     background-color: #444; }
 
 #app .artist-panel {

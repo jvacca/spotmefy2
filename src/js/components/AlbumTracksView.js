@@ -1,22 +1,25 @@
 import React, { Component } from "react";
+import Model from '../model';
 
 export default class AlbumTracksView extends Component {
   constructor() {
     super();
 
+    this.model = new Model();
     this.state = {
-      value: ""
+      data: null
     };
-
-    this.handleChange = this.handleChange.bind(this);
   }
 
-  handleChange(event) {
-    const { value } = event.target;
-    this.setState(() => {
-      return {
-        value
-      };
+  componentDidMount() {
+    //let { match: { params } } = this.props;
+    console.log('***************' + this.props.match.params.album_id)
+    let id = this.props.match.params.album_id;
+    let callPromise = this.model.fetch('albumTracks', id, (data) => {
+      console.log('data: ', data);
+      this.setState({
+        data: data
+      });
     });
   }
 
@@ -25,40 +28,44 @@ export default class AlbumTracksView extends Component {
   }
 
   render() {
-    let tracks = this.props.albumData.tracks.items.map( (item, index) => {
-        return (
-          <li key={index}>
-            <p>
-              <span className="index">{index + 1}</span> 
-              <span className="song-name">{item.name}</span> 
-              <span className="duration">{this.formatDuration(item.duration_ms)}</span>
-            </p>
-          </li>
-        )
-      
-    });
-
-    return (
-      <div className="album-panel">
-        <div className="album-cover"><img src={this.props.albumData.images[1].url} /></div>
-        <div className="heading">
-          <p>ALBUM</p>
-          <h1>{this.props.albumData.name}</h1>
-          <p>By <span className="hilight">{this.props.albumData.artists[0].name}</span></p>
-          <p>{this.props.albumData.release_date} . {this.props.albumData.total_tracks} songs, {"47 min"}</p>
+    if (this.state.data !== null) { 
+      let {images, name, artists, release_date, total_tracks} = this.state.data
+      return (
+        <div className="album-panel">
+          <div className="album-cover"><img src={images[1].url} /></div>
+          <div className="heading">
+            <p>ALBUM</p>
+            <h1>{name}</h1>
+            <p>By <span className="hilight">{artists[0].name}</span></p>
+            <p>{release_date} . {total_tracks} songs, {"47 min"}</p>
+          </div>
+          
+          <ol>
+            <li className="header">
+              <p>
+                <span className="index">#</span> 
+                <span className="song-name">TITLE</span> 
+                <span className="duration">DURATION</span>
+              </p>
+            </li>
+            {
+              this.state.data.tracks.items.map( (item, index) => {
+                return (
+                  <li key={index}>
+                    <p>
+                      <span className="index">{index + 1}</span> 
+                      <span className="song-name">{item.name}</span> 
+                      <span className="duration">{this.formatDuration(item.duration_ms)}</span>
+                    </p>
+                  </li>
+                )
+              })
+            }
+          </ol>
         </div>
-        
-        <ol>
-          <li className="header">
-            <p>
-              <span className="index">#</span> 
-              <span className="song-name">TITLE</span> 
-              <span className="duration">DURATION</span>
-            </p>
-          </li>
-          {tracks}
-        </ol>
-      </div>
-    );
+      );
+      } else {
+        return <div></div>
+      }
   }
 }
