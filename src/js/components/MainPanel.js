@@ -24,12 +24,10 @@ export default class MainPanel extends Component {
             <Router>
               <Sidebar />
               <div className="main-panel">
-                
                   <Route path='/' component={Heading} />
                   <Route path='/playlist/:playlist_id' component={Playlist} />
                   <Route path='/artist/:artist_id' component={ArtistDisplay} />
                   <Route path='/album/:album_id' component={AlbumTracksView} />
-                
               </div>
             </Router>
           
