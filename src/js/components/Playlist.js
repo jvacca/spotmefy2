@@ -20,7 +20,7 @@ export default class Playlist extends Component {
   componentDidMount() {
     console.log('***************' + this.props.match.params.playlist_id)
     let id = this.props.match.params.playlist_id;
-    let callPromise = this.model.load('playlist', id, (data) => {
+    let callPromise = this.model.load('playlistTracks', id, (data) => {
       console.log('data: ', data);
       this.setState({
         data: data

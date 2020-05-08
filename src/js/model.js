@@ -25,7 +25,10 @@ export default class Model {
     console.log('access_token ',this.access_token, 'refresh_token ', this.refresh_token);
 
     this.endpoints = {
-      'playlist': {
+      'playlists': {
+        uri: 'https://api.spotify.com/v1/me/playlists'
+      },
+      'playlistTracks': {
         uri: 'https://api.spotify.com/v1/playlists/'
       },
       'albumTracks': {

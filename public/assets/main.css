@@ -74,7 +74,8 @@
     background-repeat: no-repeat;
     background-size: 100% auto;
     background-position: top center;
-    margin-top: 30px;
+    padding-left: 20px;
+    padding-top: 30px;
     height: 350px; }
     .artist-panel .heading p {
       font-size: 2em; }
@@ -113,51 +114,55 @@ body, section, div, h1, h2, h3, p, ol, ul {
 ul, li {
   list-style: none; }
 
-#app .frame {
+.app-container {
   width: 100%;
-  height: 90%; }
-
-#app .side-panel {
-  box-sizing: border-box;
-  background-color: #000;
-  display: inline-block;
-  max-width: 300px;
-  width: 15%;
-  height: 100%;
-  padding-left: 20px;
-  padding-top: 20px;
-  vertical-align: top; }
-  #app .side-panel ul, #app .side-panel li {
-    padding: 0;
-    margin: 0; }
-  #app .side-panel a {
-    color: #CCC;
-    line-height: 2.5em;
-    text-decoration: none; }
-  #app .side-panel a:hover {
-    color: #FFF;
-    text-decoration: none; }
-  #app .side-panel p {
-    font-size: 12px;
-    line-height: 2em;
-    margin-top: 20px; }
-
-#app #main-panel {
-  box-sizing: border-box;
-  background: linear-gradient(180deg, #323232 0%, #141414 40%);
-  background-size: 100% 100%;
-  display: inline-block;
-  overflow-y: auto;
-  width: 84%;
-  height: 100%;
-  vertical-align: top; }
-  #app #main-panel a {
-    color: #CCC;
-    text-decoration: none; }
-
-#app .media-player {
-  background-color: #222;
-  width: 100%;
-  height: 10%;
-  min-height: 80px; }
+  height: 100%; }
+  .app-container .frame {
+    width: 100%;
+    height: 90%; }
+  .app-container .side-panel {
+    box-sizing: border-box;
+    background-color: #000;
+    display: inline-block;
+    max-width: 300px;
+    width: 15%;
+    height: 100%;
+    padding-left: 20px;
+    padding-top: 20px;
+    vertical-align: top;
+    overflow-y: auto; }
+    .app-container .side-panel ul, .app-container .side-panel li {
+      padding: 0;
+      margin: 0; }
+    .app-container .side-panel a {
+      color: #CCC;
+      line-height: 2.5em;
+      text-decoration: none; }
+    .app-container .side-panel a:hover {
+      color: #FFF;
+      text-decoration: none; }
+    .app-container .side-panel p {
+      font-size: 12px;
+      line-height: 2em;
+      margin-top: 20px; }
+  .app-container .main-panel {
+    box-sizing: border-box;
+    background: linear-gradient(180deg, #323232 0%, #141414 40%);
+    background-size: 100% 100%;
+    display: inline-block;
+    overflow-y: auto;
+    width: 84%;
+    height: 100%;
+    vertical-align: top; }
+    .app-container .main-panel a {
+      color: #CCC;
+      text-decoration: none; }
+    .app-container .main-panel .app-heading {
+      margin-top: 20px;
+      padding-left: 20px; }
+  .app-container .media-player {
+    background-color: #222;
+    width: 100%;
+    height: 10%;
+    min-height: 80px; }
 
