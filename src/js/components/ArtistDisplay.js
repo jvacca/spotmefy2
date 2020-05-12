@@ -15,7 +15,6 @@ export default class ArtistDisplay extends Component {
   }
 
   componentDidMount() {
-    console.log('***************' + this.props.match.params.artist_id)
     let id = this.props.match.params.artist_id;
     let callPromise = this.model.load('artist', id, (data) => {
       console.log('data: ', data);

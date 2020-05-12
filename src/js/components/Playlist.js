@@ -18,7 +18,6 @@ export default class Playlist extends Component {
   }
 
   componentDidMount() {
-    console.log('***************' + this.props.match.params.playlist_id)
     let id = this.props.match.params.playlist_id;
     let callPromise = this.model.load('playlistTracks', id, (data) => {
       console.log('data: ', data);
@@ -26,6 +25,18 @@ export default class Playlist extends Component {
         data: data
       });
     });
+  }
+
+  select(track) {
+    let eventData={
+      albumImage: track.album.images[2].url,
+      songTitle: track.name,
+      artistName: track.album.artists[0].name,
+      songPath: track.preview_url,
+      songDuration: track.duration_ms
+    }
+
+    this.model.pubsub.emit('play', eventData)
   }
 
   render() {
@@ -52,7 +63,7 @@ export default class Playlist extends Component {
                 <li key={index}>
                   <p>
                     <span className="index">{index + 1}</span> 
-                    <span className="song-name">{item.track.name}</span>
+                    <span onClick={(e) => this.select(item.track)} className="song-name">{item.track.name}</span>
                     <span className="artist-name"><Link to={artist_link}>{item.track.artists[0].name}</Link></span>
                     <span className="album-name"><Link to={album_link}>{item.track.album.name}</Link></span>
                     <span className="duration">{this.formatDuration(item.track.duration_ms)}</span>

@@ -6,18 +6,14 @@ import Sidebar from './Sidebar';
 import Playlist from './Playlist';
 import ArtistDisplay from './ArtistDisplay';
 import AlbumTracksView from './AlbumTracksView';
+import MediaPlayer from './MediaPlayer';
 
 export default class MainPanel extends Component {
   constructor() {
     super();
-
-    this.state = {
-      currentViewState: ""
-    };
   }
 
   render() {
-    
     return (
       <div className="app-container">
         <div id="frame" className="frame">
@@ -30,9 +26,8 @@ export default class MainPanel extends Component {
                   <Route path='/album/:album_id' component={AlbumTracksView} />
               </div>
             </Router>
-          
         </div>
-        <div className="media-player"></div>
+        <MediaPlayer />
       </div>
     );
   }

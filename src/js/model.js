@@ -20,7 +20,7 @@ export default class Model {
     this.access_token = getParameterByName('access_token');
     this.refresh_token = getParameterByName('refresh_token');
 
-    
+    this.pubsub = new EventEmitter3();
 
     console.log('access_token ',this.access_token, 'refresh_token ', this.refresh_token);
 
@@ -39,6 +39,9 @@ export default class Model {
       },
       'artistAlbums':{
         uri: 'https://api.spotify.com/v1/artists/'
+      },
+      'track':{
+        uri: 'https://api.spotify.com/v1/tracks/'
       }
     }
   }

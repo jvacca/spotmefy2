@@ -13,7 +13,7 @@
   .album-panel .heading, .playlist-panel .heading {
     margin-top: 20px;
     padding-left: 20px; }
-    .album-panel .heading h1, .album-panel .heading .hilight, .playlist-panel .heading h1, .playlist-panel .heading .hilight {
+    .album-panel .heading h1, .playlist-panel .heading h1 {
       color: #FFF; }
     .album-panel .heading h1, .playlist-panel .heading h1 {
       font-size: 3em; }
@@ -57,10 +57,12 @@
     background-color: #444; }
 
 .playlist-panel .song-name {
+  cursor: pointer;
   color: #fff;
   width: 40%; }
 
 .album-panel .song-name {
+  cursor: pointer;
   color: #fff;
   width: 85%; }
 
@@ -97,6 +99,65 @@
       .artist-panel ul li p {
         padding: 2%; }
 
+.media-player {
+  background-color: #282828;
+  width: 100%;
+  height: 10%;
+  min-height: 80px; }
+  .media-player button {
+    cursor: pointer;
+    max-width: 60px;
+    padding-right: 10px; }
+  .media-player .now-playing-container,
+  .media-player .controls-container {
+    display: inline-block;
+    vertical-align: top; }
+  .media-player .now-playing-container {
+    width: 25%;
+    margin-top: 20px; }
+    .media-player .now-playing-container .image, .media-player .now-playing-container .copy {
+      display: inline-block;
+      vertical-align: top; }
+    .media-player .now-playing-container .image {
+      margin-right: 15px; }
+  .media-player .controls-container {
+    width: 75%;
+    margin-top: 10px; }
+    .media-player .controls-container .control-panel,
+    .media-player .controls-container .volume-panel {
+      display: inline-block;
+      vertical-align: top; }
+    .media-player .controls-container .control-panel {
+      width: 75%; }
+      .media-player .controls-container .control-panel .controls {
+        max-width: 350px;
+        margin: 0 auto; }
+    .media-player .controls-container .volume-panel {
+      width: 25%; }
+    .media-player .controls-container .progressbar-container {
+      max-width: 800px;
+      width: 90%;
+      margin: 0 auto; }
+      .media-player .controls-container .progressbar-container #currentTime,
+      .media-player .controls-container .progressbar-container #progressbar,
+      .media-player .controls-container .progressbar-container #duration {
+        display: inline-block;
+        vertical-align: top; }
+      .media-player .controls-container .progressbar-container #currentTime {
+        margin-right: 10px; }
+      .media-player .controls-container .progressbar-container #progressbar {
+        background-color: #404040;
+        max-width: 500px;
+        width: 90%;
+        height: 3px;
+        margin-top: 5px; }
+      .media-player .controls-container .progressbar-container #duration {
+        margin-left: 10px; }
+      .media-player .controls-container .progressbar-container #bar {
+        background-color: #ccc;
+        width: 0;
+        height: 2px; }
+
 html {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 16px;
@@ -113,6 +174,20 @@ body, section, div, h1, h2, h3, p, ol, ul {
 
 ul, li {
   list-style: none; }
+
+button {
+  border: none;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  background-color: transparent;
+  box-sizing: border-box;
+  vertical-align: middle; }
+  button img {
+    width: 100%; }
+
+.hilight {
+  color: #FFF; }
 
 .app-container {
   width: 100%;
@@ -160,9 +235,4 @@ ul, li {
     .app-container .main-panel .app-heading {
       margin-top: 20px;
       padding-left: 20px; }
-  .app-container .media-player {
-    background-color: #222;
-    width: 100%;
-    height: 10%;
-    min-height: 80px; }
 

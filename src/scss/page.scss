@@ -1,5 +1,6 @@
 @import './panels.scss';
 @import './artists.scss';
+@import './media_player.scss';
 
 html {
   font-family: Arial, Helvetica, sans-serif;
@@ -20,6 +21,23 @@ body, section, div, h1, h2, h3, p, ol, ul {
 
 ul, li {
   list-style: none;
+}
+
+button {
+  border: none;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  background-color: transparent;
+  box-sizing: border-box;
+  vertical-align: middle;
+  img {
+    width: 100%;
+  }
+}
+
+.hilight {
+  color: #FFF;
 }
 
 .app-container {
@@ -85,12 +103,5 @@ ul, li {
       margin-top: 20px;
       padding-left: 20px;
     }
-  }
-
-  .media-player {
-    background-color: #222;
-    width: 100%;
-    height: 10%;
-    min-height: 80px;
-  }
+  } 
 }

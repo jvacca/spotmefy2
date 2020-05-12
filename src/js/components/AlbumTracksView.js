@@ -12,7 +12,6 @@ export default class AlbumTracksView extends Component {
   }
 
   componentDidMount() {
-    console.log('***************' + this.props.match.params.album_id)
     let id = this.props.match.params.album_id;
     let callPromise = this.model.load('albumTracks', id, (data) => {
       console.log('data: ', data);
@@ -24,6 +23,18 @@ export default class AlbumTracksView extends Component {
 
   formatDuration(ms) {
     return (Math.floor((ms/1000)/60) + ':' + Math.floor((ms/1000)%60));
+  }
+
+  select(item) {
+    let eventData={
+      albumImage: this.state.data.images[2].url,
+      songTitle: item.name,
+      artistName: item.artists[0].name,
+      songPath: item.preview_url,
+      songDuration: item.duration_ms
+    }
+
+    this.model.pubsub.emit('play', eventData)
   }
 
   render() {
@@ -53,7 +64,7 @@ export default class AlbumTracksView extends Component {
                   <li key={index}>
                     <p>
                       <span className="index">{index + 1}</span> 
-                      <span className="song-name">{item.name}</span> 
+                      <span onClick={(e) => this.select(item)} className="song-name">{item.name}</span> 
                       <span className="duration">{this.formatDuration(item.duration_ms)}</span>
                     </p>
                   </li>
