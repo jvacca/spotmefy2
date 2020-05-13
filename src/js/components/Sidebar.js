@@ -14,7 +14,7 @@ export default class Sidebar extends Component {
 
   componentDidMount() {
     let callPromise = this.model.load('playlists',null, (data) => {
-      console.log('sidebar data: ', data);
+      //console.log('sidebar data: ', data);
       this.setState({
         data: data
       });

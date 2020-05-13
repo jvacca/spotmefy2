@@ -21,14 +21,6 @@ export default class Controls extends Component {
     this.soundObj = React.createRef();
   }
 
-  componentDidMount() {
-
-  }
-
-  componentDidUpdate() {
-
-  }
-
   shuffle(e) {
     this.setState({
       shuffleState: !this.state.shuffleState

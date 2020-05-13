@@ -60,6 +60,12 @@
       width: 30px;
     }
 
+    .song-name {
+      cursor: pointer;
+      color: #fff;
+      width: 40%;
+    }
+
     .artist-name {
       width: 20%;
     }
@@ -96,12 +102,8 @@
   }
 }
 
-.playlist-panel .song-name {
-  cursor: pointer;
-  color: #fff;
-  width: 40%;
-}
 
+/*
 .album-panel .song-name {
   cursor: pointer;
   color: #fff;
@@ -111,4 +113,4 @@
 .album-panel li.header .song-name {
   color: #AAA;
   width: 85%;
-}
+}*/

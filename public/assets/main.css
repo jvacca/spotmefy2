@@ -34,6 +34,10 @@
     .album-panel li .index, .playlist-panel li .index {
       padding-left: 10px;
       width: 30px; }
+    .album-panel li .song-name, .playlist-panel li .song-name {
+      cursor: pointer;
+      color: #fff;
+      width: 40%; }
     .album-panel li .artist-name, .playlist-panel li .artist-name {
       width: 20%; }
     .album-panel li .album-name, .playlist-panel li .album-name {
@@ -56,20 +60,17 @@
   .album-panel li:hover, .playlist-panel li:hover {
     background-color: #444; }
 
-.playlist-panel .song-name {
-  cursor: pointer;
-  color: #fff;
-  width: 40%; }
-
+/*
 .album-panel .song-name {
   cursor: pointer;
   color: #fff;
-  width: 85%; }
+  width: 85%;
+}
 
 .album-panel li.header .song-name {
   color: #AAA;
-  width: 85%; }
-
+  width: 85%;
+}*/
 .artist-panel {
   padding: 2% 3%; }
   .artist-panel .heading {

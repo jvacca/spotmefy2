@@ -61,7 +61,7 @@ export default class Model {
       .then((res) => res.json())
       .then(
         (data) => {
-          console.log("Success: Call to " + url + " succeded");
+          //console.log("Success: Call to " + url + " succeded");
           resolve(data);
         },
         (error) => {

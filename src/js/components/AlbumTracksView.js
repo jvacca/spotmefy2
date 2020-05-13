@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import TrackItem from './TrackItem';
 import Model from '../model';
 
 export default class AlbumTracksView extends Component {
@@ -14,27 +15,11 @@ export default class AlbumTracksView extends Component {
   componentDidMount() {
     let id = this.props.match.params.album_id;
     let callPromise = this.model.load('albumTracks', id, (data) => {
-      console.log('data: ', data);
+      //console.log('data: ', data);
       this.setState({
         data: data
       });
     });
-  }
-
-  formatDuration(ms) {
-    return (Math.floor((ms/1000)/60) + ':' + Math.floor((ms/1000)%60));
-  }
-
-  select(item) {
-    let eventData={
-      albumImage: this.state.data.images[2].url,
-      songTitle: item.name,
-      artistName: item.artists[0].name,
-      songPath: item.preview_url,
-      songDuration: item.duration_ms
-    }
-
-    this.model.pubsub.emit('play', eventData)
   }
 
   render() {
@@ -54,20 +39,28 @@ export default class AlbumTracksView extends Component {
             <li className="header">
               <p>
                 <span className="index">#</span> 
-                <span className="song-name">TITLE</span> 
+                <span className="song-name">TITLE</span>
+                <span className="artist-name"></span>
+                <span className="album-name"></span>
                 <span className="duration">DURATION</span>
               </p>
             </li>
             {
               this.state.data.tracks.items.map( (item, index) => {
                 return (
-                  <li key={index}>
-                    <p>
-                      <span className="index">{index + 1}</span> 
-                      <span onClick={(e) => this.select(item)} className="song-name">{item.name}</span> 
-                      <span className="duration">{this.formatDuration(item.duration_ms)}</span>
-                    </p>
-                  </li>
+                  <TrackItem
+                    key={index}
+                    index={index + 1}
+                    trackName={item.name}
+                    trackData={item}
+                    artistName={''}
+                    albumName={''}
+                    duration={item.duration_ms}
+                    artist_id={''}
+                    album_id={''}
+                    album_image={images[2].url}
+                    songPath={item.preview_url}
+                  />
                 )
               })
             }

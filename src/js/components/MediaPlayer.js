@@ -46,14 +46,6 @@ export default class MediaPlayer extends Component {
     })
   }
 
-  componentDidMount() {
-    
-  }
-
-  componentDidUpdate() {
-    
-  }
-
   onNextSong() {
     console.log("next track");
   }

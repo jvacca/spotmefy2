@@ -17,14 +17,14 @@ export default class ArtistDisplay extends Component {
   componentDidMount() {
     let id = this.props.match.params.artist_id;
     let callPromise = this.model.load('artist', id, (data) => {
-      console.log('data: ', data);
+      //console.log('data: ', data);
       this.setState({
         artistData: data
       });
     })
 
     let callPromise2 = this.model.load('artistAlbums', id, (data) => {
-      console.log('data: ', data);
+      //console.log('data: ', data);
       this.setState({
         albumData: data
       });
