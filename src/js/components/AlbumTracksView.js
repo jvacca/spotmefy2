@@ -53,7 +53,7 @@ export default class AlbumTracksView extends Component {
                     index={index + 1}
                     trackName={item.name}
                     trackData={item}
-                    artistName={''}
+                    artistName={artists[0].name}
                     albumName={''}
                     duration={item.duration_ms}
                     artist_id={''}
