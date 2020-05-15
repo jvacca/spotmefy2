@@ -155,6 +155,12 @@ app.get('/refresh_token', (req, res) => {
   });
 });
 
+app.get('*', (req, res) => {
+  console.log('unknown route, redirecting to /')
+  
+  res.redirect('/');
+});
+
 app.listen(PORT, () => {
   console.log("Wintermute ready")
   console.log("env: ", env);
