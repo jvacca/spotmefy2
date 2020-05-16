@@ -8,16 +8,33 @@ export default class Playlist extends Component {
 
     this.model = new Model();
     this.state = {
-      data: null
+      data: null,
+      currentId: null
     };
   }
 
   componentDidMount() {
+    //console.log("Mounted!")
     let id = this.props.match.params.playlist_id;
     let callPromise = this.model.load('playlistTracks', id, (data) => {
       //console.log('data: ', data);
       this.setState({
-        data: data
+        data: data,
+        currentId: id
+      });
+    });
+  }
+
+  componentDidUpdate() {
+    //console.log("Updated!");
+    if (this.state.currentId === this.props.match.params.playlist_id) return
+
+    let id = this.props.match.params.playlist_id;
+    let callPromise = this.model.load('playlistTracks', id, (data) => {
+      //console.log('data: ', data);
+      this.setState({
+        data: data,
+        currentId: id
       });
     });
   }

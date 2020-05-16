@@ -28,8 +28,8 @@ export default class Sidebar extends Component {
         <ul>
           <li><a id="recent" href="#">Recently Played</a></li>
           <li><a id="songs" href="#">Liked Songs</a></li>
-          <li><a id="albums" href="#">Albums</a></li>
-          <li><a id="artists" href="#">Artists</a></li>
+          <li><Link to={'/album/1g4vEVvVVFvFju0gS0DMbh'}>Albums</Link></li>
+          <li><Link to={'/artist/4CvTDPKA6W06DRfBnZKrau'}>Artist</Link></li>
         </ul>
         <p>PLAYLISTS</p>
         <ul className="playlist-container">

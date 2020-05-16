@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom';
 import {Link} from 'react-router-dom';
 import Heading from './Heading';
 import Sidebar from './Sidebar';
@@ -20,10 +20,13 @@ export default class MainPanel extends Component {
             <Router>
               <Sidebar />
               <div className="main-panel">
-                  <Route path='/' component={Heading} />
-                  <Route path='/playlist/:playlist_id' component={Playlist} />
-                  <Route path='/artist/:artist_id' component={ArtistDisplay} />
-                  <Route path='/album/:album_id' component={AlbumTracksView} />
+                  <Route exact path='/heading' component={Heading} />
+                  <Route exact path='/playlist/:playlist_id' component={Playlist} />
+                  <Route exact path='/artist/:artist_id' component={ArtistDisplay} />
+                  <Route exact path='/album/:album_id' component={AlbumTracksView} />
+                  <Route exact path='/'>
+                    <Redirect to='/heading' />
+                  </Route>
               </div>
             </Router>
         </div>
