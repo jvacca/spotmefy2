@@ -54,7 +54,7 @@ export default class TrackItem extends Component {
     return (
       <li className={(active === true)? 'active': ''}>
         <p>
-          <span className="index">{index + 1}</span> 
+          <span className="index">{index}</span> 
           <span onClick={(e) => this.select(trackData, index)} className="song-name">{trackName}</span>
           {(this.props.isAlbumView === false)? <span className="artist-name"><Link to={artist_link}>{artistName}</Link></span> : ''}
           <span className="album-name"><Link to={album_link}>{albumName}</Link></span>

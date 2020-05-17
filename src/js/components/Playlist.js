@@ -48,10 +48,17 @@ export default class Playlist extends Component {
   }
 
   render() {
-    if (this.state.data !== null) { return (
+    if (this.state.data !== null) { 
+      let {name, tracks, images, owner} = this.state.data;
+      return (
       <div className="playlist-panel">
-        <h1>{this.state.data.name}</h1>
-        <p></p>
+        <div className="album-cover"><img src={images[1].url} /></div>
+        <div className="heading">
+          <p>PLAYLIST</p>
+          <h1>{name}</h1>
+          <p>By <span className="hilight">{owner.display_name}</span></p>
+          <p>{tracks.items.length} songs</p>
+        </div>
 
         <ol>
           <li className="header">
@@ -64,7 +71,7 @@ export default class Playlist extends Component {
             </p>
           </li>
           {
-            this.state.data.tracks.items.map( (item, index) => {
+            tracks.items.map( (item, index) => {
               let isActive = (index === this.state.currentTrackIndex)? true: false;
               
               return (
