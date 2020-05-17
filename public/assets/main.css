@@ -40,8 +40,12 @@
       width: 40%; }
     .album-panel li .artist-name, .playlist-panel li .artist-name {
       width: 20%; }
+      .album-panel li .artist-name a:hover, .playlist-panel li .artist-name a:hover {
+        text-decoration: underline; }
     .album-panel li .album-name, .playlist-panel li .album-name {
       width: 20%; }
+      .album-panel li .album-name a:hover, .playlist-panel li .album-name a:hover {
+        text-decoration: underline; }
     .album-panel li .duration, .playlist-panel li .duration {
       box-sizing: border-box;
       width: 10%;
@@ -218,13 +222,17 @@ button {
     max-width: 300px;
     width: 15%;
     height: 100%;
-    padding-left: 20px;
     padding-top: 20px;
     vertical-align: top;
     overflow-y: auto; }
     .app-container .side-panel ul, .app-container .side-panel li {
       padding: 0;
       margin: 0; }
+    .app-container .side-panel li {
+      border-left: 3px solid transparent;
+      padding-left: 20px; }
+    .app-container .side-panel li.active {
+      border-left: 3px solid #2fd566; }
     .app-container .side-panel a {
       color: #CCC;
       line-height: 2.5em;
@@ -235,7 +243,8 @@ button {
     .app-container .side-panel p {
       font-size: 12px;
       line-height: 2em;
-      margin-top: 20px; }
+      margin-top: 20px;
+      padding-left: 20px; }
   .app-container .main-panel {
     box-sizing: border-box;
     background: linear-gradient(180deg, #323232 0%, #141414 40%);

@@ -8,8 +8,11 @@ export default class Sidebar extends Component {
 
     this.model = new Model();
     this.state = {
-      data: null
+      data: null,
+      currentIndex: -1
     };
+
+    this.select = this.select.bind(this);
   }
 
   componentDidMount() {
@@ -22,7 +25,15 @@ export default class Sidebar extends Component {
   }
 
   componentDidUpdate() {
-    //console.log("Updated!");
+    console.log("Updated!");
+
+
+  }
+
+  select(count) {
+    this.setState({
+      currentIndex: count
+    })
   }
 
   render() {
@@ -39,9 +50,10 @@ export default class Sidebar extends Component {
         <ul className="playlist-container">
           {
             this.state.data && this.state.data.items.map( (item, index) => {
+              let classNameName = (index === this.state.currentIndex)? 'active': ''
               return (
-                <li key={index}>
-                  <Link to={'/playlist/' + item.id}>
+                <li key={index} className={classNameName}>
+                  <Link onClick={(e) => { this.select(index) }} to={'/playlist/' + item.id}>
                     <span className="playlist-name">{item.name}</span> 
                   </Link>
                 </li>
