@@ -3,22 +3,39 @@ import TrackItem from './TrackItem';
 import Model from '../model';
 
 export default class AlbumTracksView extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.model = new Model();
     this.state = {
-      data: null
+      data: null,
+      currentTrackIndex: -1
     };
+
+    this.onSelect = this.onSelect.bind(this);
   }
 
-  componentDidMount() {
-    let id = this.props.match.params.album_id;
+  loadAlbum(id) {
     let callPromise = this.model.load('albumTracks', id, (data) => {
       //console.log('data: ', data);
       this.setState({
         data: data
       });
+    });
+  }
+
+  componentDidMount() {
+    let id = this.props.match.params.album_id;
+    this.loadAlbum(id);
+  }
+
+  componentDidUpdate() {
+    //console.log("Updated!");
+  }
+
+  onSelect(index) {
+    this.setState({
+      currentTrackIndex: index-1
     });
   }
 
@@ -47,6 +64,8 @@ export default class AlbumTracksView extends Component {
             </li>
             {
               this.state.data.tracks.items.map( (item, index) => {
+                let isActive = (index === this.state.currentTrackIndex)? true: false;
+
                 return (
                   <TrackItem
                     key={index}
@@ -60,6 +79,8 @@ export default class AlbumTracksView extends Component {
                     album_id={''}
                     album_image={images[2].url}
                     songPath={item.preview_url}
+                    active={isActive}
+                    onSelect={this.onSelect}
                   />
                 )
               })

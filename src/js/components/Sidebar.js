@@ -3,8 +3,8 @@ import {Link} from 'react-router-dom';
 import Model from '../model';
 
 export default class Sidebar extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.model = new Model();
     this.state = {
@@ -19,6 +19,10 @@ export default class Sidebar extends Component {
         data: data
       });
     });
+  }
+
+  componentDidUpdate() {
+    //console.log("Updated!");
   }
 
   render() {

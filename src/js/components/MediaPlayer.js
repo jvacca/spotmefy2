@@ -16,8 +16,8 @@ const NowPlaying = ({albumImagePath, song_title, artist_name}) => {
 }
 
 export default class MediaPlayer extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.model = new Model();
     this.state = {
       index: 0,

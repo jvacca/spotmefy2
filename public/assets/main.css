@@ -58,7 +58,16 @@
       text-align: right;
       padding-right: 10px; }
   .album-panel li:hover, .playlist-panel li:hover {
-    background-color: #444; }
+    background-color: #333; }
+  .album-panel li.active, .playlist-panel li.active {
+    background-color: #444;
+    color: #2fd566; }
+    .album-panel li.active .song-name,
+    .album-panel li.active .artist-name a,
+    .album-panel li.active .album-name a, .playlist-panel li.active .song-name,
+    .playlist-panel li.active .artist-name a,
+    .playlist-panel li.active .album-name a {
+      color: #2fd566; }
 
 /*
 .album-panel .song-name {

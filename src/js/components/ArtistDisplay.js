@@ -3,8 +3,8 @@ import {Link} from 'react-router-dom';
 import Model from '../model';
 
 export default class ArtistDisplay extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.model = new Model();
     this.state = {
@@ -14,21 +14,28 @@ export default class ArtistDisplay extends Component {
 
   }
 
-  componentDidMount() {
-    let id = this.props.match.params.artist_id;
+  loadArtist(id) {
     let callPromise = this.model.load('artist', id, (data) => {
       //console.log('data: ', data);
       this.setState({
         artistData: data
       });
     })
+  }
 
-    let callPromise2 = this.model.load('artistAlbums', id, (data) => {
+  loadAlbum(id) {
+    let callPromise = this.model.load('artistAlbums', id, (data) => {
       //console.log('data: ', data);
       this.setState({
         albumData: data
       });
-    });
+    })
+  }
+
+  componentDidMount() {
+    let id = this.props.match.params.artist_id;
+    this.loadArtist(id);
+    this.loadAlbum(id);
   }
 
   render() {

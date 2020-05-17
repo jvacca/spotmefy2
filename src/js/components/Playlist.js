@@ -3,19 +3,20 @@ import TrackItem from './TrackItem';
 import Model from '../model';
 
 export default class Playlist extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.model = new Model();
     this.state = {
       data: null,
-      currentId: null
+      currentId: null,
+      currentTrackIndex: -1
     };
+
+    this.onSelect = this.onSelect.bind(this)
   }
 
-  componentDidMount() {
-    //console.log("Mounted!")
-    let id = this.props.match.params.playlist_id;
+  loadPlaylist(id) {
     let callPromise = this.model.load('playlistTracks', id, (data) => {
       //console.log('data: ', data);
       this.setState({
@@ -23,19 +24,25 @@ export default class Playlist extends Component {
         currentId: id
       });
     });
+
+  }
+
+  componentDidMount() {
+    //console.log("Mounted!")
+    let id = this.props.match.params.playlist_id;
+    this.loadPlaylist(id)
   }
 
   componentDidUpdate() {
     //console.log("Updated!");
-    if (this.state.currentId === this.props.match.params.playlist_id) return
-
+    if (this.state.currentId === this.props.match.params.playlist_id) return;
     let id = this.props.match.params.playlist_id;
-    let callPromise = this.model.load('playlistTracks', id, (data) => {
-      //console.log('data: ', data);
-      this.setState({
-        data: data,
-        currentId: id
-      });
+    this.loadPlaylist(id)
+  }
+
+  onSelect(index) {
+    this.setState({
+      currentTrackIndex: index-1
     });
   }
 
@@ -57,6 +64,8 @@ export default class Playlist extends Component {
           </li>
           {
             this.state.data.tracks.items.map( (item, index) => {
+              let isActive = (index === this.state.currentTrackIndex)? true: false;
+              
               return (
                 <TrackItem
                   key={index}
@@ -70,6 +79,8 @@ export default class Playlist extends Component {
                   album_id={item.track.album.id}
                   album_image={item.track.album.images[2].url}
                   songPath={item.track.preview_url}
+                  active={isActive}
+                  onSelect={this.onSelect}
                 />
               )
             })

@@ -9,8 +9,8 @@ import AlbumTracksView from './AlbumTracksView';
 import MediaPlayer from './MediaPlayer';
 
 export default class MainPanel extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
   }
 
   render() {

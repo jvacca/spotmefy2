@@ -98,7 +98,18 @@
   }
 
   li:hover {
+    background-color: #333;
+  }
+
+  li.active {
     background-color: #444;
+    color: #2fd566;
+
+    .song-name,
+    .artist-name a,
+    .album-name a {
+      color: #2fd566;
+    }
   }
 }
 
