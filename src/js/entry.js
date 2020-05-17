@@ -23,8 +23,15 @@ if (access_token === null ) window.location.href="/login";
 
 let appModel = new Model(access_token, refresh_token);
 
-document.getElementById('app').style.width = window.innerWidth + 'px';
-document.getElementById('app').style.height = window.innerHeight + 'px';
+let fullScreen = () => {
+  document.getElementById('app').style.width = window.innerWidth + 'px';
+  document.getElementById('app').style.height = window.innerHeight + 'px';
+}
+window.onresize = () => {
+  fullScreen();
+}
+fullScreen();
+
 
 ReactDOM.render (
   <MainPanel />, document.getElementById('app')

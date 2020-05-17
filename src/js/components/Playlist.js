@@ -21,7 +21,8 @@ export default class Playlist extends Component {
       //console.log('data: ', data);
       this.setState({
         data: data,
-        currentId: id
+        currentId: id,
+        currentTrackIndex: -1
       });
     });
 
@@ -37,7 +38,7 @@ export default class Playlist extends Component {
     //console.log("Updated!");
     if (this.state.currentId === this.props.match.params.playlist_id) return;
     let id = this.props.match.params.playlist_id;
-    this.loadPlaylist(id)
+    this.loadPlaylist(id);
   }
 
   onSelect(index) {
@@ -81,6 +82,7 @@ export default class Playlist extends Component {
                   songPath={item.track.preview_url}
                   active={isActive}
                   onSelect={this.onSelect}
+                  isAlbumView={false}
                 />
               )
             })

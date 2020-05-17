@@ -15,7 +15,14 @@ export default class TrackItem extends Component {
   }
 
   formatDuration(ms) {
-    return (Math.floor((ms/1000)/60) + ':' + Math.floor((ms/1000)%60));
+    let time = ''
+    let minutes = Math.floor((ms/1000)/60);
+    let seconds = Math.floor((ms/1000)%60);
+    time += (minutes < 10)? '0': '';
+    time += minutes + ':';
+    time += (seconds < 10)? '0': '';
+    time += seconds;
+    return time;
   }
 
   select(track, count) {
@@ -49,7 +56,7 @@ export default class TrackItem extends Component {
         <p>
           <span className="index">{index + 1}</span> 
           <span onClick={(e) => this.select(trackData, index)} className="song-name">{trackName}</span>
-          <span className="artist-name"><Link to={artist_link}>{artistName}</Link></span>
+          {(this.props.isAlbumView === false)? <span className="artist-name"><Link to={artist_link}>{artistName}</Link></span> : ''}
           <span className="album-name"><Link to={album_link}>{albumName}</Link></span>
           <span className="duration">{this.formatDuration(duration)}</span>
         </p>

@@ -81,6 +81,7 @@ export default class AlbumTracksView extends Component {
                     songPath={item.preview_url}
                     active={isActive}
                     onSelect={this.onSelect}
+                    isAlbumView={true}
                   />
                 )
               })

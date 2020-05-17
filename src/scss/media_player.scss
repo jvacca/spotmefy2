@@ -17,15 +17,25 @@
   }
 
   .now-playing-container {
-    width: 25%;
-    margin-top: 20px;
+    box-sizing: border-box;
+    width: 24%;
+    padding: 15px 0 0 15px;
+    
     .image, .copy {
       display: inline-block;
       vertical-align: top;
     }
 
+    .copy {
+      box-sizing: border-box;
+      width: 74%;
+      overflow: hidden;
+    }
+
     .image {
-      margin-right: 15px;
+      box-sizing: border-box;
+      width: 25%;
+      padding-right: 15px;
     }
   }
 
