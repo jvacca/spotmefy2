@@ -36,9 +36,11 @@ export default class Playlist extends Component {
 
   componentDidUpdate() {
     //console.log("Updated!");
-    if (this.state.currentId === this.props.match.params.playlist_id) return;
-    let id = this.props.match.params.playlist_id;
-    this.loadPlaylist(id);
+    if (this.state.currentId !== this.props.match.params.playlist_id) {
+      let id = this.props.match.params.playlist_id;
+      this.loadPlaylist(id);
+    }
+    
   }
 
   onSelect(index) {
