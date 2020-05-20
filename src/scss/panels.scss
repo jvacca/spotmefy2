@@ -37,8 +37,11 @@
     }
   }
 
-  ol {
+  .filter {
     margin-top: 20px;
+  }
+
+  ol {
     padding: 0;
     border-top: 1px solid #222;
   }
@@ -92,6 +95,8 @@
 
   li.header {
     font-size: 12px;
+    cursor: pointer;
+
     .song-name {
       color: #AAA;
       width: 40%;

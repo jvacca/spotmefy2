@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import TrackItem from './TrackItem';
+import TrackList from './TrackList';
 import Model from '../model';
 
 export default class Playlist extends Component {
@@ -9,11 +9,8 @@ export default class Playlist extends Component {
     this.model = new Model();
     this.state = {
       data: null,
-      currentId: null,
-      currentTrackIndex: -1
+      currentId: null
     };
-
-    this.onSelect = this.onSelect.bind(this)
   }
 
   loadPlaylist(id) {
@@ -22,7 +19,6 @@ export default class Playlist extends Component {
       this.setState({
         data: data,
         currentId: id,
-        currentTrackIndex: -1
       });
     });
 
@@ -43,12 +39,6 @@ export default class Playlist extends Component {
     
   }
 
-  onSelect(index) {
-    this.setState({
-      currentTrackIndex: index-1
-    });
-  }
-
   render() {
     if (this.state.data !== null) { 
       let {name, tracks, images, owner} = this.state.data;
@@ -61,43 +51,10 @@ export default class Playlist extends Component {
           <p>By <span className="hilight">{owner.display_name}</span></p>
           <p>{tracks.items.length} songs</p>
         </div>
-
-        <ol>
-          <li className="header">
-            <p>
-              <span className="index">#</span> 
-              <span className="song-name">TITLE</span>
-              <span className="artist-name">ARTIST</span>
-              <span className="album-name">ALBUM</span>
-              <span className="duration">DURATION</span>
-            </p>
-          </li>
-          {
-            tracks.items.map( (item, index) => {
-              let isActive = (index === this.state.currentTrackIndex)? true: false;
-              
-              return (
-                <TrackItem
-                  key={index}
-                  index={index + 1}
-                  trackName={item.track.name}
-                  trackData={item.track}
-                  artistName={item.track.artists[0].name}
-                  albumName={item.track.album.name}
-                  duration={item.track.duration_ms}
-                  artist_id={item.track.artists[0].id}
-                  album_id={item.track.album.id}
-                  album_image={item.track.album.images[2].url}
-                  songPath={item.track.preview_url}
-                  active={isActive}
-                  onSelect={this.onSelect}
-                  isAlbumView={false}
-                />
-              )
-            })
-          }
-        </ol>
-
+          <TrackList
+            playlist= {this.state.data.id}
+            tracks= {tracks}
+          />
       </div>
     )} else {
       return <div></div>

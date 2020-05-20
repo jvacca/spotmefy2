@@ -20,8 +20,9 @@
     .album-panel .heading p, .playlist-panel .heading p {
       font-size: 1em;
       line-height: 2em; }
+  .album-panel .filter, .playlist-panel .filter {
+    margin-top: 20px; }
   .album-panel ol, .playlist-panel ol {
-    margin-top: 20px;
     padding: 0;
     border-top: 1px solid #222; }
   .album-panel li, .playlist-panel li {
@@ -52,7 +53,8 @@
       text-align: right;
       padding-right: 10px; }
   .album-panel li.header, .playlist-panel li.header {
-    font-size: 12px; }
+    font-size: 12px;
+    cursor: pointer; }
     .album-panel li.header .song-name, .playlist-panel li.header .song-name {
       color: #AAA;
       width: 40%; }
