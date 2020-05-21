@@ -43,7 +43,7 @@ export default class Model {
 
   load(which, id, resolve) {
     let url = (id !== null)? this.endpoints[which].uri + id : this.endpoints[which].uri;
-    if (which === 'artistAlbums') url += '/albums';
+    if (which === 'artistAlbums') url += '/albums?market=US&include_groups=album,single';
 
     fetch(url, {
       method: 'GET',

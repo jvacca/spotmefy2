@@ -26,8 +26,17 @@ export default class ArtistDisplay extends Component {
   loadAlbum(id) {
     let callPromise = this.model.load('artistAlbums', id, (data) => {
       //console.log('data: ', data);
+      
+      let filter = data.items.filter(album => ( 
+        album.name.includes('(Deluxe') === false &&
+        album.name.includes('(Expand') === false &&
+        album.name.includes('Remaster') === false
+      ))
+      let filteredState = {}
+      filteredState.items = filter;
+
       this.setState({
-        albumData: data
+        albumData: filteredState
       });
     })
   }
@@ -40,16 +49,13 @@ export default class ArtistDisplay extends Component {
 
   render() {
     if (this.state.albumData && this.state.artistData) { 
-      
-      let backgd = {
-        backgroundImage: 'url(' + this.state.artistData.images[0].url + ')'
-      }
-
+      let {images, name} = this.state.artistData
       return (
         <div className="artist-panel">
-          <div className="heading" style={backgd}>
+          <div className="artist-image"><img src={images[0].url} /></div>
+          <div className="heading">
             <p>Artist</p>
-            <h1>{this.state.albumData.items[0].artists[0].name}</h1>
+            <h1>{name}</h1>
           </div>
           <ul>
             {

@@ -102,11 +102,13 @@ export default class TrackList extends Component {
     })
   }
 
+  
+
   render() {
     if ((this.state.tracks !== null)) {
       return (
       <div>
-        <div className="filter">Filter <input type="text" id="filter_string" onChange={this.onFilter} value={this.state.filter_string} placeholder="Filter"></input></div>
+        <div className="filter">Filter:&nbsp; <input type="text" id="filter_string" onChange={this.onFilter} value={this.state.filter_string} placeholder="Filter"></input></div>
         <ol>
             <li className="header">
               <p>
@@ -119,6 +121,7 @@ export default class TrackList extends Component {
             </li>
             { this.state.tracks.map( (item, index) => {
               let isActive = (index === this.state.currentTrackIndex)? true: false;
+              let albumImage;
               
               return (
                 <TrackItem
@@ -126,12 +129,11 @@ export default class TrackList extends Component {
                   index={index + 1}
                   trackName={item.track.name}
                   trackData={item.track}
-                  artistName={item.track.artists[0].name}
+                  artists={item.track.artists}
                   albumName={item.track.album.name}
                   duration={item.track.duration_ms}
-                  artist_id={item.track.artists[0].id}
                   album_id={item.track.album.id}
-                  album_image={item.track.album.images[2].url}
+                  album_images={item.track.album.images}
                   songPath={item.track.preview_url}
                   active={isActive}
                   onSelect={this.onSelect}

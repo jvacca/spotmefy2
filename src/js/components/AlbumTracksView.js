@@ -72,12 +72,12 @@ export default class AlbumTracksView extends Component {
                     index={index + 1}
                     trackName={item.name}
                     trackData={item}
-                    artistName={artists[0].name}
+                    artists={artists}
                     albumName={''}
                     duration={item.duration_ms}
                     artist_id={''}
                     album_id={''}
-                    album_image={images[2].url}
+                    album_images={images}
                     songPath={item.preview_url}
                     active={isActive}
                     onSelect={this.onSelect}

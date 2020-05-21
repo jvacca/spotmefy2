@@ -12,9 +12,7 @@ ToDo:
 
 Bugs:
 
-- rendering images break when some dimensions are unavailable
-- filter out remastered and deluxe editions of albums in Artist View
-- fix artist image too big and positioned erroneously
+- filter out "duplicate" albums
 
 Maybe
 - move player to inside the AlbumTracksView and Playlist components to avoid restructuring routing
