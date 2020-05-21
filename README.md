@@ -12,7 +12,5 @@ ToDo:
 
 Bugs:
 
-- filter out "duplicate" albums
-
 Maybe
 - move player to inside the AlbumTracksView and Playlist components to avoid restructuring routing

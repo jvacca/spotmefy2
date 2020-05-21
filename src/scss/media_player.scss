@@ -27,9 +27,14 @@
     }
 
     .copy {
+      line-height: 1.25em;
       box-sizing: border-box;
       width: 74%;
       overflow: hidden;
+
+      .artist {
+        font-size: .88em;
+      }
     }
 
     .image {

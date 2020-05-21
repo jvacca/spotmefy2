@@ -39,7 +39,7 @@ export default class TrackItem extends Component {
     ));
   }
 
-  getArtistName(artists) {
+  getArtistNames(artists) {
     let artistArr = artists.map((artist, index) => ( artist.name ));
     return artistArr.join(', ');
   }
@@ -60,7 +60,7 @@ export default class TrackItem extends Component {
     let eventData={
       albumImage: this.getImages(album_images),
       songTitle: trackName,
-      artistName: this.getArtistName(artists),
+      artistName: this.getArtistNames(artists),
       songPath: track.preview_url,
       songDuration: duration
     }

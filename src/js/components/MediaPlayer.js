@@ -9,7 +9,7 @@ const NowPlaying = ({albumImagePath, song_title, artist_name}) => {
       <div className="image"><img src={albumImagePath} /></div>
       <div className="copy">
         <p className="hilight">{song_title}</p>
-        <p>{artist_name}</p>
+        <p className="artist">{artist_name}</p>
       </div>
     </div>
   )
