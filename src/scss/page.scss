@@ -74,8 +74,12 @@ button {
       border-left: 3px solid #2fd566;
     }
 
+    li.active a {
+      color: #fff;
+    }
+
     a {
-      color: #CCC;
+      color: #AAA;
       line-height: 2.5em;
       text-decoration: none;
     }

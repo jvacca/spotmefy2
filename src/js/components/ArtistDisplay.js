@@ -54,7 +54,7 @@ export default class ArtistDisplay extends Component {
         <div className="artist-panel">
           <div className="artist-image"><img src={images[0].url} /></div>
           <div className="heading">
-            <p>Artist</p>
+            <p>ARTIST</p>
             <h1>{name}</h1>
           </div>
           <ul>
