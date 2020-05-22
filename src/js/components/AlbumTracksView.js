@@ -17,7 +17,7 @@ export default class AlbumTracksView extends Component {
 
   loadAlbum(id) {
     let callPromise = this.model.load('albumTracks', id, (data) => {
-      //console.log('data: ', data);
+      console.log('data: ', data);
       this.setState({
         data: data
       });
@@ -39,17 +39,37 @@ export default class AlbumTracksView extends Component {
     });
   }
 
+  getImages(album_images) {
+    if (album_images.length > 0) {
+      if (album_images.length > 1) 
+        return album_images[1].url;
+      else
+        return album_images[0].url
+    } else {
+      return null;
+    }
+  }
+
+  onPlay(tracks) {
+    console.log("playing ", tracks);
+  }
+
+  onLikeAlbum() {
+    console.log("like album ", this.state.data);
+  }
+
   render() {
     if (this.state.data !== null) { 
-      let {images, name, artists, release_date, total_tracks} = this.state.data
+      let {images, name, artists, tracks, release_date, total_tracks} = this.state.data
       return (
         <div className="album-panel">
-          <div className="album-cover"><img src={images[1].url} /></div>
+          <div className="album-cover"><img src={this.getImages(images)} /></div>
           <div className="heading">
             <p>ALBUM</p>
             <h1>{name}</h1>
             <p>By <span className="hilight">{artists[0].name}</span></p>
             <p>{release_date} . {total_tracks} songs</p>
+            <a className="play_button" onClick={e => {this.onPlay(tracks)}}>PLAY</a><a onClick={e => this.onLikeAlbum()} className="likeAlbum">&hearts;</a>
           </div>
           
           <ol>

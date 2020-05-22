@@ -112,7 +112,8 @@ export default class TrackList extends Component {
         <ol>
             <li className="header">
               <p>
-                <span className="index">#</span> 
+                <span className="index">#</span>
+                <span className="like"></span>
                 <span onClick={e => {this.onSort('name')}} className="song-name">TITLE</span>
                 <span onClick={e => {this.onSort('artist')}} className="artist-name">ARTIST</span>
                 <span onClick={e => {this.onSort('album')}} className="album-name">ALBUM</span>

@@ -17,6 +17,37 @@
     .album-panel .heading p, .playlist-panel .heading p {
       font-size: 1em;
       line-height: 2em; }
+    .album-panel .heading .play_button, .playlist-panel .heading .play_button {
+      cursor: pointer;
+      display: inline-block;
+      background-color: #2ab859;
+      color: #fff;
+      width: 100px;
+      line-height: 30px;
+      font-size: .88em;
+      text-align: center;
+      border: 1px solid #2ab859;
+      border-radius: 20px;
+      margin-top: 10px;
+      vertical-align: middle; }
+    .album-panel .heading .play_button:hover, .playlist-panel .heading .play_button:hover {
+      background-color: #2fd566;
+      border: 1px solid #2fd566; }
+    .album-panel .heading .likeAlbum, .playlist-panel .heading .likeAlbum {
+      cursor: pointer;
+      display: inline-block;
+      font-size: 1em;
+      line-height: 1.75em;
+      color: #AAA;
+      width: 25px;
+      text-align: center;
+      vertical-align: middle;
+      border: 1px solid #AAA;
+      border-radius: 50%;
+      margin-left: 20px; }
+    .album-panel .heading .likeAlbum:hover, .playlist-panel .heading .likeAlbum:hover {
+      color: #fff;
+      border: 1px solid #fff; }
   .album-panel .filter, .playlist-panel .filter {
     margin-top: 20px; }
     .album-panel .filter input[type="text"], .playlist-panel .filter input[type="text"] {
@@ -39,6 +70,12 @@
     .album-panel li .index, .playlist-panel li .index {
       padding-left: 10px;
       width: 30px; }
+    .album-panel li .like, .playlist-panel li .like {
+      cursor: pointer;
+      font-size: 1.5em;
+      width: 30px; }
+    .album-panel li .like:hover, .playlist-panel li .like:hover {
+      color: #fff; }
     .album-panel li .song-name, .playlist-panel li .song-name {
       cursor: pointer;
       color: #fff;

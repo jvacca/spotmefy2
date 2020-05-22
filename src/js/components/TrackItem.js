@@ -69,13 +69,18 @@ export default class TrackItem extends Component {
     onSelect(count);
   }
 
+  onLikeSong(track) {
+    console.log("like song ", track)
+  }
+
   render() {
     let {index, trackName, trackData, artists, albumName, duration, active, album_id} = this.props;
     let album_link = "/album/" + album_id;
     return (
       <li className={(active === true)? 'active': ''}>
         <p>
-          <span className="index">{index}</span> 
+          <span className="index">{index}</span>
+          <span onClick={e => this.onLikeSong(trackData)} className="like">&hearts;</span>
           <span onClick={(e) => this.select(trackData, index)} className="song-name">{trackName}</span>
           {(this.props.isAlbumView === false)? <span className="artist-name">{this.getArtistLinks(artists)}</span> : ''}
           <span className="album-name"><Link to={album_link}>{albumName}</Link></span>
