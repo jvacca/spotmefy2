@@ -38,9 +38,11 @@ app.get('/', (req, res) => {
   console.log("index page!");
   
   if (hasToken === true) {
+    console.log("has token")
     res.render('main', {layout: 'index', apiData:{version:'1.0.0'}});
     hasToken = false;
   } else {
+    console.log("No token yet")
     res.redirect('/login');
   }
 });
@@ -101,12 +103,10 @@ app.get('/callback', (req, res) => {
         resolve(access_token, refresh_token)
       } else {
         console.log("invalid token");
-  
-        res.redirect('/?' + querystring.stringify({
+        
+        res.redirect('/error?' + querystring.stringify({
           error: 'invalid_token'
         }));
-
-        reject();
       }
     });
   })
@@ -139,12 +139,12 @@ app.get('/refresh_token', (req, res) => {
         resolve(access_token);
       } else {
         console.log("invalid token");
-  
+  /*
         res.redirect('/?' + querystring.stringify({
           error: 'invalid_token'
-        }));
+        }));*/
 
-        reject();
+        //reject();
       }
     })
   })
@@ -153,6 +153,12 @@ app.get('/refresh_token', (req, res) => {
       'access_token': access_token
     });
   });
+});
+
+app.get('/error', (req, res) => {
+  console.log('error page')
+  
+  res.send('error page')
 });
 
 app.get('*', (req, res) => {

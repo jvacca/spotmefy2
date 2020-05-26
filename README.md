@@ -10,6 +10,3 @@ ToDo:
 - add responsive layouts to fit on mobile
 
 Bugs:
-
-Maybe
-- move player to inside the AlbumTracksView and Playlist components to avoid restructuring routing
