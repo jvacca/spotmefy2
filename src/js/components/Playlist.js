@@ -26,15 +26,13 @@ export default class Playlist extends Component {
 
   componentDidMount() {
     //console.log("Mounted!")
-    let id = this.props.match.params.playlist_id;
-    this.loadPlaylist(id)
+    this.loadPlaylist(this.props.id);
   }
 
   componentDidUpdate() {
     //console.log("Updated!");
-    if (this.state.currentId !== this.props.match.params.playlist_id) {
-      let id = this.props.match.params.playlist_id;
-      this.loadPlaylist(id);
+    if (this.state.currentId !== this.props.id) {
+      this.loadPlaylist(this.props.id);
     }
     
   }
@@ -69,7 +67,7 @@ export default class Playlist extends Component {
         </div>
           <TrackList
             playlist= {this.state.data.id}
-            tracks= {tracks}
+            tracks= {tracks.items}
           />
       </div>
     )} else {

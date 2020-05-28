@@ -6,11 +6,10 @@ export default class TrackList extends Component {
     super(props);
 
     this.state = {
-      currentTrackId: 0,
-      currentTrackIndex: -1,
+      id: null,
       filterString: '',
-      sortString: '',
-      tracks: null
+      tracks: null,
+      currentTrackIndex: -1
     }
 
     this.onSelect = this.onSelect.bind(this);
@@ -20,20 +19,21 @@ export default class TrackList extends Component {
 
   componentDidMount() {
     this.setState({
-      currentTrackId: this.props.playlist,
-      tracks: this.props.tracks.items
+      id: this.props.playlist,
+      tracks: this.props.tracks
     })
   }
 
-  componentDidUpdate(prevProps) {
-    //console.log("udpated")
-    
-    if (this.props.playlist !== this.state.currentTrackId) {
+  componentDidUpdate(prevProps, nextProps) {
+    if (this.state.id !== this.props.playlist) {
+      console.log("udpated");
+      
       this.setState({
-        currentTrackId: this.props.playlist,
-        tracks: this.props.tracks.items
+        id: this.props.playlist,
+        tracks: this.props.tracks
       })
     }
+    
   }
 
   onSelect(index) {
@@ -43,7 +43,7 @@ export default class TrackList extends Component {
   }
 
   onSort(sortString) {
-    //console.log("Sorting on ", sortString);
+    console.log("Sorting on ", sortString);
       let self = this
       let sortedState = this.state.tracks.sort((current, next) => {
         var nameA;
@@ -80,22 +80,21 @@ export default class TrackList extends Component {
       });
 
       this.setState({
-        sortString: sortString,
         tracks: sortedState
       });
-    
   }
 
   onFilter(e) {
-    //console.log("Filtering ", e.target.value)
+    console.log("Filtering ", e.target.value)
 
     let filterString = e.target.value;
-    let filteredState = this.state.tracks.filter(item => (
+    let filteredState = this.props.tracks.filter(item => (
       (item.track.artists[0].name.includes(filterString) === true) ||
       (item.track.album.name.includes(filterString) === true) ||
       (item.track.name.includes(filterString) === true)
     ));
-    if (filteredState.length === 0) filteredState = this.state.tracks;
+    console.log('**************', filteredState)
+    //if (filteredState.length === 0) filteredState = this.props.tracks;
     this.setState({
       filterString: filterString,
       tracks: filteredState
@@ -105,8 +104,7 @@ export default class TrackList extends Component {
   
 
   render() {
-    if ((this.state.tracks !== null)) {
-      return (
+    return (
       <div>
         <div className="filter">Filter:&nbsp; <input type="text" id="filter_string" onChange={this.onFilter} value={this.state.filter_string} placeholder="Filter"></input></div>
         <ol>
@@ -120,7 +118,7 @@ export default class TrackList extends Component {
                 <span onClick={e => {this.onSort('duration')}} className="duration">DURATION</span>
               </p>
             </li>
-            { this.state.tracks.map( (item, index) => {
+            { this.state.tracks && this.state.tracks.map( (item, index) => {
               let isActive = (index === this.state.currentTrackIndex)? true: false;
               let albumImage;
               
@@ -143,9 +141,6 @@ export default class TrackList extends Component {
             }) }
         </ol>    
       </div>)
-    } else {
-      return <div></div>
-    }
   }
   
 }

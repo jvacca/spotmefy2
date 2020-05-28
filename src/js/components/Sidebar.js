@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {Link} from 'react-router-dom';
+//import {Link} from 'react-router-dom';
 import Model from '../model';
 
 export default class Sidebar extends Component {
@@ -28,10 +28,18 @@ export default class Sidebar extends Component {
     //console.log("Updated!");
   }
 
-  select(count) {
+  select(e, count, id) {
+    e.preventDefault();
     this.setState({
       currentIndex: count
-    })
+    });
+
+    let eventdata={
+      panel: 'playlist',
+      id: id
+    }
+
+    this.model.pubsub.emit('tracks', eventdata)
   }
 
   render() {
@@ -49,9 +57,9 @@ export default class Sidebar extends Component {
               let classNameName = (index === this.state.currentIndex)? 'active': ''
               return (
                 <li key={index} className={classNameName}>
-                  <Link onClick={(e) => { this.select(index) }} to={'/playlist/' + item.id}>
+                  <a href="#" onClick={(e) => { this.select(e, index, item.id) }} >
                     <span className="playlist-name">{item.name}</span> 
-                  </Link>
+                  </a>
                 </li>
               )
             })

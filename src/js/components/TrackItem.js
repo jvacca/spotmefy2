@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import {Link} from 'react-router-dom';
 import Model from '../model';
 
 export default class TrackItem extends Component {
@@ -35,7 +34,7 @@ export default class TrackItem extends Component {
 
   getArtistLinks(artists) {    
     return artists.map((artist, index) => (
-      <Link key={index} to={`/artist/${artist.id}`}>{artist.name}{(index < artists.length-1)? ', ' : ''}</Link>
+      <a key={index} href="#" onClick={e => {this.selectArtist(e, artist.id)}}>{artist.name}{(index < artists.length-1)? ', ' : ''}</a>
     ));
   }
 
@@ -69,13 +68,34 @@ export default class TrackItem extends Component {
     onSelect(count);
   }
 
+  selectAlbum(e, id) {
+    e.preventDefault();
+    //console.log('select album ', id)
+    let eventData={
+      panel: 'album',
+      id: id
+    }
+    this.model.pubsub.emit('tracks', eventData);
+  }
+
+  selectArtist(e, id) {
+    e.preventDefault();
+    //console.log('select artist ', id)
+
+    let eventData={
+      panel: 'artist',
+      id: id
+    }
+    this.model.pubsub.emit('tracks', eventData);
+  }
+
   onLikeSong(track) {
     console.log("like song ", track)
   }
 
   render() {
     let {index, trackName, trackData, artists, albumName, duration, active, album_id} = this.props;
-    let album_link = "/album/" + album_id;
+    let album_link = "" + album_id;
     return (
       <li className={(active === true)? 'active': ''}>
         <p>
@@ -83,7 +103,7 @@ export default class TrackItem extends Component {
           <span onClick={e => this.onLikeSong(trackData)} className="like">&hearts;</span>
           <span onClick={(e) => this.select(trackData, index)} className="song-name">{trackName}</span>
           {(this.props.isAlbumView === false)? <span className="artist-name">{this.getArtistLinks(artists)}</span> : ''}
-          <span className="album-name"><Link to={album_link}>{albumName}</Link></span>
+          <span className="album-name"><a href="#" onClick={e => {this.selectAlbum(e, album_id)}}>{albumName}</a></span>
           <span className="duration">{this.formatDuration(duration)}</span>
         </p>
       </li>

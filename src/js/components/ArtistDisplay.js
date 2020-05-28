@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import {Link} from 'react-router-dom';
 import Model from '../model';
 
 export default class ArtistDisplay extends Component {
@@ -9,7 +8,8 @@ export default class ArtistDisplay extends Component {
     this.model = new Model();
     this.state = {
       albumData: null,
-      artistData: null
+      artistData: null,
+      currentId: null
     };
 
   }
@@ -18,7 +18,8 @@ export default class ArtistDisplay extends Component {
     let callPromise = this.model.load('artist', id, (data) => {
       //console.log('data: ', data);
       this.setState({
-        artistData: data
+        artistData: data,
+        currentId: id
       });
     })
   }
@@ -42,9 +43,26 @@ export default class ArtistDisplay extends Component {
   }
 
   componentDidMount() {
-    let id = this.props.match.params.artist_id;
-    this.loadArtist(id);
-    this.loadAlbum(id);
+    this.loadArtist(this.props.id);
+    this.loadAlbum(this.props.id);
+  }
+
+  componentDidUpdate() {
+    if (this.state.currentId !== this.props.id) {
+      this.loadArtist(this.props.id);
+      this.loadAlbum(this.props.id);
+    }
+  }
+
+  selectAlbum(e, id) {
+    e.preventDefault();
+    //console.log('select album ', id);
+
+    let eventData={
+      panel: 'album',
+      id: id
+    }
+    this.model.pubsub.emit('tracks', eventData);
   }
 
   render() {
@@ -60,14 +78,13 @@ export default class ArtistDisplay extends Component {
           <ul>
             {
               this.state.albumData.items.map( (item, index) => {
-                let album_link = "/album/" + item.id;
                 return (
                   <li key={index}>
-                    <Link className="albumBox" to={album_link}>
+                    <a className="albumBox" href="#" onClick={e => {this.selectAlbum(e, item.id)}}>
                       <img src={item.images[1].url} />
                       <p className="hilight">{item.name}</p> 
                       <p>{item.release_date}</p>
-                    </Link>
+                    </a>
                   </li>
                 )
               })

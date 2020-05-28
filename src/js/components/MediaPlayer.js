@@ -30,8 +30,6 @@ export default class MediaPlayer extends Component {
         songDuration: "0"
       }
     };
-
-    this.model.pubsub.on('play', this.updateCurrentData, this);
   }
 
   updateCurrentData(event) {
@@ -44,6 +42,14 @@ export default class MediaPlayer extends Component {
         songDuration: event.songDuration
       }
     })
+  }
+
+  componentDidMount() {
+    this.model.pubsub.on('play', this.updateCurrentData, this);
+  }
+
+  componentWillUnmount() {
+    this.model.pubsub.off('play');
   }
 
   onNextSong() {
