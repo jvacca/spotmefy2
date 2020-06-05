@@ -7,11 +7,9 @@ export default class TrackList extends Component {
 
     this.state = {
       filterString: '',
-      tracks: null,
-      currentTrackIndex: -1
+      tracks: null
     }
 
-    this.onSelect = this.onSelect.bind(this);
     this.onSort = this.onSort.bind(this);
     this.onFilter = this.onFilter.bind(this);
   }
@@ -31,12 +29,6 @@ export default class TrackList extends Component {
       })
     }
     
-  }
-
-  onSelect(index) {
-    this.setState({
-      currentTrackIndex: index-1
-    });
   }
 
   onSort(sortString) {
@@ -98,8 +90,6 @@ export default class TrackList extends Component {
     })
   }
 
-  
-
   render() {
     return (
       <div>
@@ -116,7 +106,7 @@ export default class TrackList extends Component {
               </p>
             </li>
             { this.state.tracks && this.state.tracks.map( (item, index) => {
-              let isActive = (index === this.state.currentTrackIndex)? true: false;
+              let isActive = (index === this.props.currentTrackIndex)? true: false;
               let albumImage;
               
               return (
@@ -132,7 +122,6 @@ export default class TrackList extends Component {
                   album_images={item.track.album.images}
                   songPath={item.track.preview_url}
                   active={isActive}
-                  onSelect={this.onSelect}
                   isAlbumView={false}
                 />)
             }) }

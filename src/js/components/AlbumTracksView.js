@@ -8,11 +8,8 @@ export default class AlbumTracksView extends Component {
 
     this.model = new Model();
     this.state = {
-      data: null,
-      currentTrackIndex: -1
+      data: null
     };
-
-    this.onSelect = this.onSelect.bind(this);
   }
 
   loadAlbum(id) {
@@ -32,12 +29,6 @@ export default class AlbumTracksView extends Component {
     if (prevProps.id !== this.props.id) {
       this.loadAlbum(this.props.id);
     }
-  }
-
-  onSelect(index) {
-    this.setState({
-      currentTrackIndex: index-1
-    });
   }
 
   getImages(album_images) {
@@ -85,7 +76,7 @@ export default class AlbumTracksView extends Component {
             </li>
             {
               this.state.data.tracks.items.map( (item, index) => {
-                let isActive = (index === this.state.currentTrackIndex)? true: false;
+                let isActive = (index === this.props.currentTrackIndex)? true: false;
 
                 return (
                   <TrackItem

@@ -66,6 +66,7 @@ export default class Playlist extends Component {
           <TrackList
             playlist= {this.state.data.id}
             tracks= {tracks.items}
+            currentTrackIndex={this.props.currentTrackIndex}
           />
       </div>
     )} else {

@@ -19,37 +19,6 @@ export default class MediaPlayer extends Component {
   constructor(props) {
     super(props);
     this.model = new Model();
-    this.state = {
-      index: 0,
-      queue: [],
-      currentData: {
-        albumImage: "",
-        songTitle: "",
-        artistName: "",
-        songPath: "",
-        songDuration: "0"
-      }
-    };
-  }
-
-  updateCurrentData(event) {
-    this.setState({
-      currentData: {
-        albumImage: event.albumImage,
-        songTitle: event.songTitle,
-        artistName: event.artistName,
-        songPath: event.songPath,
-        songDuration: event.songDuration
-      }
-    })
-  }
-
-  componentDidMount() {
-    this.model.pubsub.on('play', this.updateCurrentData, this);
-  }
-
-  componentWillUnmount() {
-    this.model.pubsub.off('play');
   }
 
   onNextSong() {
@@ -69,19 +38,19 @@ export default class MediaPlayer extends Component {
   }
 
   render() {
-    if (this.state.currentData !== null) {
+    if (this.props.currentTrack !== null) {
       
       return (
         <div className="media-player">
           <NowPlaying 
-            albumImagePath={this.state.currentData.albumImage} 
-            song_title={this.state.currentData.songTitle}
-            artist_name={this.state.currentData.artistName}
+            albumImagePath={this.props.currentTrack.albumImage} 
+            song_title={this.props.currentTrack.songTitle}
+            artist_name={this.props.currentTrack.artistName}
           />
 
           <Controls 
             duration={0}
-            songPath = {this.state.currentData.songPath}
+            songPath = {this.props.currentTrack.songPath}
             onNext = {this.onNextSong}
             onPrev = {this.onPrevSong}
             onShuffle = {this.onShuffle}

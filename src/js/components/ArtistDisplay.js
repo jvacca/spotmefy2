@@ -71,7 +71,7 @@ export default class ArtistDisplay extends Component {
       panel: 'album',
       id: id
     }
-    this.model.pubsub.emit('tracks', eventData);
+    this.model.pubsub.emit('selectAlbum', eventData);
   }
 
   render() {

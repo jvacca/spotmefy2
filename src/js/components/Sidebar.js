@@ -39,7 +39,7 @@ export default class Sidebar extends Component {
       id: id
     }
 
-    this.model.pubsub.emit('tracks', eventdata)
+    this.model.pubsub.emit('selectPlaylist', eventdata)
   }
 
   render() {

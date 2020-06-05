@@ -6,10 +6,6 @@ export default class TrackItem extends Component {
     super(props);
 
     this.model = new Model();
-    this.state = {
-      active: false
-    }
-
     this.select = this.select.bind(this);
   }
 
@@ -22,14 +18,6 @@ export default class TrackItem extends Component {
     time += (seconds < 10)? '0': '';
     time += seconds;
     return time;
-  }
-
-  componentDidMount() {
-
-  }
-
-  componentDidUpdate() {
-    //console.log("updated", this.props.index)
   }
 
   getArtistLinks(artists) {    
@@ -61,11 +49,11 @@ export default class TrackItem extends Component {
       songTitle: trackName,
       artistName: this.getArtistNames(artists),
       songPath: track.preview_url,
-      songDuration: duration
+      songDuration: duration,
+      trackIndex: count-1
     }
 
-    this.model.pubsub.emit('play', eventData);
-    onSelect(count);
+    this.model.pubsub.emit('selectTrack', eventData);
   }
 
   selectAlbum(e, id) {
@@ -75,7 +63,7 @@ export default class TrackItem extends Component {
       panel: 'album',
       id: id
     }
-    this.model.pubsub.emit('tracks', eventData);
+    this.model.pubsub.emit('selectAlbum', eventData);
   }
 
   selectArtist(e, id) {
@@ -86,7 +74,7 @@ export default class TrackItem extends Component {
       panel: 'artist',
       id: id
     }
-    this.model.pubsub.emit('tracks', eventData);
+    this.model.pubsub.emit('selectArtist', eventData);
   }
 
   onLikeSong(track) {
