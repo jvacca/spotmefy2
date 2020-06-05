@@ -9,7 +9,6 @@ export default class AlbumTracksView extends Component {
     this.model = new Model();
     this.state = {
       data: null,
-      currentId: null,
       currentTrackIndex: -1
     };
 
@@ -20,8 +19,7 @@ export default class AlbumTracksView extends Component {
     let callPromise = this.model.load('albumTracks', id, (data) => {
       //console.log('data: ', data);
       this.setState({
-        data: data,
-        currentId: id
+        data: data
       });
     });
   }
@@ -30,8 +28,8 @@ export default class AlbumTracksView extends Component {
     this.loadAlbum(this.props.id);
   }
 
-  componentDidUpdate() {
-    if (this.state.currentId !== this.props.id) {
+  componentDidUpdate(prevProps) {
+    if (prevProps.id !== this.props.id) {
       this.loadAlbum(this.props.id);
     }
   }

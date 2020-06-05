@@ -8,8 +8,7 @@ export default class ArtistDisplay extends Component {
     this.model = new Model();
     this.state = {
       albumData: null,
-      artistData: null,
-      currentId: null
+      artistData: null
     };
 
   }
@@ -18,8 +17,7 @@ export default class ArtistDisplay extends Component {
     let callPromise = this.model.load('artist', id, (data) => {
       //console.log('data: ', data);
       this.setState({
-        artistData: data,
-        currentId: id
+        artistData: data
       });
     })
   }
@@ -47,10 +45,21 @@ export default class ArtistDisplay extends Component {
     this.loadAlbum(this.props.id);
   }
 
-  componentDidUpdate() {
-    if (this.state.currentId !== this.props.id) {
+  componentDidUpdate(prevProps) {
+    if (prevProps.id !== this.props.id) {
       this.loadArtist(this.props.id);
       this.loadAlbum(this.props.id);
+    }
+  }
+
+  getImages(album_images) {
+    if (album_images.length > 0) {
+      if (album_images.length > 1) 
+        return album_images[1].url;
+      else
+        return album_images[0].url
+    } else {
+      return null;
     }
   }
 
@@ -81,7 +90,7 @@ export default class ArtistDisplay extends Component {
                 return (
                   <li key={index}>
                     <a className="albumBox" href="#" onClick={e => {this.selectAlbum(e, item.id)}}>
-                      <img src={item.images[1].url} />
+                      <img src={this.getImages(item.images)} />
                       <p className="hilight">{item.name}</p> 
                       <p>{item.release_date}</p>
                     </a>

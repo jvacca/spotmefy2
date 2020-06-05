@@ -9,7 +9,6 @@ export default class Playlist extends Component {
     this.model = new Model();
     this.state = {
       data: null,
-      currentId: null
     };
   }
 
@@ -17,8 +16,7 @@ export default class Playlist extends Component {
     let callPromise = this.model.load('playlistTracks', id, (data) => {
       //console.log('data: ', data);
       this.setState({
-        data: data,
-        currentId: id,
+        data: data
       });
     });
 
@@ -29,9 +27,9 @@ export default class Playlist extends Component {
     this.loadPlaylist(this.props.id);
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     //console.log("Updated!");
-    if (this.state.currentId !== this.props.id) {
+    if (prevProps.id !== this.props.id) {
       this.loadPlaylist(this.props.id);
     }
     

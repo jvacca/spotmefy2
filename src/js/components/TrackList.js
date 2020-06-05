@@ -6,7 +6,6 @@ export default class TrackList extends Component {
     super(props);
 
     this.state = {
-      id: null,
       filterString: '',
       tracks: null,
       currentTrackIndex: -1
@@ -19,17 +18,15 @@ export default class TrackList extends Component {
 
   componentDidMount() {
     this.setState({
-      id: this.props.playlist,
       tracks: this.props.tracks
     })
   }
 
   componentDidUpdate(prevProps, nextProps) {
-    if (this.state.id !== this.props.playlist) {
+    if (prevProps.playlist !== this.props.playlist) {
       console.log("udpated");
       
       this.setState({
-        id: this.props.playlist,
         tracks: this.props.tracks
       })
     }
