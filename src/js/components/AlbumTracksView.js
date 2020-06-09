@@ -43,11 +43,18 @@ export default class AlbumTracksView extends Component {
   }
 
   onPlay(tracks) {
-    console.log("playing ", tracks);
+    let eventData={
+      data: tracks.items
+    }
+    this.model.pubsub.emit('playAlbum', eventData);
   }
 
   onLikeAlbum() {
     console.log("like album ", this.state.data);
+    let eventData={
+      data: this.state.data
+    }
+    this.model.pubsub.emit('likeAlbum', eventData);
   }
 
   render() {
@@ -67,7 +74,8 @@ export default class AlbumTracksView extends Component {
           <ol>
             <li className="header">
               <p>
-                <span className="index">#</span> 
+                <span className="index">#</span>
+                <span className="like"></span>
                 <span className="song-name">TITLE</span>
                 <span className="artist-name"></span>
                 <span className="album-name"></span>

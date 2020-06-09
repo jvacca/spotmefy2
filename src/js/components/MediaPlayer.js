@@ -21,18 +21,6 @@ export default class MediaPlayer extends Component {
     this.model = new Model();
   }
 
-  onNextSong() {
-    console.log("next track");
-  }
-
-  onPrevSong() {
-    console.log("previous track");
-  }
-
-  onShuffle() {
-    console.log("shuffle now");
-  }
-
   onRepeat() {
     console.log("repeat now");
   }
@@ -51,9 +39,6 @@ export default class MediaPlayer extends Component {
           <Controls 
             duration={0}
             songPath = {this.props.currentTrack.songPath}
-            onNext = {this.onNextSong}
-            onPrev = {this.onPrevSong}
-            onShuffle = {this.onShuffle}
             onRepeat = {this.onRepeat}
           />
         </div>

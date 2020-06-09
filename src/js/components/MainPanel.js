@@ -19,6 +19,9 @@ export default class MainPanel extends Component {
       queue: [],
       id: -1
     }
+
+    this.onNextTrack = this.onNextTrack.bind(this);
+    this.onPrevTrack = this.onPrevTrack.bind(this);
   }
 
   updateCurrentPanel(event) {
@@ -48,8 +51,37 @@ export default class MainPanel extends Component {
     })
   }
 
+  updateCueue(event) {
+    console.log("updating queue with: ", event.data);
+
+    this.setState({
+      queue: event.data,
+      currentTrackIndex: 0
+    })
+  }
+
+  updateLikes(event) {
+
+  }
+
+  onPrevTrack(event) {
+    if (this.state.currentTrackIndex > 0) {
+      this.setState({
+        currentTrackIndex: this.state.currentTrackIndex - 1
+      })
+    }
+  }
+
+  onNextTrack(event) {
+    if (this.state.currentTrackIndex < this.state.queue.length) {
+      this.setState({
+        currentTrackIndex: this.state.currentTrackIndex + 1
+      })
+    }
+  }
+
   route() {
-    console.log("routing ", this.state.currentTrackIndex)
+    //console.log("routing ", this.state.currentTrackIndex)
 
     switch(this.state.panel) {
       case 'playlist':
@@ -67,11 +99,17 @@ export default class MainPanel extends Component {
     this.model.pubsub.on('selectAlbum', this.updateCurrentPanel, this);
     this.model.pubsub.on('selectArtist', this.updateCurrentPanel, this);
     this.model.pubsub.on('selectPlaylist', this.updateCurrentPanel, this);
-    this.model.pubsub.on('selectTrack', this.updateCurrentTrack, this);
+    this.model.pubsub.on('playTrack', this.updateCurrentTrack, this);
+    this.model.pubsub.on('playAlbum', this.updateCueue, this);
+    this.model.pubsub.on('playPlaylist', this.updateCueue, this);
+    this.model.pubsub.on('likeSong', this.updateLikes, this);
+    this.model.pubsub.on('likeAlbum', this.updateLikes, this);
+    this.model.pubsub.on('nextSong', this.onNextTrack, this);
+    this.model.pubsub.on('prevSong', this.onPrevTrack, this);
   }
 
   componentDidUpdate() {
-    console.log("Updating ", this.state.currentTrackIndex)
+    //console.log("Updating ", this.state.currentTrackIndex)
   }
 
   render() {
@@ -79,9 +117,9 @@ export default class MainPanel extends Component {
       <div className="app-container">
         <div id="frame" className="frame">
           <Sidebar />
-            <div className="main-panel">
-              { this.route(this.state.panel) }
-            </div>
+          <div className="main-panel">
+            { this.route(this.state.panel) }
+          </div>
         </div>
         <MediaPlayer currentTrack={this.state.currentTrack} />
       </div>

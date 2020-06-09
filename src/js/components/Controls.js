@@ -26,15 +26,15 @@ export default class Controls extends Component {
       shuffleState: !this.state.shuffleState
     });
 
-    this.props.onShuffle(this.state.shuffleState);
+    this.model.pubsub.emit('shuffle');
   }
 
   previous(e) {
-    this.props.onPrev();
+    this.model.pubsub.emit('prevSong');
   }
 
   next(e) {
-    this.props.onNext();
+    this.model.pubsub.emit('nextSong');
   }
 
   playPause(e) {

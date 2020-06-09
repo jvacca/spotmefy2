@@ -8,7 +8,7 @@ export default class Playlist extends Component {
 
     this.model = new Model();
     this.state = {
-      data: null,
+      data: null
     };
   }
 
@@ -19,7 +19,6 @@ export default class Playlist extends Component {
         data: data
       });
     });
-
   }
 
   componentDidMount() {
@@ -47,7 +46,11 @@ export default class Playlist extends Component {
   }
 
   onPlay(tracks) {
-    console.log("playing ", tracks);
+    let eventData={
+      data: tracks.items
+    }
+    this.model.pubsub.emit('playPlaylist', eventData);
+
   }
 
   render() {
