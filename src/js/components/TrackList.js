@@ -21,7 +21,7 @@ export default class TrackList extends Component {
   }
 
   componentDidUpdate(prevProps, nextProps) {
-    if (prevProps.playlist !== this.props.playlist) {
+    if (prevProps.id !== this.props.id) {
       console.log("udpated");
       
       this.setState({

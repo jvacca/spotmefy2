@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import TrackList from './TrackList';
 import Model from '../model';
 
-export default class Playlist extends Component {
+export default class PlaylistPanel extends Component {
   constructor(props) {
     super(props);
 
@@ -66,11 +66,11 @@ export default class Playlist extends Component {
           <p>{tracks.items.length} songs</p>
           <a className="play_button" onClick={e => {this.onPlay(tracks)}}>PLAY</a>
         </div>
-          <TrackList
-            playlist= {this.state.data.id}
-            tracks= {tracks.items}
-            currentTrackIndex={this.props.currentTrackIndex}
-          />
+        <TrackList
+          id= {this.state.data.id}
+          tracks= {tracks.items}
+          currentTrackIndex={this.props.currentTrackIndex}
+        />
       </div>
     )} else {
       return <div></div>

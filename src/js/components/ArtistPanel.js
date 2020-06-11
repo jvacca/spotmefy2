@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Model from '../model';
 
-export default class ArtistDisplay extends Component {
+export default class ArtistPanel extends Component {
   constructor(props) {
     super(props);
 

@@ -23,6 +23,17 @@ export default class Controls extends Component {
     this.soundObj = React.createRef();
   }
 
+  formatDuration(ms) {
+    let time = ''
+    let minutes = Math.floor((ms/1000)/60);
+    let seconds = Math.floor((ms/1000)%60);
+    time += (minutes < 10)? '0': '';
+    time += minutes + ':';
+    time += (seconds < 10)? '0': '';
+    time += seconds;
+    return time;
+  }
+
   shuffle(e) {
     this.setState({
       shuffleState: !this.state.shuffleState
@@ -78,7 +89,7 @@ export default class Controls extends Component {
             <div id="progressbar">
               <div id="bar"></div>
             </div>
-            <p id="duration">00:00</p>
+            <p id="duration">{this.formatDuration(this.props.duration)}</p>
           </div>
         </div>
 

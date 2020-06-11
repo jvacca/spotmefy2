@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import Heading from './Heading';
 import Sidebar from './Sidebar';
-import Playlist from './Playlist';
-import ArtistDisplay from './ArtistDisplay';
-import AlbumTracksView from './AlbumTracksView';
+import Playlist from './PlaylistPanel';
+import ArtistDisplay from './ArtistPanel';
+import AlbumTracksView from './AlbumPanel';
 import MediaPlayer from './MediaPlayer';
 import Model from '../model';
 
@@ -62,22 +62,22 @@ export default class MainPanel extends Component {
         songTitle: event.track.trackName,
         artistName: this.getArtistNames(event.track.artists),
         songPath: event.track.songPath,
-        songDuration: event.track.songDuration
+        duration: event.track.duration
       },
-      currentTrackIndex: event.track.trackIndex
+      currentTrackIndex: event.track.index
     })
   }
 
   onPlayPlaylist(event) {
-    console.log("updating queue with: ", event.data);
+    //console.log("updating queue with: ", event.data);
 
     let queue = event.data.map((item, index) => ({
       album_images: item.track.album.images,
       trackName: item.track.name,
       artists: item.track.artists,
       songPath: item.track.preview_url,
-      songDuration: item.track.duration_ms,
-      trackIndex: index
+      duration: item.track.duration_ms,
+      index: index
     }));
 
     this.setState({
@@ -93,7 +93,7 @@ export default class MainPanel extends Component {
   }
 
   onPlayAlbum(event) {
-    console.log("updating queue with: ", event.data);
+    //console.log("updating queue with: ", event.data);
 
     let album_images = event.album_images
 
@@ -102,8 +102,8 @@ export default class MainPanel extends Component {
       trackName: item.name,
       artists: item.artists,
       songPath: item.preview_url,
-      songDuration: item.duration_ms,
-      trackIndex: index
+      duration: item.duration_ms,
+      index: index
     }));
 
     this.setState({
@@ -114,6 +114,17 @@ export default class MainPanel extends Component {
     let eventData = {
       track: queue[0]
     }
+
+    this.onPlayTrack(eventData)
+  }
+
+  onPlaySingleTrack(event) {
+
+    let eventData = {
+      track: event.track
+    }
+
+    //eventData.track.index = eventData.track.index -1;
 
     this.onPlayTrack(eventData)
   }
@@ -171,7 +182,7 @@ export default class MainPanel extends Component {
     this.model.pubsub.on('selectAlbum', this.updateCurrentPanel, this);
     this.model.pubsub.on('selectArtist', this.updateCurrentPanel, this);
     this.model.pubsub.on('selectPlaylist', this.updateCurrentPanel, this);
-    this.model.pubsub.on('playTrack', this.onPlayTrack, this);
+    this.model.pubsub.on('playTrack', this.onPlaySingleTrack, this);
     this.model.pubsub.on('playAlbum', this.onPlayAlbum, this);
     this.model.pubsub.on('playPlaylist', this.onPlayPlaylist, this);
     this.model.pubsub.on('likeSong', this.updateLikes, this);

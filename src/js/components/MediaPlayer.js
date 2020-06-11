@@ -37,7 +37,7 @@ export default class MediaPlayer extends Component {
           />
 
           <Controls 
-            duration={0}
+            duration={this.props.currentTrack.duration}
             songPath = {this.props.currentTrack.songPath}
             onRepeat = {this.onRepeat}
           />

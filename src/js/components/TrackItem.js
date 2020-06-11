@@ -26,9 +26,16 @@ export default class TrackItem extends Component {
     ));
   }
 
-  playTrack(track, count) {
+  playTrack(count) {
     let eventData={
-     track: this.props
+     track: {
+      album_images: this.props.album_images,
+      trackName: this.props.trackName,
+      artists: this.props.artists,
+      songPath: this.props.songPath,
+      duration: this.props.duration,
+      index: count
+     }
     }
 
     this.model.pubsub.emit('playTrack', eventData);
@@ -70,7 +77,7 @@ export default class TrackItem extends Component {
         <p>
           <span className="index">{index}</span>
           <span onClick={e => this.onLikeSong(trackData)} className="like">&hearts;</span>
-          <span onClick={(e) => this.playTrack(trackData, index)} className="song-name">{trackName}</span>
+          <span onClick={(e) => this.playTrack(index-1)} className="song-name">{trackName}</span>
           {(this.props.isAlbumView === false)? <span className="artist-name">{this.getArtistLinks(artists)}</span> : ''}
           {(this.props.isAlbumView === false)? <span className="album-name"><a href="#" onClick={e => {this.selectAlbum(e, album_id)}}>{albumName}</a></span> : ''}
           <span className="duration">{this.formatDuration(duration)}</span>

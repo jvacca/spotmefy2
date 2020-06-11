@@ -2,7 +2,46 @@ import React, { Component } from "react";
 import TrackItem from './TrackItem';
 import Model from '../model';
 
-export default class AlbumTracksView extends Component {
+const SimpleTrackList = ({id, tracks, artists, images, currentTrackIndex}) => {
+  return (
+    <ol>
+      <li className="header">
+        <p>
+          <span className="index">#</span>
+          <span className="like"></span>
+          <span className="song-name">TITLE</span>
+          <span className="artist-name"></span>
+          <span className="album-name"></span>
+          <span className="duration">DURATION</span>
+        </p>
+      </li>
+      {
+        tracks.items.map( (item, index) => {
+          let isActive = (index === currentTrackIndex)? true: false;
+
+          return (
+            <TrackItem
+              key={index}
+              index={index + 1}
+              trackName={item.name}
+              trackData={item}
+              artists={artists}
+              albumName={''}
+              duration={item.duration_ms}
+              album_id={''}
+              album_images={images}
+              songPath={item.preview_url}
+              active={isActive}
+              isAlbumView={true}
+            />
+          )
+        })
+      }
+    </ol>
+  )
+}
+
+export default class AlbumPanel extends Component {
   constructor(props) {
     super(props);
 
@@ -60,7 +99,7 @@ export default class AlbumTracksView extends Component {
 
   render() {
     if (this.state.data !== null) { 
-      let {images, name, artists, tracks, release_date, total_tracks} = this.state.data
+      let {id, images, name, artists, tracks, release_date, total_tracks} = this.state.data
       return (
         <div className="album-panel">
           <div className="album-cover"><img src={this.getImages(images)} /></div>
@@ -71,43 +110,13 @@ export default class AlbumTracksView extends Component {
             <p>{release_date} . {total_tracks} songs</p>
             <a className="play_button" onClick={e => {this.onPlay(tracks)}}>PLAY</a><a onClick={e => this.onLikeAlbum()} className="likeAlbum">&hearts;</a>
           </div>
-          
-          <ol>
-            <li className="header">
-              <p>
-                <span className="index">#</span>
-                <span className="like"></span>
-                <span className="song-name">TITLE</span>
-                <span className="artist-name"></span>
-                <span className="album-name"></span>
-                <span className="duration">DURATION</span>
-              </p>
-            </li>
-            {
-              this.state.data.tracks.items.map( (item, index) => {
-                let isActive = (index === this.props.currentTrackIndex)? true: false;
-
-                return (
-                  <TrackItem
-                    key={index}
-                    index={index + 1}
-                    trackName={item.name}
-                    trackData={item}
-                    artists={artists}
-                    albumName={''}
-                    duration={item.duration_ms}
-                    artist_id={''}
-                    album_id={''}
-                    album_images={images}
-                    songPath={item.preview_url}
-                    active={isActive}
-                    onSelect={this.onSelect}
-                    isAlbumView={true}
-                  />
-                )
-              })
-            }
-          </ol>
+          <SimpleTrackList
+            id = {id}
+            tracks = {tracks}
+            artists = {artists}
+            images = {images}
+            currentTrackIndex = {this.props.currentTrackIndex}
+          />
         </div>
       );
       } else {
