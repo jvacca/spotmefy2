@@ -46,6 +46,7 @@ export default class AlbumTracksView extends Component {
     let eventData={
       data: tracks.items
     }
+    eventData.album_images = this.state.data.images;
     this.model.pubsub.emit('playAlbum', eventData);
   }
 

@@ -26,31 +26,9 @@ export default class TrackItem extends Component {
     ));
   }
 
-  getArtistNames(artists) {
-    let artistArr = artists.map((artist, index) => ( artist.name ));
-    return artistArr.join(', ');
-  }
-
-  getImages(album_images) {
-    if (album_images.length > 0) {
-      if (album_images.length > 2) 
-        return album_images[2].url;
-      else
-        return album_images[0].url
-    } else {
-      return null;
-    }
-  }
-
   playTrack(track, count) {
-    let {trackName, artists, duration, album_images, onSelect} = this.props;
     let eventData={
-      albumImage: this.getImages(album_images),
-      songTitle: trackName,
-      artistName: this.getArtistNames(artists),
-      songPath: track.preview_url,
-      songDuration: duration,
-      trackIndex: count-1
+     track: this.props
     }
 
     this.model.pubsub.emit('playTrack', eventData);

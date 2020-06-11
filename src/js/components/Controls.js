@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
+import Model from '../model';
 
 export default class Controls extends Component {
   constructor(props) {
     super(props);
 
+    this.model = new Model();
     this.state = {
       playState: false,
       shuffleState: false,

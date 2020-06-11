@@ -38,26 +38,84 @@ export default class MainPanel extends Component {
     })
   }
 
-  updateCurrentTrack(event) {
+  getImages(album_images) {
+    if (album_images.length > 0) {
+      if (album_images.length > 2) 
+        return album_images[2].url;
+      else
+        return album_images[0].url
+    } else {
+      return null;
+    }
+  }
+
+  getArtistNames(artists) {
+    let artistArr = artists.map((artist, index) => ( artist.name ));
+    return artistArr.join(', ');
+  }
+
+  onPlayTrack(event) {
+    //console.log(event.track)
     this.setState({
       currentTrack: {
-        albumImage: event.albumImage,
-        songTitle: event.songTitle,
-        artistName: event.artistName,
-        songPath: event.songPath,
-        songDuration: event.songDuration
+        albumImage: this.getImages(event.track.album_images),
+        songTitle: event.track.trackName,
+        artistName: this.getArtistNames(event.track.artists),
+        songPath: event.track.songPath,
+        songDuration: event.track.songDuration
       },
-      currentTrackIndex: event.trackIndex
+      currentTrackIndex: event.track.trackIndex
     })
   }
 
-  updateCueue(event) {
+  onPlayPlaylist(event) {
     console.log("updating queue with: ", event.data);
 
+    let queue = event.data.map((item, index) => ({
+      album_images: item.track.album.images,
+      trackName: item.track.name,
+      artists: item.track.artists,
+      songPath: item.track.preview_url,
+      songDuration: item.track.duration_ms,
+      trackIndex: index
+    }));
+
     this.setState({
-      queue: event.data,
+      queue: queue,
       currentTrackIndex: 0
     })
+
+    let eventData = {
+      track: queue[0]
+    }
+
+    this.onPlayTrack(eventData)
+  }
+
+  onPlayAlbum(event) {
+    console.log("updating queue with: ", event.data);
+
+    let album_images = event.album_images
+
+    let queue = event.data.map((item, index) => ({
+      album_images: album_images,
+      trackName: item.name,
+      artists: item.artists,
+      songPath: item.preview_url,
+      songDuration: item.duration_ms,
+      trackIndex: index
+    }));
+
+    this.setState({
+      queue: queue,
+      currentTrackIndex: 0
+    })
+
+    let eventData = {
+      track: queue[0]
+    }
+
+    this.onPlayTrack(eventData)
   }
 
   updateLikes(event) {
@@ -66,17 +124,31 @@ export default class MainPanel extends Component {
 
   onPrevTrack(event) {
     if (this.state.currentTrackIndex > 0) {
+      let newIndex = this.state.currentTrackIndex - 1
       this.setState({
-        currentTrackIndex: this.state.currentTrackIndex - 1
+        currentTrackIndex: newIndex
       })
+
+      let eventData = {
+        track: this.state.queue[newIndex]
+      }
+
+      this.onPlayTrack(eventData);
     }
   }
 
   onNextTrack(event) {
     if (this.state.currentTrackIndex < this.state.queue.length) {
+      let newIndex = this.state.currentTrackIndex + 1
       this.setState({
-        currentTrackIndex: this.state.currentTrackIndex + 1
+        currentTrackIndex: newIndex
       })
+
+      let eventData = {
+        track: this.state.queue[newIndex]
+      }
+
+      this.onPlayTrack(eventData);
     }
   }
 
@@ -99,9 +171,9 @@ export default class MainPanel extends Component {
     this.model.pubsub.on('selectAlbum', this.updateCurrentPanel, this);
     this.model.pubsub.on('selectArtist', this.updateCurrentPanel, this);
     this.model.pubsub.on('selectPlaylist', this.updateCurrentPanel, this);
-    this.model.pubsub.on('playTrack', this.updateCurrentTrack, this);
-    this.model.pubsub.on('playAlbum', this.updateCueue, this);
-    this.model.pubsub.on('playPlaylist', this.updateCueue, this);
+    this.model.pubsub.on('playTrack', this.onPlayTrack, this);
+    this.model.pubsub.on('playAlbum', this.onPlayAlbum, this);
+    this.model.pubsub.on('playPlaylist', this.onPlayPlaylist, this);
     this.model.pubsub.on('likeSong', this.updateLikes, this);
     this.model.pubsub.on('likeAlbum', this.updateLikes, this);
     this.model.pubsub.on('nextSong', this.onNextTrack, this);
