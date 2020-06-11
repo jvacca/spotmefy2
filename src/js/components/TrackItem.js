@@ -26,12 +26,28 @@ export default class TrackItem extends Component {
     ));
   }
 
+  getImages(album_images) {
+    if (album_images.length > 0) {
+      if (album_images.length > 2) 
+        return album_images[2].url;
+      else
+        return album_images[0].url
+    } else {
+      return null;
+    }
+  }
+
+  getArtistNames(artists) {
+    let artistArr = artists.map((artist, index) => ( artist.name ));
+    return artistArr.join(', ');
+  }
+
   playTrack(count) {
     let eventData={
      track: {
-      album_images: this.props.album_images,
+      album_images: this.getImages(this.props.album_images),
       trackName: this.props.trackName,
-      artists: this.props.artists,
+      artists: this.getArtistNames(this.props.artists),
       songPath: this.props.songPath,
       duration: this.props.duration,
       index: count

@@ -12,11 +12,11 @@ export default class MainPanel extends Component {
     super(props);
 
     this.model = new Model();
-    this.state={
+    this.state = {
       currentTrack: null,
       currentTrackIndex: -1,
-      panel: null,
       queue: [],
+      panel: null,
       id: -1
     }
 
@@ -54,42 +54,22 @@ export default class MainPanel extends Component {
     return artistArr.join(', ');
   }
 
-  onPlayTrack(event) {
-    //console.log(event.track)
-    this.setState({
-      currentTrack: {
-        albumImage: this.getImages(event.track.album_images),
-        songTitle: event.track.trackName,
-        artistName: this.getArtistNames(event.track.artists),
-        songPath: event.track.songPath,
-        duration: event.track.duration
-      },
-      currentTrackIndex: event.track.index
-    })
-  }
-
   onPlayPlaylist(event) {
     //console.log("updating queue with: ", event.data);
 
     let queue = event.data.map((item, index) => ({
-      album_images: item.track.album.images,
+      album_images: this.getImages(item.track.album.images),
       trackName: item.track.name,
-      artists: item.track.artists,
+      artists: this.getArtistNames(item.track.artists),
       songPath: item.track.preview_url,
-      duration: item.track.duration_ms,
-      index: index
+      duration: item.track.duration_ms
     }));
 
     this.setState({
       queue: queue,
+      currentTrack: queue[0],
       currentTrackIndex: 0
     })
-
-    let eventData = {
-      track: queue[0]
-    }
-
-    this.onPlayTrack(eventData)
   }
 
   onPlayAlbum(event) {
@@ -98,35 +78,32 @@ export default class MainPanel extends Component {
     let album_images = event.album_images
 
     let queue = event.data.map((item, index) => ({
-      album_images: album_images,
+      album_images: this.getImages(album_images),
       trackName: item.name,
-      artists: item.artists,
+      artists: this.getArtistNames(item.artists),
       songPath: item.preview_url,
-      duration: item.duration_ms,
-      index: index
+      duration: item.duration_ms
     }));
 
     this.setState({
       queue: queue,
+      currentTrack: queue[0],
       currentTrackIndex: 0
     })
-
-    let eventData = {
-      track: queue[0]
-    }
-
-    this.onPlayTrack(eventData)
   }
 
   onPlaySingleTrack(event) {
-
-    let eventData = {
-      track: event.track
+    if (this.state.queue.length < 1) {
+      let newQueue = [].push(event.track)
+      this.setState({
+        queue: newQueue
+      })
     }
 
-    //eventData.track.index = eventData.track.index -1;
-
-    this.onPlayTrack(eventData)
+    this.setState({
+      currentTrack: event.track,
+      currentTrackIndex: event.track.index
+    })
   }
 
   updateLikes(event) {
@@ -137,14 +114,9 @@ export default class MainPanel extends Component {
     if (this.state.currentTrackIndex > 0) {
       let newIndex = this.state.currentTrackIndex - 1
       this.setState({
+        currentTrack: this.state.queue[newIndex],
         currentTrackIndex: newIndex
       })
-
-      let eventData = {
-        track: this.state.queue[newIndex]
-      }
-
-      this.onPlayTrack(eventData);
     }
   }
 
@@ -152,14 +124,9 @@ export default class MainPanel extends Component {
     if (this.state.currentTrackIndex < this.state.queue.length) {
       let newIndex = this.state.currentTrackIndex + 1
       this.setState({
+        currentTrack: this.state.queue[newIndex],
         currentTrackIndex: newIndex
       })
-
-      let eventData = {
-        track: this.state.queue[newIndex]
-      }
-
-      this.onPlayTrack(eventData);
     }
   }
 

@@ -28,7 +28,7 @@ const SimpleTrackList = ({id, tracks, artists, images, currentTrackIndex}) => {
               artists={artists}
               albumName={''}
               duration={item.duration_ms}
-              album_id={''}
+              group_id={id}
               album_images={images}
               songPath={item.preview_url}
               active={isActive}

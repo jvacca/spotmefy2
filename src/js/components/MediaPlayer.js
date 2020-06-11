@@ -27,13 +27,13 @@ export default class MediaPlayer extends Component {
 
   render() {
     if (this.props.currentTrack !== null) {
-      
+      //console.log('*********', this.props.currentTrack.songPath)
       return (
         <div className="media-player">
           <NowPlaying 
-            albumImagePath={this.props.currentTrack.albumImage} 
-            song_title={this.props.currentTrack.songTitle}
-            artist_name={this.props.currentTrack.artistName}
+            albumImagePath={this.props.currentTrack.album_images} 
+            song_title={this.props.currentTrack.trackName}
+            artist_name={this.props.currentTrack.artists}
           />
 
           <Controls 
