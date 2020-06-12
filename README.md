@@ -9,4 +9,3 @@ ToDo:
 - Add responsive layouts to fit on mobile
 
 Bugs:
-- when clicking on next or previous track without playing an album or playlist will result in an error

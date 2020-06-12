@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import TrackItem from './TrackItem';
 import Model from '../model';
 
-const SimpleTrackList = ({id, tracks, artists, images, currentTrackIndex}) => {
+const SimpleTrackList = ({id, tracks, artists, images, currentTrackIndex, onPlayTrack}) => {
   return (
     <ol>
       <li className="header">
@@ -34,6 +34,7 @@ const SimpleTrackList = ({id, tracks, artists, images, currentTrackIndex}) => {
               songPath={item.preview_url}
               active={isActive}
               isAlbumView={true}
+              onPlayTrack = {onPlayTrack}
             />
           )
         })
@@ -47,6 +48,7 @@ export default class AlbumPanel extends Component {
     super(props);
 
     this.model = new Model();
+    this.onPlayTrack = this.onPlayTrack.bind(this)
     this.state = {
       data: null
     };
@@ -82,13 +84,23 @@ export default class AlbumPanel extends Component {
     }
   }
 
-  onPlay(tracks) {
+  onPlayAlbum(tracks) {
     let eventData={
       id: this.props.id,
-      tracks: tracks.items,
+      tracks: this.state.data.tracks.items,
       album_images: this.state.data.images
     }
     this.model.pubsub.emit('playAlbum', eventData);
+  }
+
+  onPlayTrack(index) {
+    let eventData={
+      id: this.props.id,
+      tracks: this.state.data.tracks.items,
+      album_images: this.state.data.images,
+      index: index
+    }
+    this.model.pubsub.emit('playTrack', eventData);
   }
 
   onLikeAlbum() {
@@ -110,7 +122,7 @@ export default class AlbumPanel extends Component {
             <h1>{name}</h1>
             <p>By <span className="hilight">{artists[0].name}</span></p>
             <p>{release_date} . {total_tracks} songs</p>
-            <a className="play_button" onClick={e => {this.onPlay(tracks)}}>PLAY</a><a onClick={e => this.onLikeAlbum()} className="likeAlbum">&hearts;</a>
+            <a className="play_button" onClick={e => {this.onPlayAlbum(tracks)}}>PLAY</a><a onClick={e => this.onLikeAlbum()} className="likeAlbum">&hearts;</a>
           </div>
           <SimpleTrackList
             id = {id}
@@ -118,6 +130,7 @@ export default class AlbumPanel extends Component {
             artists = {artists}
             images = {images}
             currentTrackIndex = {this.props.currentTrackIndex}
+            onPlayTrack = {this.onPlayTrack}
           />
         </div>
       );

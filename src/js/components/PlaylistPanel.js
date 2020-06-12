@@ -7,6 +7,7 @@ export default class PlaylistPanel extends Component {
     super(props);
 
     this.model = new Model();
+    this.onPlayTrack = this.onPlayTrack.bind(this)
     this.state = {
       data: null
     };
@@ -45,12 +46,21 @@ export default class PlaylistPanel extends Component {
     }
   }
 
-  onPlay(tracks) {
+  onPlayPlaylist(tracks) {
     let eventData={
       id: this.props.id,
-      tracks: tracks.items
+      tracks: this.state.data.tracks.items
     }
     this.model.pubsub.emit('playPlaylist', eventData);
+  }
+
+  onPlayTrack(index) {
+    let eventData={
+      id: this.props.id,
+      tracks: this.state.data.tracks.items,
+      index: index
+    }
+    this.model.pubsub.emit('playTrack', eventData);
   }
 
   render() {
@@ -64,12 +74,13 @@ export default class PlaylistPanel extends Component {
           <h1>{name}</h1>
           <p>By <span className="hilight">{owner.display_name}</span></p>
           <p>{tracks.items.length} songs</p>
-          <a className="play_button" onClick={e => {this.onPlay(tracks)}}>PLAY</a>
+          <a className="play_button" onClick={e => {this.onPlayPlaylist(tracks)}}>PLAY</a>
         </div>
         <TrackList
           id= {id}
           tracks= {tracks.items}
           currentTrackIndex={this.props.currentTrackIndex}
+          onPlayTrack = {this.onPlayTrack}
         />
       </div>
     )} else {

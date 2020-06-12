@@ -43,6 +43,7 @@ export default class TrackItem extends Component {
   }
 
   playTrack(count) {
+    /*
     let eventData={
      track: {
       group_id: this.props.group_id,
@@ -53,9 +54,9 @@ export default class TrackItem extends Component {
       duration: this.props.duration,
       index: count
      }
-    }
-
-    this.model.pubsub.emit('playTrack', eventData);
+    }*/
+    this.props.onPlayTrack(count)
+    //this.model.pubsub.emit('playTrack', eventData);
   }
 
   selectAlbum(e, id) {

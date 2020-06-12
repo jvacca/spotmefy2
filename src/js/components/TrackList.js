@@ -123,6 +123,7 @@ export default class TrackList extends Component {
                   songPath={item.track.preview_url}
                   active={isActive}
                   isAlbumView={false}
+                  onPlayTrack = {this.props.onPlayTrack}
                 />)
             }) }
         </ol>    

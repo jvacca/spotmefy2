@@ -54,17 +54,31 @@ export default class MainPanel extends Component {
     return artistArr.join(', ');
   }
 
+  sanitizeTracks(which, tracks, album_images) {
+    if (which === 'album') {
+      return tracks.map((item, index) => ({
+          album_images: this.getImages(album_images),
+          trackName: item.name,
+          artists: this.getArtistNames(item.artists),
+          songPath: item.preview_url,
+          duration: item.duration_ms
+        }));
+    } else {
+      return tracks.map((item, index) => ({
+        album_images: this.getImages(item.track.album.images),
+        trackName: item.track.name,
+        artists: this.getArtistNames(item.track.artists),
+        songPath: item.track.preview_url,
+        duration: item.track.duration_ms
+      }));
+    }
+
+  }
+
   onPlayPlaylist(event) {
     //console.log("updating queue with: ", event.data);
 
-    let tracks = event.tracks.map((item, index) => ({
-      album_images: this.getImages(item.track.album.images),
-      trackName: item.track.name,
-      artists: this.getArtistNames(item.track.artists),
-      songPath: item.track.preview_url,
-      duration: item.track.duration_ms
-    }));
-
+    let tracks = this.sanitizeTracks('playlist', event.tracks);
     let queue = {
       id: event.id,
       tracks: tracks
@@ -80,16 +94,7 @@ export default class MainPanel extends Component {
   onPlayAlbum(event) {
     //console.log("updating queue with: ", event.data);
 
-    let album_images = event.album_images
-
-    let tracks = event.tracks.map((item, index) => ({
-      album_images: this.getImages(album_images),
-      trackName: item.name,
-      artists: this.getArtistNames(item.artists),
-      songPath: item.preview_url,
-      duration: item.duration_ms
-    }));
-
+    let tracks = this.sanitizeTracks('album', event.tracks, event.album_images);
     let queue = {
       id: event.id,
       tracks: tracks
@@ -103,20 +108,24 @@ export default class MainPanel extends Component {
   }
 
   onPlaySingleTrack(event) {
-    if ((this.state.queue && this.state.queue.tracks.length < 1) || (this.state.queue && this.state.queue.id !== event.track.group_id)) {
-      let newQueue = {
-        id: event.track.group_id,
-        tracks: [].push(event.track)
+    if (!this.state.queue || (this.state.queue && this.state.queue.id !== event.id)) {
+      let tracks = this.sanitizeTracks(this.state.panel, event.tracks, (typeof event.album_images !== 'undefined')? event.album_images : null);
+      
+      let queue = {
+        id: event.id,
+        tracks: tracks,
       }
       this.setState({
-        queue: newQueue
+        queue: queue,
+        currentTrack: queue.tracks[event.index],
+        currentTrackIndex: event.index
+      })
+    } else {
+      this.setState({
+        currentTrack: this.state.queue.tracks[event.index],
+        currentTrackIndex: event.index
       })
     }
-
-    this.setState({
-      currentTrack: event.track,
-      currentTrackIndex: event.track.index
-    })
   }
 
   updateLikes(event) {
