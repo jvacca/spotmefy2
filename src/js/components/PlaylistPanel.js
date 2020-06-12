@@ -47,15 +47,15 @@ export default class PlaylistPanel extends Component {
 
   onPlay(tracks) {
     let eventData={
-      data: tracks.items
+      id: this.props.id,
+      tracks: tracks.items
     }
     this.model.pubsub.emit('playPlaylist', eventData);
-
   }
 
   render() {
     if (this.state.data !== null) { 
-      let {name, tracks, images, owner} = this.state.data;
+      let {id, name, tracks, images, owner} = this.state.data;
       return (
       <div className="playlist-panel">
         <div className="album-cover"><img src={this.getImages(images)} /></div>
@@ -67,7 +67,7 @@ export default class PlaylistPanel extends Component {
           <a className="play_button" onClick={e => {this.onPlay(tracks)}}>PLAY</a>
         </div>
         <TrackList
-          id= {this.state.data.id}
+          id= {id}
           tracks= {tracks.items}
           currentTrackIndex={this.props.currentTrackIndex}
         />

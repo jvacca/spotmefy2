@@ -15,7 +15,7 @@ export default class MainPanel extends Component {
     this.state = {
       currentTrack: null,
       currentTrackIndex: -1,
-      queue: [],
+      queue: null,
       panel: null,
       id: -1
     }
@@ -57,7 +57,7 @@ export default class MainPanel extends Component {
   onPlayPlaylist(event) {
     //console.log("updating queue with: ", event.data);
 
-    let queue = event.data.map((item, index) => ({
+    let tracks = event.tracks.map((item, index) => ({
       album_images: this.getImages(item.track.album.images),
       trackName: item.track.name,
       artists: this.getArtistNames(item.track.artists),
@@ -65,9 +65,14 @@ export default class MainPanel extends Component {
       duration: item.track.duration_ms
     }));
 
+    let queue = {
+      id: event.id,
+      tracks: tracks
+    }
+
     this.setState({
       queue: queue,
-      currentTrack: queue[0],
+      currentTrack: queue.tracks[0],
       currentTrackIndex: 0
     })
   }
@@ -77,7 +82,7 @@ export default class MainPanel extends Component {
 
     let album_images = event.album_images
 
-    let queue = event.data.map((item, index) => ({
+    let tracks = event.tracks.map((item, index) => ({
       album_images: this.getImages(album_images),
       trackName: item.name,
       artists: this.getArtistNames(item.artists),
@@ -85,16 +90,24 @@ export default class MainPanel extends Component {
       duration: item.duration_ms
     }));
 
+    let queue = {
+      id: event.id,
+      tracks: tracks
+    }
+
     this.setState({
       queue: queue,
-      currentTrack: queue[0],
+      currentTrack: queue.tracks[0],
       currentTrackIndex: 0
     })
   }
 
   onPlaySingleTrack(event) {
-    if (this.state.queue.length < 1) {
-      let newQueue = [].push(event.track)
+    if ((this.state.queue && this.state.queue.tracks.length < 1) || (this.state.queue && this.state.queue.id !== event.track.group_id)) {
+      let newQueue = {
+        id: event.track.group_id,
+        tracks: [].push(event.track)
+      }
       this.setState({
         queue: newQueue
       })
@@ -111,20 +124,22 @@ export default class MainPanel extends Component {
   }
 
   onPrevTrack(event) {
-    if (this.state.currentTrackIndex > 0) {
+    if (!this.state.queue) return;
+    if (this.state.queue.tracks.length > 1 && this.state.currentTrackIndex > 0) {
       let newIndex = this.state.currentTrackIndex - 1
       this.setState({
-        currentTrack: this.state.queue[newIndex],
+        currentTrack: this.state.queue.tracks[newIndex],
         currentTrackIndex: newIndex
       })
     }
   }
 
   onNextTrack(event) {
-    if (this.state.currentTrackIndex < this.state.queue.length) {
+    if (!this.state.queue) return;
+    if (this.state.queue.tracks.length > 1 && this.state.currentTrackIndex < this.state.queue.tracks.length-1) {
       let newIndex = this.state.currentTrackIndex + 1
       this.setState({
-        currentTrack: this.state.queue[newIndex],
+        currentTrack: this.state.queue.tracks[newIndex],
         currentTrackIndex: newIndex
       })
     }

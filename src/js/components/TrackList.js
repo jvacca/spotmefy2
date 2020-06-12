@@ -107,7 +107,6 @@ export default class TrackList extends Component {
             </li>
             { this.state.tracks && this.state.tracks.map( (item, index) => {
               let isActive = (index === this.props.currentTrackIndex)? true: false;
-              let albumImage;
               
               return (
                 <TrackItem
@@ -118,6 +117,7 @@ export default class TrackList extends Component {
                   artists={item.track.artists}
                   albumName={item.track.album.name}
                   duration={item.track.duration_ms}
+                  group_id={this.props.id}
                   album_id={item.track.album.id}
                   album_images={item.track.album.images}
                   songPath={item.track.preview_url}

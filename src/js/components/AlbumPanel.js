@@ -29,6 +29,7 @@ const SimpleTrackList = ({id, tracks, artists, images, currentTrackIndex}) => {
               albumName={''}
               duration={item.duration_ms}
               group_id={id}
+              album_id={''}
               album_images={images}
               songPath={item.preview_url}
               active={isActive}
@@ -83,9 +84,10 @@ export default class AlbumPanel extends Component {
 
   onPlay(tracks) {
     let eventData={
-      data: tracks.items
+      id: this.props.id,
+      tracks: tracks.items,
+      album_images: this.state.data.images
     }
-    eventData.album_images = this.state.data.images;
     this.model.pubsub.emit('playAlbum', eventData);
   }
 

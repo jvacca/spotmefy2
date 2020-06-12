@@ -45,6 +45,7 @@ export default class TrackItem extends Component {
   playTrack(count) {
     let eventData={
      track: {
+      group_id: this.props.group_id,
       album_images: this.getImages(this.props.album_images),
       trackName: this.props.trackName,
       artists: this.getArtistNames(this.props.artists),
@@ -87,7 +88,7 @@ export default class TrackItem extends Component {
 
   render() {
     let {index, trackName, trackData, artists, albumName, duration, active, album_id} = this.props;
-    let album_link = "" + album_id;
+    
     return (
       <li className={(active === true)? 'active': ''}>
         <p>
