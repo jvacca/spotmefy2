@@ -80,11 +80,16 @@ export default class TrackItem extends Component {
     this.model.pubsub.emit('selectArtist', eventData);
   }
 
-  onLikeSong(track) {
+  onLikeSong(id) {
+    /*
     let eventData={
       data: track
     }
-    this.model.pubsub.emit('likeSong', eventData);
+    this.model.pubsub.emit('likeSong', eventData);*/
+
+    this.model.save('getPutSavedTracks', id, data => {
+      console.log('********SAVED', data)
+    })
   }
 
   render() {
@@ -94,7 +99,7 @@ export default class TrackItem extends Component {
       <li className={(active === true)? 'active': ''}>
         <p>
           <span className="index">{index}</span>
-          <span onClick={e => this.onLikeSong(trackData)} className="like">&hearts;</span>
+          <span onClick={e => this.onLikeSong(trackData.id)} className="like">&hearts;</span>
           <span onClick={(e) => this.playTrack(index-1)} className="song-name">{trackName}</span>
           {(this.props.isAlbumView === false)? <span className="artist-name">{this.getArtistLinks(artists)}</span> : ''}
           {(this.props.isAlbumView === false)? <span className="album-name"><a href="#" onClick={e => {this.selectAlbum(e, album_id)}}>{albumName}</a></span> : ''}

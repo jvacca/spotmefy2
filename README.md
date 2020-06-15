@@ -2,7 +2,7 @@ Readme soon to come
 
 ToDo:
 - move getImages and getArtistNames to model
-- Add recently played, liked songs, albums to sidebar and save liked stuff
+- Add recently played to sidebar
 - add artist profiles tab
 - Add search functionality
 - Add lyrics feauture by adding API for Genius

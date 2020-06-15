@@ -1,4 +1,4 @@
-.artist-panel {
+.artist-panel, .saved-album-panel {
   padding: 2% 3%;
 
   .artist-image, .heading {
@@ -58,4 +58,14 @@
       }
     }
   }
+}
+
+.saved-album-panel {
+  li p {
+    line-height: 1em;
+  }
+  
+ .heading {
+   height: auto;
+ }
 }

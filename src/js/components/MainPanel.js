@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import Heading from './Heading';
 import Sidebar from './Sidebar';
-import Playlist from './PlaylistPanel';
-import ArtistDisplay from './ArtistPanel';
-import AlbumTracksView from './AlbumPanel';
+import PlaylistPanel from './PlaylistPanel';
+import ArtistPanel from './ArtistPanel';
+import AlbumPanel from './AlbumPanel';
+import SavedAlbumsPanel from './SavedAlbumsPanel';
+import SavedTracksPanel from './SavedTracksPanel';
 import MediaPlayer from './MediaPlayer';
 import Model from '../model';
 
@@ -34,7 +36,7 @@ export default class MainPanel extends Component {
 
     this.setState({
       panel: event.panel,
-      id: event.id
+      id: event.id || -1
     })
   }
 
@@ -159,11 +161,18 @@ export default class MainPanel extends Component {
 
     switch(this.state.panel) {
       case 'playlist':
-        return <Playlist id={this.state.id} currentTrackIndex={this.state.currentTrackIndex} />
+        return <PlaylistPanel id={this.state.id} currentTrackIndex={this.state.currentTrackIndex} />
       case 'artist':
-        return <ArtistDisplay id={this.state.id} />
+        return <ArtistPanel id={this.state.id} />
       case 'album':
-        return <AlbumTracksView id={this.state.id} currentTrackIndex={this.state.currentTrackIndex} />
+        return <AlbumPanel id={this.state.id} currentTrackIndex={this.state.currentTrackIndex} />
+      case 'savedAlbums':
+        return <SavedAlbumsPanel />
+      case 'savedTracks':
+        return <SavedTracksPanel currentTrackIndex={this.state.currentTrackIndex} />
+        case 'recentlyPlayed':
+          // create recently played first
+          return;
       default:
         return <Heading />
     }
@@ -173,9 +182,13 @@ export default class MainPanel extends Component {
     this.model.pubsub.on('selectAlbum', this.updateCurrentPanel, this);
     this.model.pubsub.on('selectArtist', this.updateCurrentPanel, this);
     this.model.pubsub.on('selectPlaylist', this.updateCurrentPanel, this);
+    this.model.pubsub.on('selectSavedAlbums', this.updateCurrentPanel, this);
+    this.model.pubsub.on('selectSavedTracks', this.updateCurrentPanel, this);
+    this.model.pubsub.on('recentlyPlayed', this.updateCurrentPanel, this);
     this.model.pubsub.on('playTrack', this.onPlaySingleTrack, this);
     this.model.pubsub.on('playAlbum', this.onPlayAlbum, this);
     this.model.pubsub.on('playPlaylist', this.onPlayPlaylist, this);
+    this.model.pubsub.on('playSavedTracks', this.onPlayPlaylist, this);
     this.model.pubsub.on('likeSong', this.updateLikes, this);
     this.model.pubsub.on('likeAlbum', this.updateLikes, this);
     this.model.pubsub.on('nextSong', this.onNextTrack, this);

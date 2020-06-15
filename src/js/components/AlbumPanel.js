@@ -103,12 +103,18 @@ export default class AlbumPanel extends Component {
     this.model.pubsub.emit('playTrack', eventData);
   }
 
-  onLikeAlbum() {
+  onLikeAlbum(id) {
     console.log("like album ", this.state.data);
+
+    /*
     let eventData={
       data: this.state.data
     }
-    this.model.pubsub.emit('likeAlbum', eventData);
+    this.model.pubsub.emit('likeAlbum', eventData);*/
+
+    this.model.save('getPutSavedAlbums', id, data => {
+      console.log('********SAVED', data)
+    })
   }
 
   render() {
@@ -122,7 +128,7 @@ export default class AlbumPanel extends Component {
             <h1>{name}</h1>
             <p>By <span className="hilight">{artists[0].name}</span></p>
             <p>{release_date} . {total_tracks} songs</p>
-            <a className="play_button" onClick={e => {this.onPlayAlbum(tracks)}}>PLAY</a><a onClick={e => this.onLikeAlbum()} className="likeAlbum">&hearts;</a>
+            <a className="play_button" onClick={e => {this.onPlayAlbum(tracks)}}>PLAY</a><a onClick={e => this.onLikeAlbum(id)} className="likeAlbum">&hearts;</a>
           </div>
           <SimpleTrackList
             id = {id}

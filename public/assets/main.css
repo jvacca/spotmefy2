@@ -1,23 +1,23 @@
-.album-panel, .playlist-panel {
+.album-panel, .saved-tracks-panel, .playlist-panel {
   padding: 2% 3%; }
-  .album-panel .album-cover, .album-panel .heading, .playlist-panel .album-cover, .playlist-panel .heading {
+  .album-panel .album-cover, .album-panel .heading, .saved-tracks-panel .album-cover, .saved-tracks-panel .heading, .playlist-panel .album-cover, .playlist-panel .heading {
     display: inline-block;
     vertical-align: top; }
-  .album-panel .album-cover, .playlist-panel .album-cover {
+  .album-panel .album-cover, .saved-tracks-panel .album-cover, .playlist-panel .album-cover {
     max-width: 200px; }
-  .album-panel .album-cover img, .playlist-panel .album-cover img {
+  .album-panel .album-cover img, .saved-tracks-panel .album-cover img, .playlist-panel .album-cover img {
     width: 100%; }
-  .album-panel .heading, .playlist-panel .heading {
+  .album-panel .heading, .saved-tracks-panel .heading, .playlist-panel .heading {
     margin-top: 20px;
     padding-left: 20px; }
-    .album-panel .heading h1, .playlist-panel .heading h1 {
+    .album-panel .heading h1, .saved-tracks-panel .heading h1, .playlist-panel .heading h1 {
       color: #FFF; }
-    .album-panel .heading h1, .playlist-panel .heading h1 {
+    .album-panel .heading h1, .saved-tracks-panel .heading h1, .playlist-panel .heading h1 {
       font-size: 3em; }
-    .album-panel .heading p, .playlist-panel .heading p {
+    .album-panel .heading p, .saved-tracks-panel .heading p, .playlist-panel .heading p {
       font-size: 1em;
       line-height: 2em; }
-    .album-panel .heading .play_button, .playlist-panel .heading .play_button {
+    .album-panel .heading .play_button, .saved-tracks-panel .heading .play_button, .playlist-panel .heading .play_button {
       cursor: pointer;
       display: inline-block;
       background-color: #2ab859;
@@ -30,10 +30,10 @@
       border-radius: 20px;
       margin-top: 10px;
       vertical-align: middle; }
-    .album-panel .heading .play_button:hover, .playlist-panel .heading .play_button:hover {
+    .album-panel .heading .play_button:hover, .saved-tracks-panel .heading .play_button:hover, .playlist-panel .heading .play_button:hover {
       background-color: #2fd566;
       border: 1px solid #2fd566; }
-    .album-panel .heading .likeAlbum, .playlist-panel .heading .likeAlbum {
+    .album-panel .heading .likeAlbum, .saved-tracks-panel .heading .likeAlbum, .playlist-panel .heading .likeAlbum {
       cursor: pointer;
       display: inline-block;
       font-size: 1em;
@@ -45,89 +45,92 @@
       border: 1px solid #AAA;
       border-radius: 50%;
       margin-left: 20px; }
-    .album-panel .heading .likeAlbum:hover, .playlist-panel .heading .likeAlbum:hover {
+    .album-panel .heading .likeAlbum:hover, .saved-tracks-panel .heading .likeAlbum:hover, .playlist-panel .heading .likeAlbum:hover {
       color: #fff;
       border: 1px solid #fff; }
-  .album-panel .filter, .playlist-panel .filter {
+  .album-panel .filter, .saved-tracks-panel .filter, .playlist-panel .filter {
     margin-top: 20px; }
-    .album-panel .filter input[type="text"], .playlist-panel .filter input[type="text"] {
+    .album-panel .filter input[type="text"], .saved-tracks-panel .filter input[type="text"], .playlist-panel .filter input[type="text"] {
       background-color: #333;
       border: none;
       outline: none;
       padding: 5px;
       color: #fff;
       font-size: 1em; }
-  .album-panel ol, .playlist-panel ol {
+  .album-panel ol, .saved-tracks-panel ol, .playlist-panel ol {
     padding: 0;
     border-top: 1px solid #222; }
-  .album-panel li, .playlist-panel li {
+  .album-panel li, .saved-tracks-panel li, .playlist-panel li {
     border-bottom: 1px solid #222; }
-    .album-panel li p, .playlist-panel li p {
+    .album-panel li p, .saved-tracks-panel li p, .playlist-panel li p {
       line-height: 40px; }
-    .album-panel li span, .playlist-panel li span {
+    .album-panel li span, .saved-tracks-panel li span, .playlist-panel li span {
       display: inline-block;
       vertical-align: top; }
-    .album-panel li .index, .playlist-panel li .index {
+    .album-panel li .index, .saved-tracks-panel li .index, .playlist-panel li .index {
       padding-left: 10px;
       width: 30px; }
-    .album-panel li .like, .playlist-panel li .like {
+    .album-panel li .like, .saved-tracks-panel li .like, .playlist-panel li .like {
       cursor: pointer;
       font-size: 1.5em;
       width: 30px; }
-    .album-panel li .like:hover, .playlist-panel li .like:hover {
+    .album-panel li .like:hover, .saved-tracks-panel li .like:hover, .playlist-panel li .like:hover {
       color: #fff; }
-    .album-panel li .song-name, .playlist-panel li .song-name {
+    .album-panel li .song-name, .saved-tracks-panel li .song-name, .playlist-panel li .song-name {
       cursor: pointer;
       color: #fff;
       width: 40%; }
-    .album-panel li .artist-name, .playlist-panel li .artist-name {
+    .album-panel li .artist-name, .saved-tracks-panel li .artist-name, .playlist-panel li .artist-name {
       color: #fff;
       width: 20%; }
-      .album-panel li .artist-name a, .playlist-panel li .artist-name a {
+      .album-panel li .artist-name a, .saved-tracks-panel li .artist-name a, .playlist-panel li .artist-name a {
         color: #fff;
         text-decoration: none; }
-      .album-panel li .artist-name a:hover, .playlist-panel li .artist-name a:hover {
+      .album-panel li .artist-name a:hover, .saved-tracks-panel li .artist-name a:hover, .playlist-panel li .artist-name a:hover {
         text-decoration: underline; }
-    .album-panel li .album-name, .playlist-panel li .album-name {
+    .album-panel li .album-name, .saved-tracks-panel li .album-name, .playlist-panel li .album-name {
       width: 20%; }
-      .album-panel li .album-name a, .playlist-panel li .album-name a {
+      .album-panel li .album-name a, .saved-tracks-panel li .album-name a, .playlist-panel li .album-name a {
         color: #fff;
         text-decoration: none; }
-      .album-panel li .album-name a:hover, .playlist-panel li .album-name a:hover {
+      .album-panel li .album-name a:hover, .saved-tracks-panel li .album-name a:hover, .playlist-panel li .album-name a:hover {
         text-decoration: underline; }
-    .album-panel li .duration, .playlist-panel li .duration {
+    .album-panel li .duration, .saved-tracks-panel li .duration, .playlist-panel li .duration {
       box-sizing: border-box;
       width: 10%;
       text-align: right;
       padding-right: 10px; }
-  .album-panel li.header, .playlist-panel li.header {
+  .album-panel li.header, .saved-tracks-panel li.header, .playlist-panel li.header {
     font-size: .80em;
     letter-spacing: 1px;
     cursor: pointer; }
-    .album-panel li.header .song-name, .playlist-panel li.header .song-name {
+    .album-panel li.header .song-name, .saved-tracks-panel li.header .song-name, .playlist-panel li.header .song-name {
       color: #AAA;
       width: 40%; }
     .album-panel li.header .artist-name,
-    .album-panel li.header .album-name, .playlist-panel li.header .artist-name,
+    .album-panel li.header .album-name, .saved-tracks-panel li.header .artist-name,
+    .saved-tracks-panel li.header .album-name, .playlist-panel li.header .artist-name,
     .playlist-panel li.header .album-name {
       color: #AAA; }
-    .album-panel li.header .duration, .playlist-panel li.header .duration {
+    .album-panel li.header .duration, .saved-tracks-panel li.header .duration, .playlist-panel li.header .duration {
       box-sizing: border-box;
       width: 10%;
       text-align: right;
       padding-right: 10px; }
-    .album-panel li.header span:hover, .playlist-panel li.header span:hover {
+    .album-panel li.header span:hover, .saved-tracks-panel li.header span:hover, .playlist-panel li.header span:hover {
       color: #fff; }
-  .album-panel li.header:hover, .playlist-panel li.header:hover {
+  .album-panel li.header:hover, .saved-tracks-panel li.header:hover, .playlist-panel li.header:hover {
     background-color: transparent; }
-  .album-panel li:hover, .playlist-panel li:hover {
+  .album-panel li:hover, .saved-tracks-panel li:hover, .playlist-panel li:hover {
     background-color: #222; }
-  .album-panel li.active, .playlist-panel li.active {
+  .album-panel li.active, .saved-tracks-panel li.active, .playlist-panel li.active {
     background-color: #333;
     color: #2fd566; }
     .album-panel li.active .song-name,
     .album-panel li.active .artist-name a,
-    .album-panel li.active .album-name a, .playlist-panel li.active .song-name,
+    .album-panel li.active .album-name a, .saved-tracks-panel li.active .song-name,
+    .saved-tracks-panel li.active .artist-name a,
+    .saved-tracks-panel li.active .album-name a, .playlist-panel li.active .song-name,
     .playlist-panel li.active .artist-name a,
     .playlist-panel li.active .album-name a {
       color: #2fd566; }
@@ -142,30 +145,30 @@
   color: #AAA;
   width: 85%;
 }*/
-.artist-panel {
+.artist-panel, .saved-album-panel {
   padding: 2% 3%; }
-  .artist-panel .artist-image, .artist-panel .heading {
+  .artist-panel .artist-image, .artist-panel .heading, .saved-album-panel .artist-image, .saved-album-panel .heading {
     display: inline-block;
     vertical-align: top; }
-  .artist-panel .heading {
+  .artist-panel .heading, .saved-album-panel .heading {
     box-sizing: border-box;
     width: 50%;
     padding-left: 20px;
     padding-top: 30px;
     height: 350px; }
-    .artist-panel .heading p {
+    .artist-panel .heading p, .saved-album-panel .heading p {
       font-size: 1em; }
-    .artist-panel .heading h1 {
+    .artist-panel .heading h1, .saved-album-panel .heading h1 {
       color: #FFF;
       font-size: 3em; }
-  .artist-panel .artist-image {
+  .artist-panel .artist-image, .saved-album-panel .artist-image {
     width: 50%;
     max-width: 500px; }
-    .artist-panel .artist-image img {
+    .artist-panel .artist-image img, .saved-album-panel .artist-image img {
       width: 100%; }
-  .artist-panel ul {
+  .artist-panel ul, .saved-album-panel ul {
     margin-top: 20px; }
-    .artist-panel ul li {
+    .artist-panel ul li, .saved-album-panel ul li {
       box-sizing: border-box;
       display: inline-block;
       vertical-align: top;
@@ -173,13 +176,19 @@
       /*width: 33%;*/
       padding: 1% 1%;
       margin-bottom: 20px; }
-      .artist-panel ul li img {
+      .artist-panel ul li img, .saved-album-panel ul li img {
         width: 100%; }
-      .artist-panel ul li p {
+      .artist-panel ul li p, .saved-album-panel ul li p {
         padding: 2%; }
-      .artist-panel ul li a {
+      .artist-panel ul li a, .saved-album-panel ul li a {
         color: #CCC;
         text-decoration: none; }
+
+.saved-album-panel li p {
+  line-height: 1em; }
+
+.saved-album-panel .heading {
+  height: auto; }
 
 .media-player {
   background-color: #282828;

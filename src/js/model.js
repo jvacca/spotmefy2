@@ -37,12 +37,18 @@ export default class Model {
       },
       'track':{
         uri: 'https://api.spotify.com/v1/tracks/'
+      },
+      'getPutSavedAlbums':{
+          uri: 'https://api.spotify.com/v1/me/albums'
+      },
+      'getPutSavedTracks':{
+          uri: 'https://api.spotify.com/v1/me/tracks'
       }
     }
   }
 
   load(which, id, resolve) {
-    let url = (id !== null)? this.endpoints[which].uri + id : this.endpoints[which].uri;
+    let url = (id !== null && typeof id !== 'undefined')? this.endpoints[which].uri + id : this.endpoints[which].uri;
     if (which === 'artistAlbums') url += '/albums?market=US&include_groups=album,single';
 
     fetch(url, {
@@ -66,6 +72,35 @@ export default class Model {
         console.error('Error:', error);
     })
     
+  }
+
+  save(which, id, resolve) {
+    let url = this.endpoints[which].uri + '?ids=' + id;
+
+    fetch(url, {
+      method: 'PUT',
+      cache: 'no-cache',
+      headers: {
+          'Authorization': 'Bearer ' + this.access_token
+        }
+      })
+      .then((res) => res.json())
+      .then(
+        (data) => {
+          console.log("Success: Call to " + url + " succeded", data);
+          resolve(data);
+        },
+        (error) => {
+          console.error("Fail: Call to " + url + " ended in an error", error);
+        })
+      .catch((error) => {
+        console.error('Error:', error);
+    })
+
+  }
+
+  getRecentlyPlayed() {
+    // TODO: create local storage vars for recently played
   }
   
 }

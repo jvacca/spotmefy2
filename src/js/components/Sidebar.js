@@ -42,13 +42,34 @@ export default class Sidebar extends Component {
     this.model.pubsub.emit('selectPlaylist', eventdata)
   }
 
+  selectLink(e, which) {
+    e.preventDefault();
+
+    if (which === 'likedAlbums') {
+      let eventdata={
+        panel: 'savedAlbums'
+      }
+      this.model.pubsub.emit('selectSavedAlbums', eventdata)
+    } else if (which === 'likedSongs') {
+      let eventdata={
+        panel: 'savedTracks'
+      }
+      this.model.pubsub.emit('selectSavedTracks', eventdata)
+    } else if (which === 'recentlyPlayed') {
+      let eventdata={
+        panel: 'recentlyPlayed'
+      }
+      this.model.pubsub.emit('selectRecentlyPlayed', eventdata)
+    }
+  }
+
   render() {
     return (
       <div className="side-panel">
         <p>YOUR LIBRARY</p>
         <ul>
-          <li><a id="recent" href="#">Recently Played</a></li>
-          <li><a id="songs" href="#">Liked Songs</a></li>
+          <li><a id="recent" href="#" onClick={(e) => { this.selectLink(e, 'likedAlbums') }}>Liked Albums</a></li>
+          <li><a id="songs" href="#" onClick={(e) => { this.selectLink(e, 'likedSongs') }}>Liked Songs</a></li>
         </ul>
         <p>PLAYLISTS</p>
         <ul className="playlist-container">
