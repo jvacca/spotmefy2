@@ -2,7 +2,8 @@ import React, { Component } from "react";
 import TrackItem from './TrackItem';
 import Model from '../model';
 
-const SimpleTrackList = ({id, tracks, artists, images, currentTrackIndex, onPlayTrack}) => {
+const SimpleTrackList = ({id, tracks, artists, images, currentTrackIndex, onPlayTrack, selectedTrackId}) => {
+
   return (
     <ol>
       <li className="header">
@@ -17,7 +18,7 @@ const SimpleTrackList = ({id, tracks, artists, images, currentTrackIndex, onPlay
       </li>
       {
         tracks.items.map( (item, index) => {
-          let isActive = (index === currentTrackIndex)? true: false;
+          let isActive = (currentTrackIndex === index)
 
           return (
             <TrackItem
@@ -59,6 +60,15 @@ export default class AlbumPanel extends Component {
       //console.log('data: ', data);
       this.setState({
         data: data
+      }, () => {
+        if (this.props.track !== -1) {
+          let sindex;
+          let search_index = data.tracks.items.map((item, index) => {
+            if (item.id === this.props.track) sindex = index
+          });
+          console.log("found index ", sindex)
+          if (sindex !== -1) this.onPlayTrack(sindex);
+        }
       });
     });
   }
@@ -106,12 +116,6 @@ export default class AlbumPanel extends Component {
   onLikeAlbum(id) {
     console.log("like album ", this.state.data);
 
-    /*
-    let eventData={
-      data: this.state.data
-    }
-    this.model.pubsub.emit('likeAlbum', eventData);*/
-
     this.model.save('getPutSavedAlbums', id, data => {
       console.log('********SAVED', data)
     })
@@ -119,7 +123,8 @@ export default class AlbumPanel extends Component {
 
   render() {
     if (this.state.data !== null) { 
-      let {id, images, name, artists, tracks, release_date, total_tracks} = this.state.data
+      let {id, images, name, artists, tracks, release_date, total_tracks} = this.state.data;
+      
       return (
         <div className="album-panel">
           <div className="album-cover"><img src={this.getImages(images)} /></div>

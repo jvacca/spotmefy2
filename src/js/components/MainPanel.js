@@ -6,6 +6,7 @@ import ArtistPanel from './ArtistPanel';
 import AlbumPanel from './AlbumPanel';
 import SavedAlbumsPanel from './SavedAlbumsPanel';
 import SavedTracksPanel from './SavedTracksPanel';
+import Search from './Search';
 import MediaPlayer from './MediaPlayer';
 import Model from '../model';
 
@@ -15,13 +16,16 @@ export default class MainPanel extends Component {
 
     this.model = new Model();
     this.state = {
+      searchString: '',
+      query: '',
       currentTrack: null,
       currentTrackIndex: -1,
+      currentTrackid: -1,
       queue: null,
       panel: null,
       id: -1
     }
-
+    this.onSearch = this.onSearch.bind(this);
     this.onNextTrack = this.onNextTrack.bind(this);
     this.onPrevTrack = this.onPrevTrack.bind(this);
   }
@@ -29,14 +33,16 @@ export default class MainPanel extends Component {
   updateCurrentPanel(event) {
     //console.log("event ", event.panel, event.id)
     if (this.state.panel !== event.panel || this.state.id !== event.id) {
+      let index = (event.track_index)? event.track_index : -1
       this.setState({
-        currentTrackIndex: -1
+        currentTrackIndex: index
       });
     }
 
     this.setState({
       panel: event.panel,
-      id: event.id || -1
+      id: event.id || -1,
+      currentTrackid: event.track_id || -1
     })
   }
 
@@ -130,10 +136,6 @@ export default class MainPanel extends Component {
     }
   }
 
-  updateLikes(event) {
-
-  }
-
   onPrevTrack(event) {
     if (!this.state.queue) return;
     if (this.state.queue.tracks.length > 1 && this.state.currentTrackIndex > 0) {
@@ -165,14 +167,16 @@ export default class MainPanel extends Component {
       case 'artist':
         return <ArtistPanel id={this.state.id} />
       case 'album':
-        return <AlbumPanel id={this.state.id} currentTrackIndex={this.state.currentTrackIndex} />
+        return <AlbumPanel id={this.state.id} track={this.state.currentTrackid} currentTrackIndex={this.state.currentTrackIndex} />
       case 'savedAlbums':
         return <SavedAlbumsPanel />
       case 'savedTracks':
         return <SavedTracksPanel currentTrackIndex={this.state.currentTrackIndex} />
-        case 'recentlyPlayed':
-          // create recently played first
-          return;
+      case 'search':
+        return <Search query={this.state.query} />
+      case 'recentlyPlayed':
+        // create recently played first
+        return;
       default:
         return <Heading />
     }
@@ -189,8 +193,6 @@ export default class MainPanel extends Component {
     this.model.pubsub.on('playAlbum', this.onPlayAlbum, this);
     this.model.pubsub.on('playPlaylist', this.onPlayPlaylist, this);
     this.model.pubsub.on('playSavedTracks', this.onPlayPlaylist, this);
-    this.model.pubsub.on('likeSong', this.updateLikes, this);
-    this.model.pubsub.on('likeAlbum', this.updateLikes, this);
     this.model.pubsub.on('nextSong', this.onNextTrack, this);
     this.model.pubsub.on('prevSong', this.onPrevTrack, this);
   }
@@ -199,12 +201,23 @@ export default class MainPanel extends Component {
     //console.log("Updating ", this.state.currentTrackIndex)
   }
 
+  onSearch(e) {
+    this.setState({
+      panel: 'search',
+      id: -1,
+      query: e.target.value,
+      currentTrackIndex: -1,
+      searchString: e.target.value
+    })
+  }
+
   render() {
     return (
       <div className="app-container">
         <div id="frame" className="frame">
           <Sidebar />
           <div className="main-panel">
+          <div className="search">Search:&nbsp; <input type="text" id="search_string" onChange={this.onSearch} value={this.state.searchString} placeholder="Search"></input></div>
             { this.route(this.state.panel) }
           </div>
         </div>

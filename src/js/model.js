@@ -43,13 +43,17 @@ export default class Model {
       },
       'getPutSavedTracks':{
           uri: 'https://api.spotify.com/v1/me/tracks'
+      },
+      'search':{
+          uri: 'https://api.spotify.com/v1/search'
       }
     }
   }
 
   load(which, id, resolve) {
-    let url = (id !== null && typeof id !== 'undefined')? this.endpoints[which].uri + id : this.endpoints[which].uri;
+    let url = (id !== null && typeof id !== 'undefined' && which !== 'search')? this.endpoints[which].uri + id : this.endpoints[which].uri;
     if (which === 'artistAlbums') url += '/albums?market=US&include_groups=album,single';
+    if (which === 'search') url += '?q=' + encodeURI(id) + '&type=artist,album,track'
 
     fetch(url, {
       method: 'GET',

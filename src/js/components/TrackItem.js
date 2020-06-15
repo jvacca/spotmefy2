@@ -43,20 +43,7 @@ export default class TrackItem extends Component {
   }
 
   playTrack(count) {
-    /*
-    let eventData={
-     track: {
-      group_id: this.props.group_id,
-      album_images: this.getImages(this.props.album_images),
-      trackName: this.props.trackName,
-      artists: this.getArtistNames(this.props.artists),
-      songPath: this.props.songPath,
-      duration: this.props.duration,
-      index: count
-     }
-    }*/
     this.props.onPlayTrack(count)
-    //this.model.pubsub.emit('playTrack', eventData);
   }
 
   selectAlbum(e, id) {
@@ -81,12 +68,6 @@ export default class TrackItem extends Component {
   }
 
   onLikeSong(id) {
-    /*
-    let eventData={
-      data: track
-    }
-    this.model.pubsub.emit('likeSong', eventData);*/
-
     this.model.save('getPutSavedTracks', id, data => {
       console.log('********SAVED', data)
     })
