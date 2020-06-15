@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import TrackItem from './TrackItem';
+import TrackList from './TrackList';
 import Model from '../model';
 
 export default class SavedTracksPanel extends Component {
@@ -67,49 +67,19 @@ export default class SavedTracksPanel extends Component {
 
   render() {
     if (this.state.data !== null) { 
-      
+      let {id, items} = this.state.data;
       return (
       <div className="saved-tracks-panel">
         <div className="heading">
           <h1>Liked Songs</h1>
           <a className="play_button" onClick={this.onPlaySavedTracks}>PLAY</a>
         </div>
-        <ol>
-      <li className="header">
-        <p>
-          <span className="index">#</span>
-          <span className="like"></span>
-          <span className="song-name">TITLE</span>
-          <span className="artist-name"></span>
-          <span className="album-name"></span>
-          <span className="duration">DURATION</span>
-        </p>
-      </li>
-      {
-        this.state.data.items.map( (item, index) => {
-          let isActive = (index === this.props.currentTrackIndex)? true: false;
-
-          return (
-            <TrackItem
-              key={index}
-              index={index + 1}
-              trackName={item.track.name}
-              trackData={item}
-              artists={item.track.artists}
-              albumName={''}
-              duration={item.track.duration_ms}
-              group_id={''}
-              album_id={''}
-              album_images={item.track.album.images}
-              songPath={item.track.preview_url}
-              active={isActive}
-              isAlbumView={true}
-              onPlayTrack = {this.onPlayTrack}
-            />
-          )
-        })
-      }
-    </ol>
+        <TrackList
+          id= {id}
+          tracks= {items}
+          currentTrackIndex={this.props.currentTrackIndex}
+          onPlayTrack = {this.onPlayTrack}
+        />
       </div>
     )} else {
       return <div></div>
