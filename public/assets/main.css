@@ -237,8 +237,13 @@
     .media-player .controls-container .control-panel {
       width: 75%; }
       .media-player .controls-container .control-panel .controls {
-        max-width: 350px;
-        margin: 0 auto; }
+        /*max-width: 350px;*/
+        margin: 10px auto; }
+        .media-player .controls-container .control-panel .controls button, .media-player .controls-container .control-panel .controls audio {
+          display: inline-block;
+          vertical-align: middle; }
+        .media-player .controls-container .control-panel .controls audio {
+          width: 75%; }
     .media-player .controls-container .volume-panel {
       width: 25%; }
     .media-player .controls-container .progressbar-container {

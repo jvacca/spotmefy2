@@ -103,9 +103,15 @@ export default class Model {
 
   }
 
-  getRecentlyPlayed() {
-    // TODO: create local storage vars for recently played
+  addToRecentlyPlayed() {
+    
   }
+
+  retrieveRecenlyPlayed() {
+    
+  }
+
+
 
   getImages(album_images) {
     if (album_images.length > 0) {
@@ -121,6 +127,17 @@ export default class Model {
   getArtistNames(artists) {
     let artistArr = artists.map((artist, index) => ( artist.name ));
     return artistArr.join(', ');
+  }
+
+  formatDuration(ms) {
+    let time = ''
+    let minutes = Math.floor((ms/1000)/60);
+    let seconds = Math.floor((ms/1000)%60);
+    time += (minutes < 10)? '0': '';
+    time += minutes + ':';
+    time += (seconds < 10)? '0': '';
+    time += seconds;
+    return time;
   }
   
 }

@@ -9,4 +9,3 @@ ToDo:
 - Add responsive layouts to fit on mobile
 
 Bugs:
-- media player doesn't reset state when new track in selected

@@ -65,8 +65,17 @@
       width: 75%;
       
       .controls {
-        max-width: 350px;
-        margin: 0 auto;
+        /*max-width: 350px;*/
+        margin: 10px auto;
+
+        button, audio {
+          display: inline-block;
+          vertical-align: middle;
+        }
+
+        audio {
+          width: 75%;
+        }
       }
     }
 
