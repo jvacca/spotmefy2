@@ -28,24 +28,9 @@ export default class SavedTracksPanel extends Component {
     //console.log("Mounted!")
     this.loadTracks(this.props.id);
   }
-/*
-  componentDidUpdate(prevProps) {
-    //console.log("Updated!");
-    //if (prevProps.id !== this.props.id) {
-      this.loadTracks(this.props.id);
-    //}
-    
-  }*/
 
-  getImages(album_images) {
-    if (album_images.length > 0) {
-      if (album_images.length > 1) 
-        return album_images[1].url;
-      else
-        return album_images[0].url
-    } else {
-      return null;
-    }
+  componentDidUpdate(prevProps) {
+    
   }
 
   onPlaySavedTracks() {

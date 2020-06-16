@@ -33,17 +33,6 @@ export default class Search extends Component {
     }
   }
 
-  getImages(album_images) {
-    if (album_images.length > 0) {
-      if (album_images.length > 1) 
-        return album_images[1].url;
-      else
-        return album_images[0].url
-    } else {
-      return null;
-    }
-  }
-
   selectAlbum(e, album_id, track_id) {
     e.preventDefault();
     //console.log('select album ', id);
@@ -69,7 +58,7 @@ export default class Search extends Component {
                 return (
                   <li key={index}>
                     <a className="albumBox" href="#" onClick={e => {this.selectAlbum(e, item.album.id, item.id)}}>
-                      <img src={this.getImages(item.album.images)} />
+                      <img src={this.model.getImages(item.album.images)} />
                       <p className="hilight">{item.name}</p>
                       <p className="hilight">{item.album.name}</p> 
                       <p>{item.album.release_date}</p>

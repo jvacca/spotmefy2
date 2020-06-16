@@ -25,22 +25,9 @@ export default class SavedAlbumsPanel extends Component {
   componentDidMount() {
     this.loadAlbums(this.props.id);
   }
-/*
-  componentDidUpdate(prevProps) {
-    //if (prevProps.id !== this.props.id) {
-      this.loadAlbums(this.props.id);
-    //}
-  }*/
 
-  getImages(album_images) {
-    if (album_images.length > 0) {
-      if (album_images.length > 1) 
-        return album_images[1].url;
-      else
-        return album_images[0].url
-    } else {
-      return null;
-    }
+  componentDidUpdate(prevProps) {
+
   }
 
   selectAlbum(e, id) {
@@ -67,7 +54,7 @@ export default class SavedAlbumsPanel extends Component {
                 return (
                   <li key={index}>
                     <a className="albumBox" href="#" onClick={e => {this.selectAlbum(e, item.album.id)}}>
-                      <img src={this.getImages(item.album.images)} />
+                      <img src={this.model.getImages(item.album.images)} />
                       <p className="hilight">{item.album.name}</p> 
                       <p>{item.album.release_date}</p>
                     </a>

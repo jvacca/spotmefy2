@@ -83,17 +83,6 @@ export default class AlbumPanel extends Component {
     }
   }
 
-  getImages(album_images) {
-    if (album_images.length > 0) {
-      if (album_images.length > 1) 
-        return album_images[1].url;
-      else
-        return album_images[0].url
-    } else {
-      return null;
-    }
-  }
-
   onPlayAlbum(tracks) {
     let eventData={
       id: this.props.id,
@@ -127,7 +116,7 @@ export default class AlbumPanel extends Component {
       
       return (
         <div className="album-panel">
-          <div className="album-cover"><img src={this.getImages(images)} /></div>
+          <div className="album-cover"><img src={this.model.getImages(images)} /></div>
           <div className="heading">
             <p>ALBUM</p>
             <h1>{name}</h1>

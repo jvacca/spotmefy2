@@ -46,36 +46,20 @@ export default class MainPanel extends Component {
     })
   }
 
-  getImages(album_images) {
-    if (album_images.length > 0) {
-      if (album_images.length > 2) 
-        return album_images[2].url;
-      else
-        return album_images[0].url
-    } else {
-      return null;
-    }
-  }
-
-  getArtistNames(artists) {
-    let artistArr = artists.map((artist, index) => ( artist.name ));
-    return artistArr.join(', ');
-  }
-
   sanitizeTracks(which, tracks, album_images) {
     if (which === 'album') {
       return tracks.map((item, index) => ({
-          album_images: this.getImages(album_images),
+          album_images: this.model.getImages(album_images),
           trackName: item.name,
-          artists: this.getArtistNames(item.artists),
+          artists: this.model.getArtistNames(item.artists),
           songPath: item.preview_url,
           duration: item.duration_ms
         }));
     } else {
       return tracks.map((item, index) => ({
-        album_images: this.getImages(item.track.album.images),
+        album_images: this.model.getImages(item.track.album.images),
         trackName: item.track.name,
-        artists: this.getArtistNames(item.track.artists),
+        artists: this.model.getArtistNames(item.track.artists),
         songPath: item.track.preview_url,
         duration: item.track.duration_ms
       }));

@@ -26,22 +26,6 @@ export default class TrackItem extends Component {
     ));
   }
 
-  getImages(album_images) {
-    if (album_images.length > 0) {
-      if (album_images.length > 2) 
-        return album_images[2].url;
-      else
-        return album_images[0].url
-    } else {
-      return null;
-    }
-  }
-
-  getArtistNames(artists) {
-    let artistArr = artists.map((artist, index) => ( artist.name ));
-    return artistArr.join(', ');
-  }
-
   playTrack(count) {
     this.props.onPlayTrack(count)
   }

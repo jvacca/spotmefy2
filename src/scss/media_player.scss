@@ -39,8 +39,13 @@
 
     .image {
       box-sizing: border-box;
+      max-width: 77px;
       width: 25%;
       padding-right: 15px;
+
+      img {
+        width: 100%;
+      }
     }
   }
 

@@ -52,17 +52,6 @@ export default class ArtistPanel extends Component {
     }
   }
 
-  getImages(album_images) {
-    if (album_images.length > 0) {
-      if (album_images.length > 1) 
-        return album_images[1].url;
-      else
-        return album_images[0].url
-    } else {
-      return null;
-    }
-  }
-
   selectAlbum(e, id) {
     e.preventDefault();
     //console.log('select album ', id);
@@ -90,7 +79,7 @@ export default class ArtistPanel extends Component {
                 return (
                   <li key={index}>
                     <a className="albumBox" href="#" onClick={e => {this.selectAlbum(e, item.id)}}>
-                      <img src={this.getImages(item.images)} />
+                      <img src={this.model.getImages(item.images)} />
                       <p className="hilight">{item.name}</p> 
                       <p>{item.release_date}</p>
                     </a>

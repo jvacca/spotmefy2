@@ -145,6 +145,9 @@
   color: #AAA;
   width: 85%;
 }*/
+.search {
+  padding: 1% 0 1% 2%; }
+
 .artist-panel, .saved-album-panel {
   padding: 2% 3%; }
   .artist-panel .artist-image, .artist-panel .heading, .saved-album-panel .artist-image, .saved-album-panel .heading {
@@ -219,8 +222,11 @@
         font-size: .88em; }
     .media-player .now-playing-container .image {
       box-sizing: border-box;
+      max-width: 77px;
       width: 25%;
       padding-right: 15px; }
+      .media-player .now-playing-container .image img {
+        width: 100%; }
   .media-player .controls-container {
     width: 75%;
     margin-top: 10px; }
