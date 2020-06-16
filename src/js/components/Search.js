@@ -28,7 +28,7 @@ export default class Search extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.query !== this.props.query) {
+    if (this.props.query !== '' && prevProps.query !== this.props.query) {
       this.search();
     }
   }

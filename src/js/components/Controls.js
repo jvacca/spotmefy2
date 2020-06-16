@@ -71,6 +71,12 @@ export default class Controls extends Component {
     this.props.onRepeat(this.state.repeatState);
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.songPath !== this.props.songPath) {
+      this.playPause();
+    }
+  }
+
   render() {
     
     return (

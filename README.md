@@ -2,7 +2,6 @@ Readme soon to come
 
 ToDo:
 - finish mediaplayer (on complete play select next track, add progress bar, make mute work)
-- move getImages and getArtistNames to model
 - Add recently played to sidebar
 - add artist profiles tab
 - Finish search functionality
