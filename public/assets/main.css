@@ -148,30 +148,30 @@
 .search {
   padding: 1% 0 1% 2%; }
 
-.artist-panel, .saved-album-panel {
+.artist-panel, .saved-album-panel, .search-panel {
   padding: 2% 3%; }
-  .artist-panel .artist-image, .artist-panel .heading, .saved-album-panel .artist-image, .saved-album-panel .heading {
+  .artist-panel .artist-image, .artist-panel .heading, .saved-album-panel .artist-image, .saved-album-panel .heading, .search-panel .artist-image, .search-panel .heading {
     display: inline-block;
     vertical-align: top; }
-  .artist-panel .heading, .saved-album-panel .heading {
+  .artist-panel .heading, .saved-album-panel .heading, .search-panel .heading {
     box-sizing: border-box;
     width: 50%;
     padding-left: 20px;
     padding-top: 30px;
     height: 350px; }
-    .artist-panel .heading p, .saved-album-panel .heading p {
+    .artist-panel .heading p, .saved-album-panel .heading p, .search-panel .heading p {
       font-size: 1em; }
-    .artist-panel .heading h1, .saved-album-panel .heading h1 {
+    .artist-panel .heading h1, .saved-album-panel .heading h1, .search-panel .heading h1 {
       color: #FFF;
       font-size: 3em; }
-  .artist-panel .artist-image, .saved-album-panel .artist-image {
+  .artist-panel .artist-image, .saved-album-panel .artist-image, .search-panel .artist-image {
     width: 50%;
     max-width: 500px; }
-    .artist-panel .artist-image img, .saved-album-panel .artist-image img {
+    .artist-panel .artist-image img, .saved-album-panel .artist-image img, .search-panel .artist-image img {
       width: 100%; }
-  .artist-panel ul, .saved-album-panel ul {
+  .artist-panel ul, .saved-album-panel ul, .search-panel ul {
     margin-top: 20px; }
-    .artist-panel ul li, .saved-album-panel ul li {
+    .artist-panel ul li, .saved-album-panel ul li, .search-panel ul li {
       box-sizing: border-box;
       display: inline-block;
       vertical-align: top;
@@ -179,11 +179,11 @@
       /*width: 33%;*/
       padding: 1% 1%;
       margin-bottom: 20px; }
-      .artist-panel ul li img, .saved-album-panel ul li img {
+      .artist-panel ul li img, .saved-album-panel ul li img, .search-panel ul li img {
         width: 100%; }
-      .artist-panel ul li p, .saved-album-panel ul li p {
+      .artist-panel ul li p, .saved-album-panel ul li p, .search-panel ul li p {
         padding: 2%; }
-      .artist-panel ul li a, .saved-album-panel ul li a {
+      .artist-panel ul li a, .saved-album-panel ul li a, .search-panel ul li a {
         color: #CCC;
         text-decoration: none; }
 
@@ -200,6 +200,8 @@
   min-height: 80px; }
   .media-player button {
     cursor: pointer;
+    color: #fff;
+    font-size: 2em;
     max-width: 60px;
     padding-right: 10px; }
   .media-player .now-playing-container,

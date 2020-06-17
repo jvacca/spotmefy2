@@ -32,7 +32,7 @@ export default class TrackList extends Component {
   }
 
   onSort(sortString) {
-    console.log("Sorting on ", sortString);
+    //console.log("Sorting on ", sortString);
       let self = this
       let sortedState = this.state.tracks.sort((current, next) => {
         var nameA;
@@ -74,7 +74,7 @@ export default class TrackList extends Component {
   }
 
   onFilter(e) {
-    console.log("Filtering ", e.target.value)
+    //console.log("Filtering ", e.target.value)
 
     let filterString = e.target.value;
     let filteredState = this.props.tracks.filter(item => (
@@ -82,7 +82,7 @@ export default class TrackList extends Component {
       (item.track.album.name.includes(filterString) === true) ||
       (item.track.name.includes(filterString) === true)
     ));
-    console.log('**************', filteredState)
+    //console.log('**************', filteredState)
     //if (filteredState.length === 0) filteredState = this.props.tracks;
     this.setState({
       filterString: filterString,

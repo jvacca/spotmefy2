@@ -1,7 +1,6 @@
 Readme soon to come
 
 ToDo:
-- finish mediaplayer (on complete play select next track, add progress bar, make mute work)
 - Add recently played to sidebar
 - add artist profiles tab
 - Finish search functionality
@@ -9,3 +8,4 @@ ToDo:
 - Add responsive layouts to fit on mobile
 
 Bugs:
+- Fix search when user clicks on an album, it does not route correctly

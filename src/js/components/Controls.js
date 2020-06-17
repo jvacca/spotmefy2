@@ -35,11 +35,11 @@ export default class Controls extends Component {
       <div className="controls-container">
         <div className="control-panel">
           <div className="controls">
-            <button id="prev" onClick={this.previous}><img src="assets/images/btn_prev.png" /></button>
+            <button id="prev" onClick={this.previous}> &lt; </button>
             <audio id="audio" controls src={this.props.songPath} ref={this.soundObj}>
               This is not supported
             </audio>
-            <button id="next" onClick={this.next}><img src="assets/images/btn_next.png" /></button>
+            <button id="next" onClick={this.next}> &gt; </button>
           </div>
         </div>
       </div>

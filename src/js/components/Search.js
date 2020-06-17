@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import {Link} from 'react-router-dom';
 import Model from '../model';
 
 export default class Search extends Component {
@@ -6,63 +7,63 @@ export default class Search extends Component {
     super(props);
 
     this.model = new Model();
+    this.onSearch = this.onSearch.bind(this);
     this.state = {
-      data: null
+      data: null,
+      searchString: '',
+      query: ''
     };
 
   }
 
   search() {
-    console.log('searching ', this.props.query)
-    let callPromise = this.model.load('search', this.props.query, (data) => {
+    console.log('searching ')
+    let callPromise = this.model.load('search', this.state.searchString, (data) => {
       console.log('search data: ', data);
       
       this.setState({
-        data: data
+        data: data,
+        query: this.state.searchString
       });
     })
   }
 
   componentDidMount() {
-    this.search();
+    //this.search();
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.query !== '' && prevProps.query !== this.props.query) {
+    if (this.state.searchString !== '' && this.state.searchString !== this.state.query) {
       this.search();
     }
   }
 
-  selectAlbum(e, album_id, track_id) {
-    e.preventDefault();
-    //console.log('select album ', id);
-
-    let eventData={
-      panel: 'album',
-      id: album_id,
-      track_id: track_id
-    }
-    this.model.pubsub.emit('selectAlbum', eventData);
+  onSearch(e) {
+    this.setState({
+      searchString: e.target.value
+    });
   }
+  
 
   render() {
-    if (this.state.data) { 
+
       return (
-        <div className="saved-album-panel">
+        <div className="search-panel">
+          <div className="search">Search:&nbsp; <input type="text" id="search_string" onChange={this.onSearch} value={this.state.searchString} placeholder="Search"></input></div>
           <div className="heading">
             <h1>Search Results</h1>
           </div>
           <ul>
             {
-              this.state.data.tracks.items.map( (item, index) => {
+              this.state.data && this.state.data.tracks.items.map( (item, index) => {
                 return (
-                  <li key={index}>
-                    <a className="albumBox" href="#" onClick={e => {this.selectAlbum(e, item.album.id, item.id)}}>
+                  <li key={index} className="albumBox">
+                    <Link to={`/album/${item.album.id}/${item.id}`}>
                       <img src={this.model.getImages(item.album.images)} />
                       <p className="hilight">{item.name}</p>
                       <p className="hilight">{item.album.name}</p> 
                       <p>{item.album.release_date}</p>
-                    </a>
+                    </Link>
                   </li>
                 )
               })
@@ -70,8 +71,5 @@ export default class Search extends Component {
           </ul>
         </div>
       );
-      } else {
-        return <div></div>
-      }
   }
 }
