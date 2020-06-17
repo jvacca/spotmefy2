@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Link} from 'react-router-dom';
 import Model from '../model';
 
 export default class TrackItem extends Component {
@@ -22,7 +23,7 @@ export default class TrackItem extends Component {
 
   getArtistLinks(artists) {    
     return artists.map((artist, index) => (
-      <a key={index} href="#" onClick={e => {this.selectArtist(e, artist.id)}}>{artist.name}{(index < artists.length-1)? ', ' : ''}</a>
+      <Link key={index} to={`/artist/${artist.id}`}>{artist.name}{(index < artists.length-1)? ', ' : ''}</Link>
     ));
   }
 
@@ -67,7 +68,7 @@ export default class TrackItem extends Component {
           <span onClick={e => this.onLikeSong(trackData.id)} className="like">&hearts;</span>
           <span onClick={(e) => this.playTrack(index-1)} className="song-name">{trackName}</span>
           {(this.props.isAlbumView === false)? <span className="artist-name">{this.getArtistLinks(artists)}</span> : ''}
-          {(this.props.isAlbumView === false)? <span className="album-name"><a href="#" onClick={e => {this.selectAlbum(e, album_id)}}>{albumName}</a></span> : ''}
+          {(this.props.isAlbumView === false)? <span className="album-name"><Link to={`/album/${album_id}`}>{albumName}</Link></span> : ''}
           <span className="duration">{this.formatDuration(duration)}</span>
         </p>
       </li>

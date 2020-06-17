@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import {Link} from 'react-router-dom';
 import Model from '../model';
 
 export default class SavedAlbumsPanel extends Component {
@@ -14,7 +15,7 @@ export default class SavedAlbumsPanel extends Component {
 
   loadAlbums(id) {
     let callPromise = this.model.load('getPutSavedAlbums', '', (data) => {
-      console.log('data: ', data);
+      //console.log('data: ', data);
       
       this.setState({
         albumData: data
@@ -52,12 +53,12 @@ export default class SavedAlbumsPanel extends Component {
             {
               this.state.albumData.items.map( (item, index) => {
                 return (
-                  <li key={index}>
-                    <a className="albumBox" href="#" onClick={e => {this.selectAlbum(e, item.album.id)}}>
+                  <li key={index} className="albumBox">
+                    <Link to={`/album/${item.album.id}`}>
                       <img src={this.model.getImages(item.album.images)} />
                       <p className="hilight">{item.album.name}</p> 
                       <p>{item.album.release_date}</p>
-                    </a>
+                    </Link>
                   </li>
                 )
               })

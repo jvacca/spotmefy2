@@ -114,7 +114,7 @@ export default class Model {
 
 
   getImages(album_images) {
-    if (album_images.length > 0) {
+    if (album_images || album_images.length > 0) {
       if (album_images.length > 1) 
         return album_images[1].url;
       else

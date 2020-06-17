@@ -13,7 +13,7 @@ import Model from '../model';
 export default class MainPanel extends Component {
   constructor(props) {
     super(props);
-
+    
     this.model = new Model();
     this.state = {
       searchString: '',
@@ -21,15 +21,25 @@ export default class MainPanel extends Component {
       currentTrack: null,
       currentTrackIndex: -1,
       currentTrackid: -1,
-      queue: null,
-      panel: null,
-      id: -1
+      queue: null
     }
     this.onSearch = this.onSearch.bind(this);
     this.onNextTrack = this.onNextTrack.bind(this);
     this.onPrevTrack = this.onPrevTrack.bind(this);
   }
 
+  getPanel() {
+    let count, panel;
+    if (this.props.match.path.lastIndexOf('/') > 0) {
+      count = this.props.match.path.lastIndexOf('/')
+      panel = this.props.match.path.substr(1, count).replace('/', '')
+    } else {
+      panel = this.props.match.path.substr(1, this.props.match.path.length-1)
+    }
+
+    return panel;
+  }
+/*
   updateCurrentPanel(event) {
     //console.log("event ", event.panel, event.id)
     if (this.state.panel !== event.panel || this.state.id !== event.id) {
@@ -44,7 +54,7 @@ export default class MainPanel extends Component {
       id: event.id || -1,
       currentTrackid: event.track_id || -1
     })
-  }
+  }*/
 
   sanitizeTracks(which, tracks, album_images) {
     if (which === 'album') {
@@ -101,7 +111,7 @@ export default class MainPanel extends Component {
 
   onPlaySingleTrack(event) {
     if (!this.state.queue || (this.state.queue && this.state.queue.id !== event.id)) {
-      let tracks = this.sanitizeTracks(this.state.panel, event.tracks, (typeof event.album_images !== 'undefined')? event.album_images : null);
+      let tracks = this.sanitizeTracks(event.panel, event.tracks, (typeof event.album_images !== 'undefined')? event.album_images : null);
       
       let queue = {
         id: event.id,
@@ -143,18 +153,18 @@ export default class MainPanel extends Component {
   }
 
   route() {
-    //console.log("routing ", this.state.currentTrackIndex)
+    let panel = this.getPanel();
 
-    switch(this.state.panel) {
+    switch(panel) {
       case 'playlist':
-        return <PlaylistPanel id={this.state.id} currentTrackIndex={this.state.currentTrackIndex} />
+        return <PlaylistPanel id={this.props.match.params.id} currentTrackIndex={this.state.currentTrackIndex} />
       case 'artist':
-        return <ArtistPanel id={this.state.id} />
+        return <ArtistPanel id={this.props.match.params.id} />
       case 'album':
-        return <AlbumPanel id={this.state.id} track={this.state.currentTrackid} currentTrackIndex={this.state.currentTrackIndex} />
-      case 'savedAlbums':
+        return <AlbumPanel id={this.props.match.params.id} track={this.state.currentTrackid} currentTrackIndex={this.state.currentTrackIndex} />
+      case 'savedalbums':
         return <SavedAlbumsPanel />
-      case 'savedTracks':
+      case 'savedtracks':
         return <SavedTracksPanel currentTrackIndex={this.state.currentTrackIndex} />
       case 'search':
         return <Search query={this.state.query} />
@@ -167,12 +177,8 @@ export default class MainPanel extends Component {
   }
 
   componentDidMount() {
-    this.model.pubsub.on('selectAlbum', this.updateCurrentPanel, this);
-    this.model.pubsub.on('selectArtist', this.updateCurrentPanel, this);
-    this.model.pubsub.on('selectPlaylist', this.updateCurrentPanel, this);
-    this.model.pubsub.on('selectSavedAlbums', this.updateCurrentPanel, this);
-    this.model.pubsub.on('selectSavedTracks', this.updateCurrentPanel, this);
-    this.model.pubsub.on('recentlyPlayed', this.updateCurrentPanel, this);
+    //console.log("Mounted ", this.props.match.params, this.props.match.path);
+
     this.model.pubsub.on('playTrack', this.onPlaySingleTrack, this);
     this.model.pubsub.on('playAlbum', this.onPlayAlbum, this);
     this.model.pubsub.on('playPlaylist', this.onPlayPlaylist, this);
@@ -182,7 +188,11 @@ export default class MainPanel extends Component {
   }
 
   componentDidUpdate() {
-    //console.log("Updating ", this.state.currentTrackIndex)
+    //console.log("Updated ", this.props.match.params, this.props.match.path)
+  }
+
+  componentWillUnmount() {
+    this.model.pubsub.removeAllListeners();
   }
 
   onSearch(e) {
@@ -202,7 +212,7 @@ export default class MainPanel extends Component {
           <Sidebar />
           <div className="main-panel">
           <div className="search">Search:&nbsp; <input type="text" id="search_string" onChange={this.onSearch} value={this.state.searchString} placeholder="Search"></input></div>
-            { this.route(this.state.panel) }
+            { this.route() }
           </div>
         </div>
         <MediaPlayer currentTrack={this.state.currentTrack} />

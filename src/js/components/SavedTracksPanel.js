@@ -16,7 +16,7 @@ export default class SavedTracksPanel extends Component {
 
   loadTracks() {
     let callPromise = this.model.load('getPutSavedTracks', '', (data) => {
-      console.log('data: ', data);
+      //console.log('data: ', data);
       
       this.setState({
         data: data
@@ -44,6 +44,7 @@ export default class SavedTracksPanel extends Component {
   onPlayTrack(index) {
     let eventData={
       id: this.props.id,
+      panel: 'savedtracks',
       tracks: this.state.data.items,
       index: index
     }

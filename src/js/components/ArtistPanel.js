@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import {Link} from 'react-router-dom';
 import Model from '../model';
 
 export default class ArtistPanel extends Component {
@@ -78,11 +79,11 @@ export default class ArtistPanel extends Component {
               this.state.albumData.items.map( (item, index) => {
                 return (
                   <li key={index}>
-                    <a className="albumBox" href="#" onClick={e => {this.selectAlbum(e, item.id)}}>
+                    <Link to={`/album/${item.id}`}>
                       <img src={this.model.getImages(item.images)} />
                       <p className="hilight">{item.name}</p> 
                       <p>{item.release_date}</p>
-                    </a>
+                    </Link>
                   </li>
                 )
               })

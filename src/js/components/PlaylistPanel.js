@@ -46,6 +46,7 @@ export default class PlaylistPanel extends Component {
   onPlayTrack(index) {
     let eventData={
       id: this.props.id,
+      panel: 'playlist',
       tracks: this.state.data.tracks.items,
       index: index
     }

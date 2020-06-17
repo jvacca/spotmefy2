@@ -95,6 +95,7 @@ export default class AlbumPanel extends Component {
   onPlayTrack(index) {
     let eventData={
       id: this.props.id,
+      panel: 'album',
       tracks: this.state.data.tracks.items,
       album_images: this.state.data.images,
       index: index

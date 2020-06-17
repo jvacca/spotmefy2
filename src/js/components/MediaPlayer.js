@@ -21,13 +21,9 @@ export default class MediaPlayer extends Component {
     this.model = new Model();
   }
 
-  onRepeat() {
-    console.log("repeat now");
-  }
-
   render() {
     if (this.props.currentTrack !== null) {
-      //console.log('*********', this.props.currentTrack.songPath)
+      console.log('*********', this.props.currentTrack.songPath)
       return (
         <div className="media-player">
           <NowPlaying 

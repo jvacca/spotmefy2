@@ -2,7 +2,7 @@ import '../scss/page.scss';
 import Model from './model';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import MainPanel from './components/MainPanel';
+import AppRouter from './components/AppRouter';
 
 console.log("Initializing");
 
@@ -34,5 +34,5 @@ fullScreen();
 
 
 ReactDOM.render (
-  <MainPanel />, document.getElementById('app')
+  <AppRouter />, document.getElementById('app')
 );

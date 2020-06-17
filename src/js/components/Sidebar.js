@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-//import {Link} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import Model from '../model';
 
 export default class Sidebar extends Component {
@@ -68,8 +68,8 @@ export default class Sidebar extends Component {
       <div className="side-panel">
         <p>YOUR LIBRARY</p>
         <ul>
-          <li><a id="recent" href="#" onClick={(e) => { this.selectLink(e, 'likedAlbums') }}>Liked Albums</a></li>
-          <li><a id="songs" href="#" onClick={(e) => { this.selectLink(e, 'likedSongs') }}>Liked Songs</a></li>
+          <li><Link to="/savedalbums">Liked Albums</Link></li>
+          <li><Link to="/savedtracks">Liked Songs</Link></li>
         </ul>
         <p>PLAYLISTS</p>
         <ul className="playlist-container">
@@ -78,9 +78,9 @@ export default class Sidebar extends Component {
               let classNameName = (index === this.state.currentIndex)? 'active': ''
               return (
                 <li key={index} className={classNameName}>
-                  <a href="#" onClick={(e) => { this.select(e, index, item.id) }} >
+                  <Link to={`/playlist/${item.id}`}>
                     <span className="playlist-name">{item.name}</span> 
-                  </a>
+                  </Link>
                 </li>
               )
             })
