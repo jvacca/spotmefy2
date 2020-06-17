@@ -28,39 +28,10 @@ export default class Sidebar extends Component {
     //console.log("Updated!");
   }
 
-  select(e, count, id) {
-    e.preventDefault();
+  select(count) {
     this.setState({
       currentIndex: count
     });
-
-    let eventdata={
-      panel: 'playlist',
-      id: id
-    }
-
-    this.model.pubsub.emit('selectPlaylist', eventdata)
-  }
-
-  selectLink(e, which) {
-    e.preventDefault();
-
-    if (which === 'likedAlbums') {
-      let eventdata={
-        panel: 'savedAlbums'
-      }
-      this.model.pubsub.emit('selectSavedAlbums', eventdata)
-    } else if (which === 'likedSongs') {
-      let eventdata={
-        panel: 'savedTracks'
-      }
-      this.model.pubsub.emit('selectSavedTracks', eventdata)
-    } else if (which === 'recentlyPlayed') {
-      let eventdata={
-        panel: 'recentlyPlayed'
-      }
-      this.model.pubsub.emit('selectRecentlyPlayed', eventdata)
-    }
   }
 
   render() {
@@ -78,7 +49,7 @@ export default class Sidebar extends Component {
               let classNameName = (index === this.state.currentIndex)? 'active': ''
               return (
                 <li key={index} className={classNameName}>
-                  <Link to={`/playlist/${item.id}`}>
+                  <Link to={`/playlist/${item.id}`} onClick={e => {this.select(index)}}>
                     <span className="playlist-name">{item.name}</span> 
                   </Link>
                 </li>
