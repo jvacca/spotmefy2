@@ -29,12 +29,14 @@ export default class Sidebar extends Component {
   }
 
   select(count) {
+    //console.log("count ", count)
     this.setState({
       currentIndex: count
     });
   }
 
   render() {
+    //console.log("state ", this.state.currentIndex)
     return (
       <div className="side-panel">
         <p>YOUR LIBRARY</p>

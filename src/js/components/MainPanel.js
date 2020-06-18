@@ -14,17 +14,18 @@ import Model from '../model';
 export default class MainPanel extends Component {
   constructor(props) {
     super(props);
-    
+
     this.model = new Model();
     this.state = {
       currentTrack: null,
       currentTrackIndex: -1,
       queue: null
     }
+
     this.onNextTrack = this.onNextTrack.bind(this);
     this.onPrevTrack = this.onPrevTrack.bind(this);
   }
-
+  
   getPanel() {
     let count, panel;
     if (this.props.match.path.lastIndexOf('/') > 0) {
@@ -133,6 +134,30 @@ export default class MainPanel extends Component {
     }
   }
 
+  componentDidMount() {
+    //console.log("Mounted ", this.props.match.params, this.props.match.path);
+
+    this.model.pubsub.on('playTrack', this.onPlaySingleTrack, this);
+    this.model.pubsub.on('playAlbum', this.onPlayAlbum, this);
+    this.model.pubsub.on('playPlaylist', this.onPlayPlaylist, this);
+    this.model.pubsub.on('playSavedTracks', this.onPlayPlaylist, this);
+    this.model.pubsub.on('nextSong', this.onNextTrack, this);
+    this.model.pubsub.on('prevSong', this.onPrevTrack, this);
+  }
+
+  componentWillUnmount() {
+    this.model.pubsub.removeAllListeners();
+  }
+  
+  componentDidUpdate(prevProps) {
+    //console.log("Updated ", this.props.match.params, this.props.match.path)
+    if (prevProps.match.params.id !== this.props.match.params.id) {
+      this.setState({
+        currentTrackIndex: -1
+      })
+    }
+  }
+  
   route() {
     let panel = this.getPanel();
 
@@ -157,40 +182,10 @@ export default class MainPanel extends Component {
     }
   }
 
-  componentDidMount() {
-    //console.log("Mounted ", this.props.match.params, this.props.match.path);
-
-    this.model.pubsub.on('playTrack', this.onPlaySingleTrack, this);
-    this.model.pubsub.on('playAlbum', this.onPlayAlbum, this);
-    this.model.pubsub.on('playPlaylist', this.onPlayPlaylist, this);
-    this.model.pubsub.on('playSavedTracks', this.onPlayPlaylist, this);
-    this.model.pubsub.on('nextSong', this.onNextTrack, this);
-    this.model.pubsub.on('prevSong', this.onPrevTrack, this);
-  }
-
-  componentDidUpdate(prevProps) {
-    //console.log("Updated ", this.props.match.params, this.props.match.path)
-    if (prevProps.match.params.id !== this.props.match.params.id) {
-      this.setState({
-        currentTrackIndex: -1
-      })
-    }
-  }
-
-  componentWillUnmount() {
-    this.model.pubsub.removeAllListeners();
-  }
-
   render() {
     return (
-      <div className="app-container">
-        <div id="frame" className="frame">
-          <Sidebar />
-          <div className="main-panel">
-            <Link to="/search">Search</Link>
-            { this.route() }
-          </div>
-        </div>
+      <div>
+        { this.route() }
         <MediaPlayer currentTrack={this.state.currentTrack} />
       </div>
     );
