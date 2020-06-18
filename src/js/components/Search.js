@@ -58,7 +58,7 @@ export default class Search extends Component {
               this.state.data && this.state.data.tracks.items.map( (item, index) => {
                 return (
                   <li key={index} className="albumBox">
-                    <Link to={`/album/${item.album.id}/${item.id}`}>
+                    <Link to={`/album/${item.album.id}`}>
                       <img src={this.model.getImages(item.album.images)} />
                       <p className="hilight">{item.name}</p>
                       <p className="hilight">{item.album.name}</p> 

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import {BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import MainPanel from './MainPanel';
 import Sidebar from './Sidebar';
 import MediaPlayer from './MediaPlayer';
@@ -9,9 +10,7 @@ export default class AppRouter extends Component {
   constructor(props) {
     super(props);
     this.model = new Model();
-    this.state = {
-      currentTrack: null
-    }
+    
   }
 
   render() {
@@ -21,6 +20,7 @@ export default class AppRouter extends Component {
           <Router>
             <Sidebar />
             <div className="main-panel">
+              <Link to="/search">Search</Link>
               <Route exact path='/playlist/:id' component={MainPanel} />
               <Route exact path='/artist/:id' component={MainPanel} />
               <Route exact path='/album/:id' component={MainPanel} />
