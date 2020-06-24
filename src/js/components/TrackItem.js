@@ -31,27 +31,6 @@ export default class TrackItem extends Component {
     this.props.onPlayTrack(count)
   }
 
-  selectAlbum(e, id) {
-    e.preventDefault();
-    //console.log('select album ', id)
-    let eventData={
-      panel: 'album',
-      id: id
-    }
-    this.model.pubsub.emit('selectAlbum', eventData);
-  }
-
-  selectArtist(e, id) {
-    e.preventDefault();
-    //console.log('select artist ', id)
-
-    let eventData={
-      panel: 'artist',
-      id: id
-    }
-    this.model.pubsub.emit('selectArtist', eventData);
-  }
-
   onLikeSong(id) {
     this.model.save('getPutSavedTracks', id, data => {
       console.log('********SAVED', data)

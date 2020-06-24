@@ -82,8 +82,7 @@ export default class TrackList extends Component {
       (item.track.album.name.includes(filterString) === true) ||
       (item.track.name.includes(filterString) === true)
     ));
-    //console.log('**************', filteredState)
-    //if (filteredState.length === 0) filteredState = this.props.tracks;
+
     this.setState({
       filterString: filterString,
       tracks: filteredState

@@ -35,6 +35,9 @@ export default class Model {
       'artistAlbums':{
         uri: 'https://api.spotify.com/v1/artists/'
       },
+      'artistTopTracks':{
+        uri: 'https://api.spotify.com/v1/artists/'
+      },
       'track':{
         uri: 'https://api.spotify.com/v1/tracks/'
       },
@@ -53,6 +56,7 @@ export default class Model {
   load(which, id, resolve) {
     let url = (id !== null && typeof id !== 'undefined' && which !== 'search')? this.endpoints[which].uri + id : this.endpoints[which].uri;
     if (which === 'artistAlbums') url += '/albums?market=US&include_groups=album,single';
+    if (which === 'artistTopTracks') url += '/top-tracks?country=US';
     if (which === 'search') url += '?q=' + encodeURI(id) + '&type=artist,album,track'
 
     fetch(url, {

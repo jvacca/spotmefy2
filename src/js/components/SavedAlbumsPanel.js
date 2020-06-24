@@ -31,17 +31,6 @@ export default class SavedAlbumsPanel extends Component {
 
   }
 
-  selectAlbum(e, id) {
-    e.preventDefault();
-    //console.log('select album ', id);
-
-    let eventData={
-      panel: 'album',
-      id: id
-    }
-    this.model.pubsub.emit('selectAlbum', eventData);
-  }
-
   render() {
     if (this.state.albumData) { 
       return (

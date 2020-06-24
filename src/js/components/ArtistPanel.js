@@ -1,6 +1,48 @@
 import React, { Component } from "react";
 import {Link} from 'react-router-dom';
+import TrackItem from './TrackItem';
 import Model from '../model';
+
+const SimpleTrackList2 = ({tracks, images, onPlayTrack}) => {
+  let filtered_tracks = tracks.tracks.slice(0, 5)
+  return (
+    <ol>
+      <li className="header">
+        <p>
+          <span className="index">#</span>
+          <span className="like"></span>
+          <span className="song-name">TITLE</span>
+          <span className="artist-name"></span>
+          <span className="album-name"></span>
+          <span className="duration">DURATION</span>
+        </p>
+      </li>
+      {
+        filtered_tracks.map( (item, index) => {
+          //let isActive = (currentTrackIndex === index)
+
+          return (
+            <TrackItem
+              key={index}
+              index={index + 1}
+              trackName={item.name}
+              trackData={item}
+              artists={''}
+              albumName={''}
+              duration={item.duration_ms}
+              album_id={''}
+              album_images={images}
+              songPath={item.preview_url}
+              active={false}
+              isAlbumView={true}
+              onPlayTrack = {onPlayTrack}
+            />
+          )
+        })
+      }
+    </ol>
+  )
+}
 
 export default class ArtistPanel extends Component {
   constructor(props) {
@@ -9,9 +51,10 @@ export default class ArtistPanel extends Component {
     this.model = new Model();
     this.state = {
       albumData: null,
-      artistData: null
+      artistData: null,
+      artistTopTracks: null
     };
-
+    this.onPlayTrack = this.onPlayTrack.bind(this);
   }
 
   loadArtist(id) {
@@ -19,6 +62,15 @@ export default class ArtistPanel extends Component {
       //console.log('data: ', data);
       this.setState({
         artistData: data
+      });
+    })
+  }
+
+  loadArtistTracks(id) {
+    let callPromise = this.model.load('artistTopTracks', id, (data) => {
+      console.log('data: ', data);
+      this.setState({
+        artistTopTracks: data
       });
     })
   }
@@ -43,37 +95,50 @@ export default class ArtistPanel extends Component {
 
   componentDidMount() {
     this.loadArtist(this.props.id);
+    this.loadArtistTracks(this.props.id);
     this.loadAlbum(this.props.id);
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.id !== this.props.id) {
       this.loadArtist(this.props.id);
+      this.loadArtistTracks(this.props.id);
       this.loadAlbum(this.props.id);
     }
   }
 
-  selectAlbum(e, id) {
-    e.preventDefault();
-    //console.log('select album ', id);
-
+  onPlayTrack(index) {
     let eventData={
       panel: 'album',
-      id: id
+      tracks: this.state.artistTopTracks.tracks,
+      album_images: this.state.artistData.images,
+      index: index
     }
-    this.model.pubsub.emit('selectAlbum', eventData);
+    this.model.pubsub.emit('playTrack', eventData);
   }
 
   render() {
-    if (this.state.albumData && this.state.artistData) { 
+    if (this.state.albumData && this.state.artistData && this.state.artistTopTracks) { 
       let {images, name} = this.state.artistData
       return (
         <div className="artist-panel">
-          <div className="artist-image"><img src={images[0].url} /></div>
-          <div className="heading">
-            <p>ARTIST</p>
-            <h1>{name}</h1>
+          <div className="heading-holder">
+            <div className="artist-image"><img src={this.model.getImages(images)} /></div>
+            <div className="heading">
+              <p>ARTIST</p>
+              <h1>{name}</h1>
+              <h3>Top Tracks</h3>
+              <div className="top-tracks-holder">
+                {
+                  this.state.artistTopTracks && <SimpleTrackList2
+                  tracks = {this.state.artistTopTracks}
+                  images = {images}
+                  onPlayTrack = {this.onPlayTrack}
+                />}
+              </div>
+            </div>
           </div>
+          
           <ul>
             {
               this.state.albumData.items.map( (item, index) => {
