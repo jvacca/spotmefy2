@@ -31,6 +31,11 @@
       line-height: 2em;
     }
 
+    .heading-label {
+      font-size: .88em;
+      color: #fff;
+    }
+
     .play_button {
       cursor: pointer;
       display: inline-block;
@@ -119,7 +124,7 @@
     .song-name {
       cursor: pointer;
       color: #fff;
-      width: 40%;
+      width: 30%;
     }
 
     .artist-name {
@@ -151,9 +156,13 @@
 
     .duration {
       box-sizing: border-box;
-      width: 10%;
+      width: 5%;
       text-align: right;
       padding-right: 10px;
+    }
+
+    .date {
+      width: 15%;
     }
   }
 
@@ -164,7 +173,7 @@
 
     .song-name {
       color: #AAA;
-      width: 40%;
+      width: 30%;
     }
 
     .artist-name,
@@ -174,9 +183,13 @@
 
     .duration {
       box-sizing: border-box;
-      width: 10%;
+      width: 5%;
       text-align: right;
       padding-right: 10px;
+    }
+
+    .date {
+      width: 15%;
     }
 
     span:hover {
@@ -218,6 +231,10 @@
 
 .top-tracks-holder li.header .song-name {
   width: 20%;
+}
+
+.saved-tracks-panel .heading {
+  padding-left: 0;
 }
 
 /*

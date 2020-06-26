@@ -133,6 +133,15 @@ export default class Model {
     return artistArr.join(', ');
   }
 
+  formatDate(date) {
+    let dateObj = new Date(date);
+    let formatted = '';
+    let month = ((dateObj.getMonth() < 10)? '0' : '') + (dateObj.getMonth() + 1);
+    let day = ((dateObj.getDay() < 10)? '0': '') + dateObj.getDay();
+    formatted += dateObj.getFullYear() + '-' + month + '-' + day;
+    return formatted;
+  }
+
   formatDuration(ms) {
     let time = ''
     let minutes = Math.floor((ms/1000)/60);

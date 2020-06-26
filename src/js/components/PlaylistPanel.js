@@ -15,7 +15,7 @@ export default class PlaylistPanel extends Component {
 
   loadPlaylist(id) {
     let callPromise = this.model.load('playlistTracks', id, (data) => {
-      //console.log('data: ', data);
+      console.log('data: ', data);
       this.setState({
         data: data
       });
@@ -60,9 +60,9 @@ export default class PlaylistPanel extends Component {
       <div className="playlist-panel">
         <div className="album-cover"><img src={this.model.getImages(images)} /></div>
         <div className="heading">
-          <p>PLAYLIST</p>
+          <p className="heading-label">PLAYLIST</p>
           <h1>{name}</h1>
-          <p>By <span className="hilight">{owner.display_name}</span></p>
+          <p>Created by <span className="hilight">{owner.display_name}</span></p>
           <p>{tracks.items.length} songs</p>
           <a className="play_button" onClick={e => {this.onPlayPlaylist(tracks)}}>PLAY</a>
         </div>

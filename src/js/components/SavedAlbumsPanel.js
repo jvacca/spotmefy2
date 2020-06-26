@@ -36,7 +36,7 @@ export default class SavedAlbumsPanel extends Component {
       return (
         <div className="saved-album-panel">
           <div className="heading">
-            <h1>Liked Albums</h1>
+            <h1>Albums</h1>
           </div>
           <ul>
             {

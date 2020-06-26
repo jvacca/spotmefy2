@@ -68,7 +68,7 @@ export default class ArtistPanel extends Component {
 
   loadArtistTracks(id) {
     let callPromise = this.model.load('artistTopTracks', id, (data) => {
-      console.log('data: ', data);
+      //console.log('data: ', data);
       this.setState({
         artistTopTracks: data
       });
@@ -125,9 +125,9 @@ export default class ArtistPanel extends Component {
           <div className="heading-holder">
             <div className="artist-image"><img src={this.model.getImages(images)} /></div>
             <div className="heading">
-              <p>ARTIST</p>
+              <p className="heading-label">ARTIST</p>
               <h1>{name}</h1>
-              <h3>Top Tracks</h3>
+              <h3>Popular</h3>
               <div className="top-tracks-holder">
                 {
                   this.state.artistTopTracks && <SimpleTrackList2

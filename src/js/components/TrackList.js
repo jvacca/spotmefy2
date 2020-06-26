@@ -96,11 +96,12 @@ export default class TrackList extends Component {
         <ol>
             <li className="header">
               <p>
-                <span className="index">#</span>
+                <span className="index"></span>
                 <span className="like"></span>
                 <span onClick={e => {this.onSort('name')}} className="song-name">TITLE</span>
                 <span onClick={e => {this.onSort('artist')}} className="artist-name">ARTIST</span>
                 <span onClick={e => {this.onSort('album')}} className="album-name">ALBUM</span>
+                <span className="date">DATE</span>
                 <span onClick={e => {this.onSort('duration')}} className="duration">DURATION</span>
               </p>
             </li>
@@ -115,6 +116,7 @@ export default class TrackList extends Component {
                   trackData={item.track}
                   artists={item.track.artists}
                   albumName={item.track.album.name}
+                  added_at={item.added_at}
                   duration={item.track.duration_ms}
                   group_id={this.props.id}
                   album_id={item.track.album.id}

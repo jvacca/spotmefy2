@@ -17,12 +17,18 @@
       font-size: 1em;
     }
 
+    .heading-label {
+      font-size: .88em;
+      color: #fff;
+    }
+
     h1 {
       color: #FFF;
       font-size: 3em;;
     }
 
     h3 {
+      color: #fff;
       margin-top: 15px;
     }
   }
@@ -70,6 +76,7 @@
   }
   
  .heading {
-   height: auto;
+    padding-left: 10px;
+    height: auto;
  }
 }

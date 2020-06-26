@@ -119,7 +119,7 @@ export default class AlbumPanel extends Component {
         <div className="album-panel">
           <div className="album-cover"><img src={this.model.getImages(images)} /></div>
           <div className="heading">
-            <p>ALBUM</p>
+            <p className="heading-label">ALBUM</p>
             <h1>{name}</h1>
             <p>By <span className="hilight">{artists[0].name}</span></p>
             <p>{release_date} . {total_tracks} songs</p>
