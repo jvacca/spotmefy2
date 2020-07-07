@@ -1,4 +1,4 @@
-.album-panel, .saved-tracks-panel, .playlist-panel, .top-tracks-holder {
+.album-panel, .saved-tracks-panel, .playlist-panel, .top-tracks-holder, .user-panel {
   padding: 2% 3%;
 
   .album-cover, .heading {
@@ -237,11 +237,11 @@
   padding-left: 0;
 }
 
-/*
+
 .album-panel li.header .song-name {
   color: #AAA;
-  width: 85%;
-}*/
+  width: 40%;
+}
 
 .search {
   padding: 1% 0 1% 2%;

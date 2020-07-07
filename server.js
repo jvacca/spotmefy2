@@ -11,7 +11,7 @@ const client_secret = 'bd241b3266954b0da04cdb7f40a28fd0';
 const redirect_uri = (env === 'local')? 'http://localhost:1111/callback' : 'https://spotmefy2.herokuapp.com/callback';
 const authorize_uri = 'https://accounts.spotify.com/authorize?';
 const stateKey = 'spotify_auth_state';
-const scope = 'user-read-private user-read-email user-library-read user-library-modify';
+const scope = 'user-read-private user-read-email user-library-read user-library-modify user-top-read';
 const PORT = process.env.PORT || 1111;
 let hasToken = false;
 

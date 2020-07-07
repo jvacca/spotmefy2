@@ -6,6 +6,7 @@ export default class Model {
     }
 
     Model.instance = this;
+    Model.APIBaseUrl = 'https://api.spotify.com/';
 
     if (access_token !== null) {
       this.access_token = access_token;
@@ -20,41 +21,47 @@ export default class Model {
     console.log('access_token ',this.access_token, 'refresh_token ', this.refresh_token);
 
     this.endpoints = {
+      'userprofile': {
+        uri: 'v1/me'
+      },
+      'history': {
+        uri: 'v1/me/top/tracks'
+      },
       'playlists': {
-        uri: 'https://api.spotify.com/v1/me/playlists'
+        uri: 'v1/me/playlists'
       },
       'playlistTracks': {
-        uri: 'https://api.spotify.com/v1/playlists/'
+        uri: 'v1/playlists/'
       },
       'albumTracks': {
-        uri: 'https://api.spotify.com/v1/albums/'
+        uri: 'v1/albums/'
       },
       'artist':{
-        uri: 'https://api.spotify.com/v1/artists/'
+        uri: 'v1/artists/'
       },
       'artistAlbums':{
-        uri: 'https://api.spotify.com/v1/artists/'
+        uri: 'v1/artists/'
       },
       'artistTopTracks':{
-        uri: 'https://api.spotify.com/v1/artists/'
+        uri: 'v1/artists/'
       },
       'track':{
-        uri: 'https://api.spotify.com/v1/tracks/'
+        uri: 'v1/tracks/'
       },
       'getPutSavedAlbums':{
-          uri: 'https://api.spotify.com/v1/me/albums'
+          uri: 'v1/me/albums'
       },
       'getPutSavedTracks':{
-          uri: 'https://api.spotify.com/v1/me/tracks'
+          uri: 'v1/me/tracks'
       },
       'search':{
-          uri: 'https://api.spotify.com/v1/search'
+          uri: 'v1/search'
       }
     }
   }
 
   load(which, id, resolve) {
-    let url = (id !== null && typeof id !== 'undefined' && which !== 'search')? this.endpoints[which].uri + id : this.endpoints[which].uri;
+    let url = (id !== null && typeof id !== 'undefined' && which !== 'search')? Model.APIBaseUrl + this.endpoints[which].uri + id : Model.APIBaseUrl + this.endpoints[which].uri;
     if (which === 'artistAlbums') url += '/albums?market=US&include_groups=album,single';
     if (which === 'artistTopTracks') url += '/top-tracks?country=US';
     if (which === 'search') url += '?q=' + encodeURI(id) + '&type=artist,album,track'
@@ -83,7 +90,7 @@ export default class Model {
   }
 
   save(which, id, resolve) {
-    let url = this.endpoints[which].uri + '?ids=' + id;
+    let url = Model.APIBaseUrl + this.endpoints[which].uri + '?ids=' + id;
 
     fetch(url, {
       method: 'PUT',
@@ -106,16 +113,6 @@ export default class Model {
     })
 
   }
-
-  addToRecentlyPlayed() {
-    
-  }
-
-  retrieveRecenlyPlayed() {
-    
-  }
-
-
 
   getImages(album_images) {
     if (album_images || album_images.length > 0) {

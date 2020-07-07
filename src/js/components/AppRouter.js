@@ -10,7 +10,6 @@ export default class AppRouter extends Component {
   constructor(props) {
     super(props);
     this.model = new Model();
-    
   }
 
   render() {
@@ -31,7 +30,6 @@ export default class AppRouter extends Component {
               <Route exact path='/' component={MainPanel} />
             </div>
           </Router>
-          
         </div>
       </div>
     )

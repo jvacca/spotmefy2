@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {Link} from 'react-router-dom';
-import Heading from './Heading';
+import User from './User';
 import Sidebar from './Sidebar';
 import PlaylistPanel from './PlaylistPanel';
 import ArtistPanel from './ArtistPanel';
@@ -47,6 +47,14 @@ export default class MainPanel extends Component {
           songPath: item.preview_url,
           duration: item.duration_ms
         }));
+    } else if (which === 'user') {
+      return tracks.map((item, index) => ({
+        album_images: this.model.getImages(item.album.images),
+        trackName: item.name,
+        artists: this.model.getArtistNames(item.artists),
+        songPath: item.preview_url,
+        duration: item.duration_ms
+      }));
     } else {
       return tracks.map((item, index) => ({
         album_images: this.model.getImages(item.track.album.images),
@@ -178,7 +186,7 @@ export default class MainPanel extends Component {
         // create recently played first
         return;
       default:
-        return <Heading />
+        return <User />
     }
   }
 

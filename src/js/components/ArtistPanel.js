@@ -42,7 +42,7 @@ const SimpleTrackList2 = ({tracks, images, onPlayTrack}) => {
       }
     </ol>
   )
-}
+} 
 
 export default class ArtistPanel extends Component {
   constructor(props) {
