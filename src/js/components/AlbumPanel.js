@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import {connect} from 'react-redux';
+import * as Actions from '../actions'
 import TrackItem from './TrackItem';
 import Model from '../model';
 
@@ -44,7 +46,17 @@ const SimpleTrackList = ({id, tracks, artists, images, currentTrackIndex, onPlay
   )
 }
 
-export default class AlbumPanel extends Component {
+const mapStateToProps = state => ({
+  currentTrackIndex: state.queue.currentTrackIndex
+});
+
+const mapDispatchToProps = dispatch => ({
+  playSingleTrack: (data) => dispatch(Actions.playSingleTrack(data)),
+  playAlbum: (data) => dispatch(Actions.playAlbum(data)),
+  resetCurrentTrackIndex: () => dispatch(Actions.resetCurrentTrackIndex())
+});
+
+class AlbumPanelComponent extends Component {
   constructor(props) {
     super(props);
 
@@ -61,10 +73,10 @@ export default class AlbumPanel extends Component {
       this.setState({
         data: data
       }, () => {
-        if (this.props.track !== -1) {
+        if (typeof this.props.match.params.trackid !== 'undefined') {
           let sindex;
           let search_index = data.tracks.items.map((item, index) => {
-            if (item.id === this.props.track) sindex = index
+            if (item.id === this.props.match.params.trackid) sindex = index
           });
           console.log("found index ", sindex)
           if (sindex !== -1) this.onPlayTrack(sindex);
@@ -74,33 +86,36 @@ export default class AlbumPanel extends Component {
   }
 
   componentDidMount() {
-    this.loadAlbum(this.props.id);
+    this.props.resetCurrentTrackIndex();
+    this.loadAlbum(this.props.match.params.id);
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.id !== this.props.id) {
-      this.loadAlbum(this.props.id);
+    if (prevProps.match.params.id !== this.props.match.params.id) {
+      this.loadAlbum(this.props.match.params.id);
     }
   }
 
   onPlayAlbum(tracks) {
     let eventData={
-      id: this.props.id,
+      id: this.props.match.params.id,
       tracks: this.state.data.tracks.items,
       album_images: this.state.data.images
     }
-    this.model.pubsub.emit('playAlbum', eventData);
+    
+    this.props.playAlbum(eventData);
   }
 
   onPlayTrack(index) {
     let eventData={
-      id: this.props.id,
+      id: this.props.match.params.id,
       panel: 'album',
       tracks: this.state.data.tracks.items,
       album_images: this.state.data.images,
       index: index
     }
-    this.model.pubsub.emit('playTrack', eventData);
+
+    this.props.playSingleTrack(eventData);
   }
 
   onLikeAlbum(id) {
@@ -140,3 +155,7 @@ export default class AlbumPanel extends Component {
       }
   }
 }
+
+const AlbumPanel = connect(mapStateToProps, mapDispatchToProps)(AlbumPanelComponent);
+
+export default AlbumPanel

@@ -1,7 +1,14 @@
 import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import * as Actions from '../actions';
 import Model from '../model';
 
-export default class Controls extends Component {
+const mapDispatchToProps = dispatch => ({
+  prevTrack: (data) => dispatch(Actions.prevTrack()),
+  nextTrack: (data) => dispatch(Actions.nextTrack())
+});
+
+class ControlsComponent extends Component {
   constructor(props) {
     super(props);
 
@@ -12,11 +19,11 @@ export default class Controls extends Component {
   }
 
   previous(e) {
-    this.model.pubsub.emit('prevSong');
+    this.props.prevTrack();
   }
 
   next(e) {
-    this.model.pubsub.emit('nextSong');
+    this.props.nextTrack();
   }
 
   componentDidMount() {
@@ -46,3 +53,7 @@ export default class Controls extends Component {
     )
   }
 }
+
+const Controls = connect(null, mapDispatchToProps)(ControlsComponent);
+
+export default Controls

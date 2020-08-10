@@ -1,8 +1,20 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
+import * as Actions from '../actions';
 import TrackList from './TrackList';
 import Model from '../model';
 
-export default class PlaylistPanel extends Component {
+const mapStateToProps = state => ({
+  currentTrackIndex: state.queue.currentTrackIndex
+});
+
+const mapDispatchToProps = dispatch => ({
+  playSingleTrack: (data) => dispatch(Actions.playSingleTrack(data)),
+  playPlaylist: (data) => dispatch(Actions.playPlaylist(data)),
+  resetCurrentTrackIndex: () => dispatch(Actions.resetCurrentTrackIndex())
+});
+
+class PlaylistPanelComponent extends Component {
   constructor(props) {
     super(props);
 
@@ -24,33 +36,37 @@ export default class PlaylistPanel extends Component {
 
   componentDidMount() {
     //console.log("Mounted!")
-    this.loadPlaylist(this.props.id);
+    this.props.resetCurrentTrackIndex();
+    this.loadPlaylist(this.props.match.params.id);
   }
 
   componentDidUpdate(prevProps) {
     //console.log("Updated!");
-    if (prevProps.id !== this.props.id) {
-      this.loadPlaylist(this.props.id);
+    if (prevProps.match.params.id !== this.props.match.params.id) {
+      this.props.resetCurrentTrackIndex();
+      this.loadPlaylist(this.props.match.params.id);
     }
     
   }
 
   onPlayPlaylist(tracks) {
     let eventData={
-      id: this.props.id,
+      id: this.props.match.params.id,
       tracks: this.state.data.tracks.items
     }
-    this.model.pubsub.emit('playPlaylist', eventData);
+    
+    this.props.playPlaylist(eventData);
   }
 
   onPlayTrack(index) {
     let eventData={
-      id: this.props.id,
+      id: this.props.match.params.id,
       panel: 'playlist',
       tracks: this.state.data.tracks.items,
       index: index
     }
-    this.model.pubsub.emit('playTrack', eventData);
+    
+    this.props.playSingleTrack(eventData);
   }
 
   render() {
@@ -78,3 +94,7 @@ export default class PlaylistPanel extends Component {
     }
   }
 }
+
+const PlaylistPanel = connect(mapStateToProps, mapDispatchToProps)(PlaylistPanelComponent);
+
+export default PlaylistPanel;

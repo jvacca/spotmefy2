@@ -1,6 +1,11 @@
 import React, { Component } from "react";
 import Controls from './Controls';
 import Model from '../model';
+import {connect} from 'react-redux';
+
+const mapStateToProps = state => ({
+  currentTrack: state.queue.currentTrack
+});
 
 const NowPlaying = ({albumImagePath, song_title, artist_name}) => {
   
@@ -15,32 +20,34 @@ const NowPlaying = ({albumImagePath, song_title, artist_name}) => {
   )
 }
 
-export default class MediaPlayer extends Component {
+class MediaPlayerComponent extends Component {
   constructor(props) {
     super(props);
     this.model = new Model();
   }
 
   render() {
-    if (this.props.currentTrack !== null) {
-      //console.log('*********', this.props.currentTrack.songPath)
+    if (this.props.currentTrack !== null || typeof this.props.currentTrack !== 'undefined' || this.props.currentTrack !== '') {
+      //console.log('*********?', this.props.currentTrack)
       return (
         <div className="media-player">
           <NowPlaying 
-            albumImagePath={this.props.currentTrack.album_images} 
-            song_title={this.props.currentTrack.trackName}
-            artist_name={this.props.currentTrack.artists}
+            albumImagePath={this.props.currentTrack.album_images || null} 
+            song_title={this.props.currentTrack.trackName || ''}
+            artist_name={this.props.currentTrack.artists || ''}
           />
 
           <Controls 
-            duration={this.props.currentTrack.duration}
-            songPath = {this.props.currentTrack.songPath}
-            onRepeat = {this.onRepeat}
+            duration={this.props.currentTrack.duration || 0}
+            songPath = {this.props.currentTrack.songPath || ''}
           />
         </div>
       );
-      } else {
-        return <div></div>
-      }
+    } else {
+      return <div></div>
+    }
   }
 }
+
+const MediaPlayer = connect(mapStateToProps, null)(MediaPlayerComponent);
+export default MediaPlayer;

@@ -130,6 +130,35 @@ export default class Model {
     return artistArr.join(', ');
   }
 
+  sanitizeTracks(which, tracks, album_images) {
+    if (which === 'album') {
+      return tracks.map((item, index) => ({
+          album_images: this.getImages(album_images),
+          trackName: item.name,
+          artists: this.getArtistNames(item.artists),
+          songPath: item.preview_url,
+          duration: item.duration_ms
+        }));
+    } else if (which === 'user') {
+      return tracks.map((item, index) => ({
+        album_images: this.getImages(item.album.images),
+        trackName: item.name,
+        artists: this.getArtistNames(item.artists),
+        songPath: item.preview_url,
+        duration: item.duration_ms
+      }));
+    } else {
+      return tracks.map((item, index) => ({
+        album_images: this.getImages(item.track.album.images),
+        trackName: item.track.name,
+        artists: this.getArtistNames(item.track.artists),
+        songPath: item.track.preview_url,
+        duration: item.track.duration_ms
+      }));
+    }
+
+  }
+
   formatDate(date) {
     let dateObj = new Date(date);
     let formatted = '';

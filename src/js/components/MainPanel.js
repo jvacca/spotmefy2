@@ -22,8 +22,8 @@ export default class MainPanel extends Component {
       queue: null
     }
 
-    this.onNextTrack = this.onNextTrack.bind(this);
-    this.onPrevTrack = this.onPrevTrack.bind(this);
+    //this.onNextTrack = this.onNextTrack.bind(this);
+    //this.onPrevTrack = this.onPrevTrack.bind(this);
   }
   
   getPanel() {
@@ -37,7 +37,7 @@ export default class MainPanel extends Component {
 
     return panel;
   }
-
+/*
   sanitizeTracks(which, tracks, album_images) {
     if (which === 'album') {
       return tracks.map((item, index) => ({
@@ -141,29 +141,30 @@ export default class MainPanel extends Component {
       })
     }
   }
-
+*/
   componentDidMount() {
     //console.log("Mounted ", this.props.match.params, this.props.match.path);
-
+/*
     this.model.pubsub.on('playTrack', this.onPlaySingleTrack, this);
     this.model.pubsub.on('playAlbum', this.onPlayAlbum, this);
     this.model.pubsub.on('playPlaylist', this.onPlayPlaylist, this);
     this.model.pubsub.on('playSavedTracks', this.onPlayPlaylist, this);
     this.model.pubsub.on('nextSong', this.onNextTrack, this);
-    this.model.pubsub.on('prevSong', this.onPrevTrack, this);
+    this.model.pubsub.on('prevSong', this.onPrevTrack, this);*/
   }
 
   componentWillUnmount() {
-    this.model.pubsub.removeAllListeners();
+    //this.model.pubsub.removeAllListeners();
   }
   
   componentDidUpdate(prevProps) {
     //console.log("Updated ", this.props.match.params, this.props.match.path)
+    /*
     if (prevProps.match.params.id !== this.props.match.params.id) {
       this.setState({
         currentTrackIndex: -1
       })
-    }
+    }*/
   }
   
   route() {
@@ -171,15 +172,15 @@ export default class MainPanel extends Component {
 
     switch(panel) {
       case 'playlist':
-        return <PlaylistPanel id={this.props.match.params.id} currentTrackIndex={this.state.currentTrackIndex} />
+        return <PlaylistPanel id={this.props.match.params.id} />
       case 'artist':
         return <ArtistPanel id={this.props.match.params.id} />
       case 'album':
-        return <AlbumPanel id={this.props.match.params.id} track={this.props.match.params.trackid || -1} currentTrackIndex={this.state.currentTrackIndex} />
+        return <AlbumPanel id={this.props.match.params.id} />
       case 'savedalbums':
         return <SavedAlbumsPanel />
       case 'savedtracks':
-        return <SavedTracksPanel currentTrackIndex={this.state.currentTrackIndex} />
+        return <SavedTracksPanel />
       case 'search':
         return <Search />
       case 'recentlyPlayed':
@@ -194,7 +195,7 @@ export default class MainPanel extends Component {
     return (
       <div>
         { this.route() }
-        <MediaPlayer currentTrack={this.state.currentTrack} />
+        <MediaPlayer />
       </div>
     );
   }

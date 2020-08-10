@@ -62,7 +62,7 @@ export default class User extends Component {
 
   loadUserProfile() {
     let callPromise = this.model.load('userprofile', null, (data) => {
-      console.log('data: ', data);
+      //console.log('data: ', data);
 
       this.setState({
         userData: data
@@ -72,7 +72,7 @@ export default class User extends Component {
 
   loadTopTracks() {
     let callPromise = this.model.load('history', null, (data) => {
-      console.log('data: ', data);
+      //console.log('data: ', data);
 
       this.setState({
         topTracks: data

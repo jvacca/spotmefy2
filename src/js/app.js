@@ -2,6 +2,8 @@ import '../scss/page.scss';
 import Model from './model';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {createStore} from 'redux';
+import reducer from './reducers';
 import AppRouter from './components/AppRouter';
 
 console.log("Initializing");
@@ -32,7 +34,15 @@ window.onresize = () => {
 }
 fullScreen();
 
+const store = createStore(reducer);
+console.log('state:')
+console.log(store.getState())
+const unsubscribe = store.subscribe(() => {
+  console.log('state:')
+  console.log(store.getState())
+});
+
 
 ReactDOM.render (
-  <AppRouter />, document.getElementById('app')
+    <AppRouter store={store} />, document.getElementById('app')
 );

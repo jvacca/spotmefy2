@@ -94,16 +94,16 @@ export default class ArtistPanel extends Component {
   }
 
   componentDidMount() {
-    this.loadArtist(this.props.id);
-    this.loadArtistTracks(this.props.id);
-    this.loadAlbum(this.props.id);
+    this.loadArtist(this.props.match.params.id);
+    this.loadArtistTracks(this.props.match.params.id);
+    this.loadAlbum(this.props.match.params.id);
   }
 
   componentDidUpdate(prevProps) {
-    if (prevProps.id !== this.props.id) {
-      this.loadArtist(this.props.id);
-      this.loadArtistTracks(this.props.id);
-      this.loadAlbum(this.props.id);
+    if (prevProps.match.params.id !== this.props.match.params.id) {
+      this.loadArtist(this.props.match.params.id);
+      this.loadArtistTracks(this.props.match.params.id);
+      this.loadAlbum(this.props.match.params.id);
     }
   }
 

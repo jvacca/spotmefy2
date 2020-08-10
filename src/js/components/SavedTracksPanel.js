@@ -1,8 +1,20 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
+import * as Actions from '../actions';
 import TrackList from './TrackList';
 import Model from '../model';
 
-export default class SavedTracksPanel extends Component {
+const mapStateToProps = state => ({
+  currentTrackIndex: state.queue.currentTrackIndex
+});
+
+const mapDispatchToProps = dispatch => ({
+  playSingleTrack: (data) => dispatch(Actions.playSingleTrack(data)),
+  playAllSavedTracks: (data) => dispatch(Actions.playPlaylist(data)),
+  resetCurrentTrackIndex: () => dispatch(Actions.resetCurrentTrackIndex())
+});
+
+class SavedTracksPanelComponent extends Component {
   constructor(props) {
     super(props);
 
@@ -26,6 +38,7 @@ export default class SavedTracksPanel extends Component {
 
   componentDidMount() {
     //console.log("Mounted!")
+    this.props.resetCurrentTrackIndex();
     this.loadTracks(this.props.id);
   }
 
@@ -38,7 +51,8 @@ export default class SavedTracksPanel extends Component {
       id: this.props.id,
       tracks: this.state.data.items
     }
-    this.model.pubsub.emit('playSavedTracks', eventData);
+
+    this.props.playAllSavedTracks(eventData);
   }
 
   onPlayTrack(index) {
@@ -48,7 +62,8 @@ export default class SavedTracksPanel extends Component {
       tracks: this.state.data.items,
       index: index
     }
-    this.model.pubsub.emit('playTrack', eventData);
+    
+    this.props.playSingleTrack(eventData);
   }
 
   render() {
@@ -72,3 +87,7 @@ export default class SavedTracksPanel extends Component {
     }
   }
 }
+
+const SavedTracksPanel = connect(mapStateToProps, mapDispatchToProps)(SavedTracksPanelComponent)
+
+export default SavedTracksPanel

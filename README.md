@@ -1,7 +1,7 @@
 Readme soon to come
 
 ToDo:
-- Finish search functionality
+- Finish search functionality (add see more and break up results in categories, etc)
 - Replace User profile (default panel) with Recently Played which will be retrieved from local storage
 
 
