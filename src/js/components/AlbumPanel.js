@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import {connect} from 'react-redux';
 import * as Actions from '../actions'
 import TrackItem from './TrackItem';
-import Model from '../model';
+import * as Utils from '../utils';
 
 const SimpleTrackList = ({id, tracks, artists, images, currentTrackIndex, onPlayTrack, selectedTrackId}) => {
 
@@ -47,28 +47,26 @@ const SimpleTrackList = ({id, tracks, artists, images, currentTrackIndex, onPlay
 }
 
 const mapStateToProps = state => ({
-  currentTrackIndex: state.queue.currentTrackIndex
+  currentTrackIndex: state.queue.currentTrackIndex,
+  data: state.fetchedData['albumTracks']
 });
 
 const mapDispatchToProps = dispatch => ({
   playSingleTrack: (data) => dispatch(Actions.playSingleTrack(data)),
   playAlbum: (data) => dispatch(Actions.playAlbum(data)),
-  resetCurrentTrackIndex: () => dispatch(Actions.resetCurrentTrackIndex())
+  resetCurrentTrackIndex: () => dispatch(Actions.resetCurrentTrackIndex()),
+  load: (which, id) => dispatch(Actions.load(which, id))
 });
 
 class AlbumPanelComponent extends Component {
   constructor(props) {
     super(props);
 
-    this.model = new Model();
     this.onPlayTrack = this.onPlayTrack.bind(this)
-    this.state = {
-      data: null
-    };
   }
 
   loadAlbum(id) {
-    let callPromise = this.model.load('albumTracks', id, (data) => {
+    let callPromise = this.props.load('albumTracks', id, (data) => {
       //console.log('data: ', data);
       this.setState({
         data: data
@@ -87,20 +85,20 @@ class AlbumPanelComponent extends Component {
 
   componentDidMount() {
     this.props.resetCurrentTrackIndex();
-    this.loadAlbum(this.props.match.params.id);
+    let callPromise = this.props.load('albumTracks', this.props.match.params.id);
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.match.params.id !== this.props.match.params.id) {
-      this.loadAlbum(this.props.match.params.id);
+      let callPromise = this.props.load('albumTracks', this.props.match.params.id);
     }
   }
 
   onPlayAlbum(tracks) {
     let eventData={
       id: this.props.match.params.id,
-      tracks: this.state.data.tracks.items,
-      album_images: this.state.data.images
+      tracks: this.props.data.tracks.items,
+      album_images: this.props.data.images
     }
     
     this.props.playAlbum(eventData);
@@ -110,8 +108,8 @@ class AlbumPanelComponent extends Component {
     let eventData={
       id: this.props.match.params.id,
       panel: 'album',
-      tracks: this.state.data.tracks.items,
-      album_images: this.state.data.images,
+      tracks: this.props.data.tracks.items,
+      album_images: this.props.data.images,
       index: index
     }
 
@@ -119,20 +117,20 @@ class AlbumPanelComponent extends Component {
   }
 
   onLikeAlbum(id) {
-    console.log("like album ", this.state.data);
+    console.log("like album ", this.props.data);
 
-    this.model.save('getPutSavedAlbums', id, data => {
+    this.props.save('getPutSavedAlbums', id, data => {
       console.log('********SAVED', data)
     })
   }
 
   render() {
-    if (this.state.data !== null) { 
-      let {id, images, name, artists, tracks, release_date, total_tracks} = this.state.data;
+    if (this.props.data) { 
+      let {id, images, name, artists, tracks, release_date, total_tracks} = this.props.data;
       
       return (
         <div className="album-panel">
-          <div className="album-cover"><img src={this.model.getImages(images)} /></div>
+          <div className="album-cover"><img src={Utils.getImages(images)} /></div>
           <div className="heading">
             <p className="heading-label">ALBUM</p>
             <h1>{name}</h1>

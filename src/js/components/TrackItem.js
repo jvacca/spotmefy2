@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
-import Model from '../model';
+import * as Utils from '../utils';
 
 export default class TrackItem extends Component {
   constructor(props) {
     super(props);
 
-    this.model = new Model();
     this.playTrack = this.playTrack.bind(this);
   }
 
@@ -21,7 +20,7 @@ export default class TrackItem extends Component {
   }
 
   onLikeSong(id) {
-    this.model.save('getPutSavedTracks', id, data => {
+    this.props.save('getPutSavedTracks', id, data => {
       console.log('********SAVED', data)
     })
   }
@@ -37,8 +36,8 @@ export default class TrackItem extends Component {
           <span onClick={(e) => this.playTrack(index-1)} className="song-name">{trackName}</span>
           {(this.props.isAlbumView === false)? <span className="artist-name">{this.getArtistLinks(artists)}</span> : ''}
           {(this.props.isAlbumView === false)? <span className="album-name"><Link to={`/album/${album_id}`}>{albumName}</Link></span> : ''}
-          {(this.props.isAlbumView === false)? <span className="date">{this.model.formatDate(added_at)}</span> : ''}
-          <span className="duration">{this.model.formatDuration(duration)}</span>
+          {(this.props.isAlbumView === false)? <span className="date">{Utils.formatDate(added_at)}</span> : ''}
+          <span className="duration">{Utils.formatDuration(duration)}</span>
         </p>
       </li>
     )

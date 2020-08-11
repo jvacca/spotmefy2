@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import * as Actions from '../actions';
-import Model from '../model';
 
 const mapDispatchToProps = dispatch => ({
   prevTrack: (data) => dispatch(Actions.prevTrack()),
@@ -12,7 +11,6 @@ class ControlsComponent extends Component {
   constructor(props) {
     super(props);
 
-    this.model = new Model();
     this.soundObj = React.createRef();
     this.previous = this.previous.bind(this);
     this.next = this.next.bind(this);

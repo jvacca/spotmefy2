@@ -1,7 +1,9 @@
 import React, { Component } from "react";
+import {connect} from 'react-redux';
+import * as Actions from '../actions'
 import {Link} from 'react-router-dom';
 import TrackItem from './TrackItem';
-import Model from '../model';
+import * as Utils from '../utils';
 
 const SimpleTrackList2 = ({tracks, images, onPlayTrack}) => {
   let filtered_tracks = tracks.tracks.slice(0, 5)
@@ -44,94 +46,76 @@ const SimpleTrackList2 = ({tracks, images, onPlayTrack}) => {
   )
 } 
 
-export default class ArtistPanel extends Component {
+const mapStateToProps = state => ({
+  albumData: state.fetchedData['artistAlbums'],
+  artistData: state.fetchedData['artist'],
+  artistTopTracks: state.fetchedData['artistTopTracks']
+});
+
+const mapDispatchToProps = dispatch => ({
+  load: (which, id) => dispatch(Actions.load(which, id))
+});
+
+class ArtistPanelComponent extends Component {
   constructor(props) {
     super(props);
 
-    this.model = new Model();
-    this.state = {
-      albumData: null,
-      artistData: null,
-      artistTopTracks: null
-    };
     this.onPlayTrack = this.onPlayTrack.bind(this);
   }
 
-  loadArtist(id) {
-    let callPromise = this.model.load('artist', id, (data) => {
-      //console.log('data: ', data);
-      this.setState({
-        artistData: data
-      });
-    })
-  }
-
-  loadArtistTracks(id) {
-    let callPromise = this.model.load('artistTopTracks', id, (data) => {
-      //console.log('data: ', data);
-      this.setState({
-        artistTopTracks: data
-      });
-    })
-  }
-
-  loadAlbum(id) {
-    let callPromise = this.model.load('artistAlbums', id, (data) => {
-      //console.log('data: ', data);
-      
-      let filter = data.items.filter(album => ( 
+  filterAlbums(albums) {   
+      let filter = albums.items.filter(album => ( 
         album.name.includes('(Deluxe') === false &&
         album.name.includes('(Expand') === false &&
         album.name.includes('Remaster') === false
-      ))
+      ));
       let filteredState = {}
       filteredState.items = filter;
 
-      this.setState({
-        albumData: filteredState
-      });
-    })
+      return filteredState;
   }
 
   componentDidMount() {
-    this.loadArtist(this.props.match.params.id);
-    this.loadArtistTracks(this.props.match.params.id);
-    this.loadAlbum(this.props.match.params.id);
+    let callPromise = this.props.load('artist',this.props.match.params.id);
+    let callPromise2 = this.props.load('artistTopTracks',this.props.match.params.id);
+    let callPromise3 = this.props.load('artistAlbums',this.props.match.params.id);
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.match.params.id !== this.props.match.params.id) {
-      this.loadArtist(this.props.match.params.id);
-      this.loadArtistTracks(this.props.match.params.id);
-      this.loadAlbum(this.props.match.params.id);
+      let callPromise = this.props.load('artist',this.props.match.params.id);
+      let callPromise2 = this.props.load('artistTopTracks',this.props.match.params.id);
+      let callPromise3 = this.props.load('artistAlbums',this.props.match.params.id);
     }
   }
 
   onPlayTrack(index) {
     let eventData={
       panel: 'album',
-      tracks: this.state.artistTopTracks.tracks,
-      album_images: this.state.artistData.images,
+      tracks: this.props.artistTopTracks.tracks,
+      album_images: this.props.artistData.images,
       index: index
     }
-    this.model.pubsub.emit('playTrack', eventData);
+
+    this.props.playSingleTrack(eventData);
   }
 
   render() {
-    if (this.state.albumData && this.state.artistData && this.state.artistTopTracks) { 
-      let {images, name} = this.state.artistData
+    if (this.props.albumData && this.props.artistData && this.props.artistTopTracks) { 
+      let {images, name} = this.props.artistData;
+      let albums = this.filterAlbums(this.props.albumData)
       return (
         <div className="artist-panel">
           <div className="heading-holder">
-            <div className="artist-image"><img src={this.model.getImages(images)} /></div>
+            <div className="artist-image"><img src={Utils.getImages(images)} /></div>
             <div className="heading">
               <p className="heading-label">ARTIST</p>
               <h1>{name}</h1>
               <h3>Popular</h3>
               <div className="top-tracks-holder">
                 {
-                  this.state.artistTopTracks && <SimpleTrackList2
-                  tracks = {this.state.artistTopTracks}
+                  this.props.artistTopTracks && <SimpleTrackList2
+                  tracks = {this.props.artistTopTracks}
                   images = {images}
                   onPlayTrack = {this.onPlayTrack}
                 />}
@@ -141,11 +125,11 @@ export default class ArtistPanel extends Component {
           
           <ul>
             {
-              this.state.albumData.items.map( (item, index) => {
+              albums.items.map( (item, index) => {
                 return (
                   <li key={index}>
                     <Link to={`/album/${item.id}`}>
-                      <img src={this.model.getImages(item.images)} />
+                      <img src={Utils.getImages(item.images)} />
                       <p className="hilight">{item.name}</p> 
                       <p>{item.release_date}</p>
                     </Link>
@@ -161,3 +145,7 @@ export default class ArtistPanel extends Component {
       }
   }
 }
+
+const ArtistPanel = connect(mapStateToProps, mapDispatchToProps)(ArtistPanelComponent);
+
+export default ArtistPanel

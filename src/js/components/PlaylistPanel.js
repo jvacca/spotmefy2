@@ -2,49 +2,38 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import * as Actions from '../actions';
 import TrackList from './TrackList';
-import Model from '../model';
+import * as Utils from '../utils';
 
 const mapStateToProps = state => ({
-  currentTrackIndex: state.queue.currentTrackIndex
+  currentTrackIndex: state.queue.currentTrackIndex,
+  data: state.fetchedData['playlistTracks']
 });
 
 const mapDispatchToProps = dispatch => ({
   playSingleTrack: (data) => dispatch(Actions.playSingleTrack(data)),
   playPlaylist: (data) => dispatch(Actions.playPlaylist(data)),
-  resetCurrentTrackIndex: () => dispatch(Actions.resetCurrentTrackIndex())
+  resetCurrentTrackIndex: () => dispatch(Actions.resetCurrentTrackIndex()),
+  load: (which, id) => dispatch(Actions.load(which, id))
 });
 
 class PlaylistPanelComponent extends Component {
   constructor(props) {
     super(props);
 
-    this.model = new Model();
     this.onPlayTrack = this.onPlayTrack.bind(this)
-    this.state = {
-      data: null
-    };
-  }
-
-  loadPlaylist(id) {
-    let callPromise = this.model.load('playlistTracks', id, (data) => {
-      console.log('data: ', data);
-      this.setState({
-        data: data
-      });
-    });
   }
 
   componentDidMount() {
     //console.log("Mounted!")
     this.props.resetCurrentTrackIndex();
-    this.loadPlaylist(this.props.match.params.id);
+    let callPromise = this.props.load('playlistTracks', this.props.match.params.id);
   }
 
   componentDidUpdate(prevProps) {
     //console.log("Updated!");
     if (prevProps.match.params.id !== this.props.match.params.id) {
       this.props.resetCurrentTrackIndex();
-      this.loadPlaylist(this.props.match.params.id);
+      let callPromise = this.props.load('playlistTracks', this.props.match.params.id);
     }
     
   }
@@ -52,7 +41,7 @@ class PlaylistPanelComponent extends Component {
   onPlayPlaylist(tracks) {
     let eventData={
       id: this.props.match.params.id,
-      tracks: this.state.data.tracks.items
+      tracks: this.props.data.tracks.items
     }
     
     this.props.playPlaylist(eventData);
@@ -62,7 +51,7 @@ class PlaylistPanelComponent extends Component {
     let eventData={
       id: this.props.match.params.id,
       panel: 'playlist',
-      tracks: this.state.data.tracks.items,
+      tracks: this.props.data.tracks.items,
       index: index
     }
     
@@ -70,11 +59,11 @@ class PlaylistPanelComponent extends Component {
   }
 
   render() {
-    if (this.state.data !== null) { 
-      let {id, name, tracks, images, owner} = this.state.data;
+    if (this.props.data) { 
+      let {id, name, tracks, images, owner} = this.props.data;
       return (
       <div className="playlist-panel">
-        <div className="album-cover"><img src={this.model.getImages(images)} /></div>
+        <div className="album-cover"><img src={Utils.getImages(images)} /></div>
         <div className="heading">
           <p className="heading-label">PLAYLIST</p>
           <h1>{name}</h1>

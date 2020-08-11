@@ -1,30 +1,24 @@
 import React, { Component } from "react";
+import {connect} from 'react-redux';
+import * as Actions from '../actions';
 import {Link} from 'react-router-dom';
-import Model from '../model';
+import * as Utils from '../utils';
 
-export default class SavedAlbumsPanel extends Component {
+const mapStateToProps = state => ({
+  albumData: state.fetchedData['getPutSavedAlbums']
+});
+
+const mapDispatchToProps = dispatch => ({
+  load: (which, id) => dispatch(Actions.load(which, id))
+});
+
+class SavedAlbumsPanelComponent extends Component {
   constructor(props) {
     super(props);
-
-    this.model = new Model();
-    this.state = {
-      albumData: null
-    };
-
-  }
-
-  loadAlbums(id) {
-    let callPromise = this.model.load('getPutSavedAlbums', '', (data) => {
-      //console.log('data: ', data);
-      
-      this.setState({
-        albumData: data
-      });
-    })
   }
 
   componentDidMount() {
-    this.loadAlbums(this.props.id);
+    let callPromise = this.props.load('getPutSavedAlbums', null);
   }
 
   componentDidUpdate(prevProps) {
@@ -32,7 +26,7 @@ export default class SavedAlbumsPanel extends Component {
   }
 
   render() {
-    if (this.state.albumData) { 
+    if (this.props.albumData) { 
       return (
         <div className="saved-album-panel">
           <div className="heading">
@@ -40,11 +34,11 @@ export default class SavedAlbumsPanel extends Component {
           </div>
           <ul>
             {
-              this.state.albumData.items.map( (item, index) => {
+              this.props.albumData.items.map( (item, index) => {
                 return (
                   <li key={index} className="albumBox">
                     <Link to={`/album/${item.album.id}`}>
-                      <img src={this.model.getImages(item.album.images)} />
+                      <img src={Utils.getImages(item.album.images)} />
                       <p className="hilight">{item.album.name}</p> 
                       <p>{item.album.release_date}</p>
                     </Link>
@@ -60,3 +54,5 @@ export default class SavedAlbumsPanel extends Component {
       }
   }
 }
+const SavedAlbumsPanel = connect(mapStateToProps, mapDispatchToProps)(SavedAlbumsPanelComponent);
+export default SavedAlbumsPanel

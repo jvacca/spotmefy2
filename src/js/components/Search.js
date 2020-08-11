@@ -1,31 +1,34 @@
 import React, { Component } from "react";
+import {connect} from 'react-redux';
+import * as Actions from '../actions';
 import {Link} from 'react-router-dom';
-import Model from '../model';
+import * as Utils from '../utils';
 
-export default class Search extends Component {
+const mapStateToProps = state => ({
+  data: state.fetchedData['search']
+});
+
+const mapDispatchToProps = dispatch => ({
+  load: (which, id) => dispatch(Actions.load(which, id))
+});
+
+class SearchComponent extends Component {
   constructor(props) {
     super(props);
 
-    this.model = new Model();
     this.onSearch = this.onSearch.bind(this);
     this.state = {
-      data: null,
       searchString: '',
       query: ''
     };
-
   }
 
   search() {
     console.log('searching ')
-    let callPromise = this.model.load('search', this.state.searchString, (data) => {
-      console.log('search data: ', data);
-      
-      this.setState({
-        data: data,
-        query: this.state.searchString
-      });
-    })
+    let callPromise = this.props.load('search', this.state.searchString);
+    this.setState({
+      query: this.state.searchString
+    });
   }
 
   componentDidMount() {
@@ -55,11 +58,11 @@ export default class Search extends Component {
           </div>
           <ul>
             {
-              this.state.data && this.state.data.tracks.items.map( (item, index) => {
+              this.props.data && this.props.data.tracks.items.map( (item, index) => {
                 return (
                   <li key={index} className="albumBox">
                     <Link to={`/album/${item.album.id}`}>
-                      <img src={this.model.getImages(item.album.images)} />
+                      <img src={Utils.getImages(item.album.images)} />
                       <p className="hilight">{item.name}</p>
                       <p className="hilight">{item.album.name}</p> 
                       <p>{item.album.release_date}</p>
@@ -73,3 +76,6 @@ export default class Search extends Component {
       );
   }
 }
+
+const Search = connect(mapStateToProps, mapDispatchToProps)(SearchComponent);
+export default Search;

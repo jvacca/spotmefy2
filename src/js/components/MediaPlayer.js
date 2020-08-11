@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Controls from './Controls';
-import Model from '../model';
 import {connect} from 'react-redux';
 
 const mapStateToProps = state => ({
@@ -23,7 +22,6 @@ const NowPlaying = ({albumImagePath, song_title, artist_name}) => {
 class MediaPlayerComponent extends Component {
   constructor(props) {
     super(props);
-    this.model = new Model();
   }
 
   render() {

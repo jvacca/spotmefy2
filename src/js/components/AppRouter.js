@@ -11,12 +11,10 @@ import SavedAlbumsPanel from './SavedAlbumsPanel';
 import SavedTracksPanel from './SavedTracksPanel';
 import Search from './Search';
 import Sidebar from './Sidebar';
-import Model from '../model';
 
 export default class AppRouter extends Component {
   constructor(props) {
     super(props);
-    this.model = new Model();
   }
 
   render() {

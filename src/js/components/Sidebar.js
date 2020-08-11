@@ -1,14 +1,22 @@
 import React, { Component } from "react";
+import {connect} from 'react-redux';
+import * as Actions from '../actions';
 import {Link} from 'react-router-dom';
-import Model from '../model';
+import Utils from '../utils';
 
-export default class Sidebar extends Component {
+const mapStateToProps = state => ({
+  playlists: state.fetchedData['playlists']
+});
+
+const mapDispatchToProps = dispatch => ({
+  load: (which, id) => dispatch(Actions.load(which, id))
+});
+
+class SidebarComponent extends Component {
   constructor(props) {
     super(props);
 
-    this.model = new Model();
     this.state = {
-      data: null,
       currentIndex: -1
     };
 
@@ -16,12 +24,7 @@ export default class Sidebar extends Component {
   }
 
   componentDidMount() {
-    let callPromise = this.model.load('playlists',null, (data) => {
-      //console.log('sidebar data: ', data);
-      this.setState({
-        data: data
-      });
-    });
+    let callPromise = this.props.load('playlists', null);
   }
 
   componentDidUpdate() {
@@ -36,7 +39,7 @@ export default class Sidebar extends Component {
   }
 
   render() {
-    //console.log("state ", this.state.currentIndex)
+    //console.log("state ", this.props.playlists)
     return (
       <div className="side-panel">
         <p>YOUR LIBRARY</p>
@@ -47,7 +50,7 @@ export default class Sidebar extends Component {
         <p>PLAYLISTS</p>
         <ul className="playlist-container">
           {
-            this.state.data && this.state.data.items.map( (item, index) => {
+            this.props.playlists && this.props.playlists.items.map( (item, index) => {
               let classNameName = (index === this.state.currentIndex)? 'active': ''
               return (
                 <li key={index} className={classNameName}>
@@ -63,3 +66,6 @@ export default class Sidebar extends Component {
     )
   }
 }
+
+const Sidebar = connect(mapStateToProps, mapDispatchToProps)(SidebarComponent);
+export default Sidebar;

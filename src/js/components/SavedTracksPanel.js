@@ -2,44 +2,32 @@ import React, { Component } from 'react';
 import {connect} from 'react-redux';
 import * as Actions from '../actions';
 import TrackList from './TrackList';
-import Model from '../model';
+import Utils from '../utils';
 
 const mapStateToProps = state => ({
-  currentTrackIndex: state.queue.currentTrackIndex
+  currentTrackIndex: state.queue.currentTrackIndex,
+  data: state.fetchedData['getPutSavedTracks']
 });
 
 const mapDispatchToProps = dispatch => ({
   playSingleTrack: (data) => dispatch(Actions.playSingleTrack(data)),
   playAllSavedTracks: (data) => dispatch(Actions.playPlaylist(data)),
-  resetCurrentTrackIndex: () => dispatch(Actions.resetCurrentTrackIndex())
+  resetCurrentTrackIndex: () => dispatch(Actions.resetCurrentTrackIndex()),
+  load: (which, id) => dispatch(Actions.load(which, id))
 });
 
 class SavedTracksPanelComponent extends Component {
   constructor(props) {
     super(props);
 
-    this.model = new Model();
     this.onPlayTrack = this.onPlayTrack.bind(this)
     this.onPlaySavedTracks = this.onPlaySavedTracks.bind(this)
-    this.state = {
-      data: null
-    };
-  }
-
-  loadTracks() {
-    let callPromise = this.model.load('getPutSavedTracks', '', (data) => {
-      //console.log('data: ', data);
-      
-      this.setState({
-        data: data
-      });
-    });
   }
 
   componentDidMount() {
     //console.log("Mounted!")
     this.props.resetCurrentTrackIndex();
-    this.loadTracks(this.props.id);
+    let callPromise = this.props.load('getPutSavedTracks', null);
   }
 
   componentDidUpdate(prevProps) {
@@ -49,7 +37,7 @@ class SavedTracksPanelComponent extends Component {
   onPlaySavedTracks() {
     let eventData={
       id: this.props.id,
-      tracks: this.state.data.items
+      tracks: this.props.data.items
     }
 
     this.props.playAllSavedTracks(eventData);
@@ -59,7 +47,7 @@ class SavedTracksPanelComponent extends Component {
     let eventData={
       id: this.props.id,
       panel: 'savedtracks',
-      tracks: this.state.data.items,
+      tracks: this.props.data.items,
       index: index
     }
     
@@ -67,8 +55,8 @@ class SavedTracksPanelComponent extends Component {
   }
 
   render() {
-    if (this.state.data !== null) { 
-      let {id, items} = this.state.data;
+    if (this.props.data) { 
+      let {id, items} = this.props.data;
       return (
       <div className="saved-tracks-panel">
         <div className="heading">

@@ -1,7 +1,9 @@
 import React, { Component } from "react";
+import {connect} from 'react-redux';
+import * as Actions from '../actions'
 import {Link} from 'react-router-dom';
 import TrackItem from './TrackItem';
-import Model from '../model';
+import * as Utils from '../utils';
 
 const SimpleTrackList = ({id, tracks, currentTrackIndex, onPlayTrack}) => {
 
@@ -47,69 +49,58 @@ const SimpleTrackList = ({id, tracks, currentTrackIndex, onPlayTrack}) => {
   )
 }
 
-export default class User extends Component {
+const mapStateToProps = state => ({
+  currentTrackIndex: state.queue.currentTrackIndex,
+  userData: state.fetchedData['userprofile'],
+  topTracks: state.fetchedData['history']
+});
+
+const mapDispatchToProps = dispatch => ({
+  playSingleTrack: (data) => dispatch(Actions.playSingleTrack(data)),
+  load: (which, id) => dispatch(Actions.load(which, id))
+});
+
+class UserComponent extends Component {
   constructor(props) {
     super(props);
 
-    this.model = new Model();
     this.onPlayTrack = this.onPlayTrack.bind(this);
-
-    this.state = {
-      userData: null,
-      topTracks: null
-    };
-  }
-
-  loadUserProfile() {
-    let callPromise = this.model.load('userprofile', null, (data) => {
-      //console.log('data: ', data);
-
-      this.setState({
-        userData: data
-      });
-    });
-  }
-
-  loadTopTracks() {
-    let callPromise = this.model.load('history', null, (data) => {
-      //console.log('data: ', data);
-
-      this.setState({
-        topTracks: data
-      });
-    });
   }
 
   componentDidMount() {
-    this.loadUserProfile();
-    this.loadTopTracks();
+    let callPromise = this.props.load('userprofile', null);
+    let callPromise2 = this.props.load('history', null);
   }
 
   onPlayTrack(index) {
     let eventData={
       id: this.props.id,
       panel: 'user',
-      tracks: this.state.topTracks.items,
+      tracks: this.props.topTracks.items,
       index: index
     }
-    this.model.pubsub.emit('playTrack', eventData);
+
+    this.props.playSingleTrack(eventData);
   }
 
   render() {
-    if (this.state.userData && this.state.topTracks) { 
-      let {items} = this.state.topTracks;
+    //console.log(this.props.topTracks, this.props.userData)
+    if (this.props.topTracks && this.props.userData) { 
+      
+      let {items} = this.props.topTracks;
+      let user = this.props.userData;
       return (
         <div className="user-panel">
-          <div className="album-cover"><img src={this.model.getImages(this.state.userData.images)} /></div>
+          <div className="album-cover"><img src={Utils.getImages(user.images)} /></div>
           <div className="heading">
             <p className="heading-label">USER</p>
-            <h1>{this.state.userData.display_name}</h1>
+            <h1>{user.display_name}</h1>
           </div>
           <h3>Top Tracks</h3>
           <SimpleTrackList
             id = {''}
             tracks = {items}
-            currentTrackIndex = {0}
+            currentTrackIndex = {this.props.currentTrackIndex}
             onPlayTrack = {this.onPlayTrack}
           />
         </div>
@@ -119,3 +110,6 @@ export default class User extends Component {
     }
   }
 }
+
+const User = connect(mapStateToProps, mapDispatchToProps)(UserComponent);
+export default User
