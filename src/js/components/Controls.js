@@ -40,11 +40,11 @@ class ControlsComponent extends Component {
       <div className="controls-container">
         <div className="control-panel">
           <div className="controls">
-            <button id="prev" onClick={this.previous}> &lt; </button>
+            <button id="prev" onClick={this.previous}> &#x25C0; </button>
             <audio id="audio" controls src={this.props.songPath} ref={this.soundObj}>
               This is not supported
             </audio>
-            <button id="next" onClick={this.next}> &gt; </button>
+            <button id="next" onClick={this.next}> &nbsp;&#x25B6; </button>
           </div>
         </div>
       </div>

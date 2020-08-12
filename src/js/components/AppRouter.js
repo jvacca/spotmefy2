@@ -25,7 +25,7 @@ export default class AppRouter extends Component {
           <Router>
             <Sidebar />
             <div className="main-panel">
-              <Link to="/search">Search</Link>
+              <Link to="/search" className="search-button">Search</Link>
               <Route exact path='/playlist/:id' component={PlaylistPanel} />
               <Route exact path='/artist/:id' component={ArtistPanel} />
               <Route exact path='/album/:id' component={AlbumPanel} />

@@ -84,7 +84,7 @@ class UserComponent extends Component {
   }
 
   render() {
-    //console.log(this.props.topTracks, this.props.userData)
+    console.log(this.props.topTracks, this.props.userData)
     if (this.props.topTracks && this.props.userData) { 
       
       let {items} = this.props.topTracks;

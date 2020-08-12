@@ -63,7 +63,8 @@ class AlbumPanelComponent extends Component {
   constructor(props) {
     super(props);
 
-    this.onPlayTrack = this.onPlayTrack.bind(this)
+    this.onPlayTrack = this.onPlayTrack.bind(this);
+    this.callPromise = null;
   }
 /*
   loadAlbum(id) {
@@ -86,13 +87,26 @@ class AlbumPanelComponent extends Component {
 
   componentDidMount() {
     this.props.resetCurrentTrackIndex();
-    let callPromise = this.props.load('albumTracks', this.props.match.params.id);
+    this.callPromise = this.props.load('albumTracks', this.props.match.params.id);
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.match.params.id !== this.props.match.params.id) {
       let callPromise = this.props.load('albumTracks', this.props.match.params.id);
     }
+
+    console.log("on update")
+      this.callPromise.then( () => {
+        console.log("data returned")
+        if (typeof this.props.match.params.trackid !== 'undefined') {
+          let sindex;
+          let search_index = this.props.data.tracks.items.map((item, index) => {
+            if (item.id === this.props.match.params.trackid) sindex = index
+          });
+          console.log("found index ", sindex)
+          if (sindex !== -1) this.onPlayTrack(sindex);
+        }
+      })
   }
 
   onPlayAlbum(tracks) {

@@ -4,7 +4,13 @@ import * as Utils from '../utils';
 const initialState = {
   id: -1,
   tracks: [],
-  currentTrack: {},
+  currentTrack: {
+    album_images: '',
+    trackName: 'Tracks',
+    artists: 'Choose a track to play',
+    duration: 0,
+    songPath: ''
+  },
   currentTrackIndex: -1
 }
 
