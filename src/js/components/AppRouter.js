@@ -26,14 +26,17 @@ export default class AppRouter extends Component {
             <Sidebar />
             <div className="main-panel">
               <Link to="/search" className="search-button">Search</Link>
-              <Route exact path='/playlist/:id' component={PlaylistPanel} />
-              <Route exact path='/artist/:id' component={ArtistPanel} />
-              <Route exact path='/album/:id' component={AlbumPanel} />
-              <Route exact path='/album/:id/:trackid' component={AlbumPanel} />
-              <Route exact path='/savedalbums' component={SavedAlbumsPanel} />
-              <Route exact path='/savedtracks' component={SavedTracksPanel} />
-              <Route exact path='/search' component={Search} />
-              <Route exact path='/' component={User} />
+              <Switch>
+                <Route exact path='/' component={User} />
+                <Route exact path='/playlist/:id' component={PlaylistPanel} />
+                <Route exact path='/artist/:id' component={ArtistPanel} />
+                <Route exact path='/album/:id' component={AlbumPanel} />
+                <Route exact path='/album/:id/:trackid' component={AlbumPanel} />
+                <Route exact path='/savedalbums' component={SavedAlbumsPanel} />
+                <Route exact path='/savedtracks' component={SavedTracksPanel} />
+                <Route exact path='/search' component={Search} />
+                <Route exact path='/*' component={User} />
+              </Switch>
               <MediaPlayer  />
             </div>
           </Router>
