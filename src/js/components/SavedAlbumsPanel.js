@@ -9,7 +9,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  load: (which, id) => dispatch(Actions.load(which, id))
+  load: (which, id) => dispatch(Actions.fetchData(which, id))
 });
 
 class SavedAlbumsPanelComponent extends Component {

@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
+import {connect} from 'react-redux';
+import * as Actions from '../actions'
 import {Link} from 'react-router-dom';
 import * as Utils from '../utils';
 
-export default class TrackItem extends Component {
+const mapDispatchToProps = dispatch => ({
+  save: (which, id) => dispatch(Actions.saveData(which, id))
+});
+
+class TrackItemComponent extends Component {
   constructor(props) {
     super(props);
 
@@ -20,9 +26,7 @@ export default class TrackItem extends Component {
   }
 
   onLikeSong(id) {
-    this.props.save('getPutSavedTracks', id, data => {
-      console.log('********SAVED', data)
-    })
+    let callPromise = this.props.save('getPutSavedTracks', id);
   }
 
   render() {
@@ -43,3 +47,6 @@ export default class TrackItem extends Component {
     )
   }
 }
+
+const TrackItem = connect(null, mapDispatchToProps)(TrackItemComponent);
+export default TrackItem;

@@ -13,7 +13,7 @@ const mapDispatchToProps = dispatch => ({
   playSingleTrack: (data) => dispatch(Actions.playSingleTrack(data)),
   playPlaylist: (data) => dispatch(Actions.playPlaylist(data)),
   resetCurrentTrackIndex: () => dispatch(Actions.resetCurrentTrackIndex()),
-  load: (which, id) => dispatch(Actions.load(which, id))
+  load: (which, id) => dispatch(Actions.fetchData(which, id))
 });
 
 class PlaylistPanelComponent extends Component {

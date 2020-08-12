@@ -53,7 +53,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  load: (which, id) => dispatch(Actions.load(which, id))
+  playSingleTrack: (data) => dispatch(Actions.playSingleTrack(data)),
+  load: (which, id) => dispatch(Actions.fetchData(which, id))
 });
 
 class ArtistPanelComponent extends Component {
@@ -122,7 +123,7 @@ class ArtistPanelComponent extends Component {
               </div>
             </div>
           </div>
-          
+          <h3>Albums</h3>
           <ul>
             {
               albums.items.map( (item, index) => {

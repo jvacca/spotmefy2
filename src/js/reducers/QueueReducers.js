@@ -1,4 +1,5 @@
 import * as Action from '../actions';
+import * as Utils from '../utils';
 
 const initialState = {
   id: -1,
@@ -109,44 +110,28 @@ const resetCurrentTrackIndex = (state) => {
 const sanitizeTracks = (which, tracks, album_images) => {
   if (which === 'album') {
     return tracks.map((item, index) => ({
-        album_images: getImages(album_images),
+        album_images: Utils.getImages(album_images),
         trackName: item.name,
-        artists: getArtistNames(item.artists),
+        artists: Utils.getArtistNames(item.artists),
         songPath: item.preview_url,
         duration: item.duration_ms
       }));
   } else if (which === 'user') {
     return tracks.map((item, index) => ({
-      album_images: getImages(item.album.images),
+      album_images: Utils.getImages(item.album.images),
       trackName: item.name,
-      artists: getArtistNames(item.artists),
+      artists: Utils.getArtistNames(item.artists),
       songPath: item.preview_url,
       duration: item.duration_ms
     }));
   } else {
     return tracks.map((item, index) => ({
-      album_images: getImages(item.track.album.images),
+      album_images: Utils.getImages(item.track.album.images),
       trackName: item.track.name,
-      artists: getArtistNames(item.track.artists),
+      artists: Utils.getArtistNames(item.track.artists),
       songPath: item.track.preview_url,
       duration: item.track.duration_ms
     }));
   }
 
-}
-
-const getImages = (album_images) => {
-  if (album_images && album_images.length > 0) {
-    if (album_images.length > 1) 
-      return album_images[1].url;
-    else
-      return album_images[0].url
-  } else {
-    return null;
-  }
-}
-
-const getArtistNames = (artists) => {
-  let artistArr = artists.map((artist, index) => ( artist.name ));
-  return artistArr.join(', ');
 }

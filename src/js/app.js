@@ -19,6 +19,7 @@ window.onresize = () => {
 fullScreen();
 
 const store = createStore(reducer, applyMiddleware(thunk));
+
 console.log('first state:')
 console.log(store.getState())
 const unsubscribe = store.subscribe(() => {

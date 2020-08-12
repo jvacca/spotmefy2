@@ -55,7 +55,8 @@ const mapDispatchToProps = dispatch => ({
   playSingleTrack: (data) => dispatch(Actions.playSingleTrack(data)),
   playAlbum: (data) => dispatch(Actions.playAlbum(data)),
   resetCurrentTrackIndex: () => dispatch(Actions.resetCurrentTrackIndex()),
-  load: (which, id) => dispatch(Actions.load(which, id))
+  load: (which, id) => dispatch(Actions.fetchData(which, id)),
+  save: (which, id) => dispatch(Actions.saveData(which, id))
 });
 
 class AlbumPanelComponent extends Component {
@@ -64,7 +65,7 @@ class AlbumPanelComponent extends Component {
 
     this.onPlayTrack = this.onPlayTrack.bind(this)
   }
-
+/*
   loadAlbum(id) {
     let callPromise = this.props.load('albumTracks', id, (data) => {
       //console.log('data: ', data);
@@ -81,7 +82,7 @@ class AlbumPanelComponent extends Component {
         }
       });
     });
-  }
+  }*/
 
   componentDidMount() {
     this.props.resetCurrentTrackIndex();
@@ -119,9 +120,7 @@ class AlbumPanelComponent extends Component {
   onLikeAlbum(id) {
     console.log("like album ", this.props.data);
 
-    this.props.save('getPutSavedAlbums', id, data => {
-      console.log('********SAVED', data)
-    })
+    let callPromise = this.props.save('getPutSavedAlbums', id);
   }
 
   render() {

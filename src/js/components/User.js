@@ -57,7 +57,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   playSingleTrack: (data) => dispatch(Actions.playSingleTrack(data)),
-  load: (which, id) => dispatch(Actions.load(which, id))
+  load: (which, id) => dispatch(Actions.fetchData(which, id))
 });
 
 class UserComponent extends Component {
