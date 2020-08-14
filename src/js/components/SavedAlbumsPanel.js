@@ -27,9 +27,9 @@ class SavedAlbumsPanelComponent extends Component {
   }
 
   render() {
-    if (this.props.albumData) { 
+    
       return (
-        <div className="saved-album-panel">
+        (this.props.albumData)? <div className="saved-album-panel">
           <div className="heading">
             <h1>Albums</h1>
           </div>
@@ -48,11 +48,8 @@ class SavedAlbumsPanelComponent extends Component {
               })
             }
           </ul>
-        </div>
+        </div> : <div></div>
       );
-      } else {
-        return <div></div>
-      }
   }
 }
 

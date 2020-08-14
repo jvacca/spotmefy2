@@ -45,13 +45,27 @@ TrackItemComponent.propTypes = {
   index: PropTypes.number, 
   trackName: PropTypes.string, 
   trackData: PropTypes.object, 
-  artists: PropTypes.array, 
   albumName: PropTypes.string, 
   duration: PropTypes.number, 
   active: PropTypes.bool, 
   album_id: PropTypes.string, 
   added_at: PropTypes.string, 
   onPlayTrack: PropTypes.func
+}
+
+TrackItemComponent.defaultProps = {
+  save: null,
+  isAlbumView: false, 
+  index: -1, 
+  trackName: "", 
+  trackData: null, 
+  artists: null, 
+  albumName: "", 
+  duration: -1, 
+  active: false, 
+  album_id: "", 
+  added_at: "", 
+  onPlayTrack: null
 }
 
 const TrackItem = connect(null, mapDispatchToProps)(TrackItemComponent);

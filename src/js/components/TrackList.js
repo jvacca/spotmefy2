@@ -142,3 +142,12 @@ TrackList.propTypes = {
   currentTrackIndex: PropTypes.number,
   onPlayTrack: PropTypes.func
 }
+
+TrackList.defaultProps = {
+  id: "",
+  tracks: null,
+  artists: null,
+  images: "",
+  currentTrackIndex: -1,
+  onPlayTrack: null
+}

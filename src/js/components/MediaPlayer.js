@@ -21,10 +21,8 @@ const NowPlaying = ({albumImagePath, song_title, artist_name}) => {
 }
 
 const MediaPlayerComponent = ({currentTrack}) => {
-
-    if (currentTrack !== null || typeof currentTrack !== 'undefined' || currentTrack !== '') {
-      //console.log('*********?', currentTrack)
       return (
+        ((currentTrack !== null || typeof currentTrack !== 'undefined' || currentTrack !== ''))?
         <div className="media-player">
           <NowPlaying 
             albumImagePath={currentTrack.album_images || null} 
@@ -36,12 +34,8 @@ const MediaPlayerComponent = ({currentTrack}) => {
             duration={currentTrack.duration || 0}
             songPath = {currentTrack.songPath || ''}
           />
-        </div>
+        </div> : <div></div>
       );
-    } else {
-      return <div></div>
-    }
-  
 }
 
 MediaPlayerComponent.propTypes = {

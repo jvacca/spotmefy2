@@ -1,4 +1,3 @@
-import '../scss/page.scss';
 import Model from './utils';
 import React from 'react';
 import ReactDOM from 'react-dom';

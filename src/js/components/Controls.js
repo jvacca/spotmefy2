@@ -60,6 +60,11 @@ ControlsComponent.propTypes = {
   duration: PropTypes.number
 }
 
+ControlsComponent.defaultProps = {
+  songPath: "",
+  duration: -1
+}
+
 const Controls = connect(null, mapDispatchToProps)(ControlsComponent);
 
 export default Controls
