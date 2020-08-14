@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import * as Actions from '../actions'
 import TrackItem from './TrackItem';
@@ -66,24 +67,6 @@ class AlbumPanelComponent extends Component {
     this.onPlayTrack = this.onPlayTrack.bind(this);
     this.callPromise = null;
   }
-/*
-  loadAlbum(id) {
-    let callPromise = this.props.load('albumTracks', id, (data) => {
-      //console.log('data: ', data);
-      this.setState({
-        data: data
-      }, () => {
-        if (typeof this.props.match.params.trackid !== 'undefined') {
-          let sindex;
-          let search_index = data.tracks.items.map((item, index) => {
-            if (item.id === this.props.match.params.trackid) sindex = index
-          });
-          console.log("found index ", sindex)
-          if (sindex !== -1) this.onPlayTrack(sindex);
-        }
-      });
-    });
-  }*/
 
   componentDidMount() {
     this.props.resetCurrentTrackIndex();
@@ -165,6 +148,16 @@ class AlbumPanelComponent extends Component {
         return <div></div>
       }
   }
+}
+
+AlbumPanelComponent.propTypes = {
+  currentTrackIndex: PropTypes.number,
+  data: PropTypes.object,
+  playSingleTrack: PropTypes.func,
+  playAlbum: PropTypes.func,
+  resetCurrentTrackIndex: PropTypes.func,
+  load: PropTypes.func,
+  save: PropTypes.func
 }
 
 const AlbumPanel = connect(mapStateToProps, mapDispatchToProps)(AlbumPanelComponent);

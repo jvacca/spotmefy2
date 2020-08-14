@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import * as Actions from '../actions'
 import {Link} from 'react-router-dom';
@@ -109,6 +110,14 @@ class UserComponent extends Component {
       return <div></div>
     }
   }
+}
+
+UserComponent.propTypes = {
+  currentTrackIndex: PropTypes.number,
+  userData: PropTypes.object,
+  topTracks: PropTypes.object,
+  playSingleTrack: PropTypes.func,
+  load: PropTypes.func
 }
 
 const User = connect(mapStateToProps, mapDispatchToProps)(UserComponent);

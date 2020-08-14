@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import * as Actions from '../actions';
 import {Link} from 'react-router-dom';
@@ -65,6 +66,11 @@ class SidebarComponent extends Component {
       </div>
     )
   }
+}
+
+SidebarComponent.propTypes = {
+  data: PropTypes.object,
+  load: PropTypes.func
 }
 
 const Sidebar = connect(mapStateToProps, mapDispatchToProps)(SidebarComponent);

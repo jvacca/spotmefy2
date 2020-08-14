@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import * as Actions from '../actions';
 import TrackList from './TrackList';
@@ -82,6 +83,15 @@ class PlaylistPanelComponent extends Component {
       return <div></div>
     }
   }
+}
+
+PlaylistPanelComponent.propTypes = {
+  currentTrackIndex: PropTypes.number,
+  data: PropTypes.object,
+  playSingleTrack: PropTypes.func,
+  playPlaylist: PropTypes.func,
+  resetCurrentTrackIndex: PropTypes.func,
+  load: PropTypes.func
 }
 
 const PlaylistPanel = connect(mapStateToProps, mapDispatchToProps)(PlaylistPanelComponent);

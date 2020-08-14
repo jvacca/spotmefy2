@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import * as Actions from '../actions';
 import {Link} from 'react-router-dom';
@@ -54,5 +55,11 @@ class SavedAlbumsPanelComponent extends Component {
       }
   }
 }
+
+SavedAlbumsPanelComponent.propTypes = {
+  albumData: PropTypes.object,
+  load: PropTypes.func
+}
+
 const SavedAlbumsPanel = connect(mapStateToProps, mapDispatchToProps)(SavedAlbumsPanelComponent);
 export default SavedAlbumsPanel

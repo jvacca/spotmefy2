@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import * as Actions from '../actions';
 import TrackList from './TrackList';
@@ -74,6 +75,15 @@ class SavedTracksPanelComponent extends Component {
       return <div></div>
     }
   }
+}
+
+SavedTracksPanelComponent.propTypes = {
+  currentTrackIndex: PropTypes.number,
+  data: PropTypes.object,
+  playSingleTrack: PropTypes.func,
+  playAllSavedTracks: PropTypes.func,
+  resetCurrentTrackIndex: PropTypes.func,
+  load: PropTypes.func
 }
 
 const SavedTracksPanel = connect(mapStateToProps, mapDispatchToProps)(SavedTracksPanelComponent)

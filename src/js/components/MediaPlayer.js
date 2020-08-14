@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
 import Controls from './Controls';
 import {connect} from 'react-redux';
 
@@ -19,32 +20,32 @@ const NowPlaying = ({albumImagePath, song_title, artist_name}) => {
   )
 }
 
-class MediaPlayerComponent extends Component {
-  constructor(props) {
-    super(props);
-  }
+const MediaPlayerComponent = ({currentTrack}) => {
 
-  render() {
-    if (this.props.currentTrack !== null || typeof this.props.currentTrack !== 'undefined' || this.props.currentTrack !== '') {
-      //console.log('*********?', this.props.currentTrack)
+    if (currentTrack !== null || typeof currentTrack !== 'undefined' || currentTrack !== '') {
+      //console.log('*********?', currentTrack)
       return (
         <div className="media-player">
           <NowPlaying 
-            albumImagePath={this.props.currentTrack.album_images || null} 
-            song_title={this.props.currentTrack.trackName || ''}
-            artist_name={this.props.currentTrack.artists || ''}
+            albumImagePath={currentTrack.album_images || null} 
+            song_title={currentTrack.trackName || ''}
+            artist_name={currentTrack.artists || ''}
           />
 
           <Controls 
-            duration={this.props.currentTrack.duration || 0}
-            songPath = {this.props.currentTrack.songPath || ''}
+            duration={currentTrack.duration || 0}
+            songPath = {currentTrack.songPath || ''}
           />
         </div>
       );
     } else {
       return <div></div>
     }
-  }
+  
+}
+
+MediaPlayerComponent.propTypes = {
+  currentTrack: PropTypes.object
 }
 
 const MediaPlayer = connect(mapStateToProps, null)(MediaPlayerComponent);

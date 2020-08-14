@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import * as Actions from '../actions'
 import {Link} from 'react-router-dom';
@@ -145,6 +146,14 @@ class ArtistPanelComponent extends Component {
         return <div></div>
       }
   }
+}
+
+ArtistPanelComponent.propTypes = {
+  albumData: PropTypes.object,
+  artistData: PropTypes.object,
+  artistTopTracks: PropTypes.object,
+  playSingleTrack: PropTypes.func,
+  load: PropTypes.func
 }
 
 const ArtistPanel = connect(mapStateToProps, mapDispatchToProps)(ArtistPanelComponent);

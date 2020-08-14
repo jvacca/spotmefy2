@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import TrackItem from './TrackItem';
 
 export default class TrackList extends Component {
@@ -131,4 +132,13 @@ export default class TrackList extends Component {
       </div>)
   }
   
+}
+
+TrackList.propTypes = {
+  id: PropTypes.string,
+  tracks: PropTypes.array,
+  artists: PropTypes.object,
+  images: PropTypes.string,
+  currentTrackIndex: PropTypes.number,
+  onPlayTrack: PropTypes.func
 }

@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import * as Actions from '../actions';
 
 const mapDispatchToProps = dispatch => ({
   prevTrack: (data) => dispatch(Actions.prevTrack()),
-  nextTrack: (data) => dispatch(Actions.nextTrack())
+  nextTrack: (data) => dispatch(Actions.nextTrack()),
 });
 
 class ControlsComponent extends Component {
@@ -50,6 +51,13 @@ class ControlsComponent extends Component {
       </div>
     )
   }
+}
+
+ControlsComponent.propTypes = {
+  prevTrack: PropTypes.func,
+  nextTrack: PropTypes.func,
+  songPath: PropTypes.string,
+  duration: PropTypes.number
 }
 
 const Controls = connect(null, mapDispatchToProps)(ControlsComponent);
