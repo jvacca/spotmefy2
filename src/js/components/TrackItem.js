@@ -32,7 +32,7 @@ const TrackItemComponent = ({save, isAlbumView, index, trackName, trackData, art
         <span onClick={(e) => playTrack(index-1)} className="song-name">{trackName}</span>
         {(isAlbumView === false)? <span className="artist-name">{getArtistLinks(artists)}</span> : ''}
         {(isAlbumView === false)? <span className="album-name"><Link to={`/album/${album_id}`}>{albumName}</Link></span> : ''}
-        {(isAlbumView === false)? <span className="date">{Utils.formatDate(added_at)}</span> : ''}
+        {(isAlbumView === false && added_at && added_at !== '')? <span className="date">{Utils.formatDate(added_at)}</span> : ''}
         <span className="duration">{Utils.formatDuration(duration)}</span>
       </p>
     </li>

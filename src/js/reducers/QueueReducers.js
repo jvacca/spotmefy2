@@ -63,10 +63,8 @@ export default queue;
 
 const playSingleTrack = (state, payload) => {
   //console.log("playSingleTrack -> updating queue with: ", payload.panel, payload.tracks, payload.album_images);
-  
+  let tracks = sanitizeTracks(payload.panel, payload.tracks, (typeof payload.album_images !== 'undefined')? payload.album_images : null);
   if (state.id !== payload.id) {
-    let tracks = sanitizeTracks(payload.panel, payload.tracks, (typeof payload.album_images !== 'undefined')? payload.album_images : null);
-    
     return {
       id: payload.id,
       tracks: tracks,
@@ -76,7 +74,7 @@ const playSingleTrack = (state, payload) => {
   } else {
     return {
       ...state,
-      currentTrack: state.tracks[payload.index],
+      currentTrack: tracks[payload.index],
       currentTrackIndex: payload.index
     }
   }

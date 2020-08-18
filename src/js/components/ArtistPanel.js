@@ -5,49 +5,10 @@ import * as Actions from '../actions'
 import {Link} from 'react-router-dom';
 import TrackItem from './TrackItem';
 import * as Utils from '../utils';
-
-const SimpleTrackList2 = ({tracks, images, onPlayTrack}) => {
-  let filtered_tracks = tracks.tracks.slice(0, 5)
-  return (
-    <ol>
-      <li className="header">
-        <p>
-          <span className="index">#</span>
-          <span className="like"></span>
-          <span className="song-name">TITLE</span>
-          <span className="artist-name"></span>
-          <span className="album-name"></span>
-          <span className="duration">DURATION</span>
-        </p>
-      </li>
-      {
-        filtered_tracks.map( (item, index) => {
-          //let isActive = (currentTrackIndex === index)
-
-          return (
-            <TrackItem
-              key={index}
-              index={index + 1}
-              trackName={item.name}
-              trackData={item}
-              artists={''}
-              albumName={''}
-              duration={item.duration_ms}
-              album_id={''}
-              album_images={images}
-              songPath={item.preview_url}
-              active={false}
-              isAlbumView={true}
-              onPlayTrack = {onPlayTrack}
-            />
-          )
-        })
-      }
-    </ol>
-  )
-} 
+import SimplerTrackList from './SimplerTrackList';
 
 const mapStateToProps = state => ({
+  currentTrackIndex: state.queue.currentTrackIndex,
   albumData: state.fetchedData['artistAlbums'],
   artistData: state.fetchedData['artist'],
   artistTopTracks: state.fetchedData['artistTopTracks']
@@ -55,6 +16,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   playSingleTrack: (data) => dispatch(Actions.playSingleTrack(data)),
+  resetCurrentTrackIndex: () => dispatch(Actions.resetCurrentTrackIndex()),
   load: (which, id) => dispatch(Actions.fetchData(which, id))
 });
 
@@ -78,6 +40,7 @@ class ArtistPanelComponent extends Component {
   }
 
   componentDidMount() {
+    this.props.resetCurrentTrackIndex();
     let callPromise = this.props.load('artist',this.props.match.params.id);
     let callPromise2 = this.props.load('artistTopTracks',this.props.match.params.id);
     let callPromise3 = this.props.load('artistAlbums',this.props.match.params.id);
@@ -93,6 +56,7 @@ class ArtistPanelComponent extends Component {
 
   onPlayTrack(index) {
     let eventData={
+      id: this.props.id,
       panel: 'album',
       tracks: this.props.artistTopTracks.tracks,
       album_images: this.props.artistData.images,
@@ -116,10 +80,14 @@ class ArtistPanelComponent extends Component {
               <h3>Popular</h3>
               <div className="top-tracks-holder">
                 {
-                  this.props.artistTopTracks && <SimpleTrackList2
-                  tracks = {this.props.artistTopTracks}
+                  this.props.artistTopTracks && <SimplerTrackList
+                  id = {''}
+                  tracks = {this.props.artistTopTracks.tracks.slice(0, 5)}
+                  artists = {''}
                   images = {images}
+                  currentTrackIndex = '0'
                   onPlayTrack = {this.onPlayTrack}
+                  isAlbumView = {true}
                 />}
               </div>
             </div>
@@ -149,10 +117,12 @@ class ArtistPanelComponent extends Component {
 }
 
 ArtistPanelComponent.propTypes = {
+  currentTrackIndex: PropTypes.number,
   albumData: PropTypes.object,
   artistData: PropTypes.object,
   artistTopTracks: PropTypes.object,
   playSingleTrack: PropTypes.func,
+  resetCurrentTrackIndex: PropTypes.func,
   load: PropTypes.func
 }
 

@@ -4,48 +4,7 @@ import {connect} from 'react-redux';
 import * as Actions from '../actions'
 import TrackItem from './TrackItem';
 import * as Utils from '../utils';
-
-const SimpleTrackList = ({id, tracks, artists, images, currentTrackIndex, onPlayTrack, selectedTrackId}) => {
-
-  return (
-    <ol>
-      <li className="header">
-        <p>
-          <span className="index">#</span>
-          <span className="like"></span>
-          <span className="song-name">TITLE</span>
-          <span className="artist-name"></span>
-          <span className="album-name"></span>
-          <span className="duration">DURATION</span>
-        </p>
-      </li>
-      {
-        tracks.items.map( (item, index) => {
-          let isActive = (currentTrackIndex === index)
-
-          return (
-            <TrackItem
-              key={index}
-              index={index + 1}
-              trackName={item.name}
-              trackData={item}
-              artists={artists}
-              albumName={''}
-              duration={item.duration_ms}
-              group_id={id}
-              album_id={''}
-              album_images={images}
-              songPath={item.preview_url}
-              active={isActive}
-              isAlbumView={true}
-              onPlayTrack = {onPlayTrack}
-            />
-          )
-        })
-      }
-    </ol>
-  )
-}
+import SimplerTrackList from './SimplerTrackList';
 
 const mapStateToProps = state => ({
   currentTrackIndex: state.queue.currentTrackIndex,
@@ -134,13 +93,14 @@ class AlbumPanelComponent extends Component {
             <p>{release_date} . {total_tracks} songs</p>
             <a className="play_button" onClick={e => {this.onPlayAlbum(tracks)}}>PLAY</a><a onClick={e => this.onLikeAlbum(id)} className="likeAlbum">&hearts;</a>
           </div>
-          <SimpleTrackList
+          <SimplerTrackList
             id = {id}
-            tracks = {tracks}
+            tracks = {tracks.items}
             artists = {artists}
             images = {images}
             currentTrackIndex = {this.props.currentTrackIndex}
             onPlayTrack = {this.onPlayTrack}
+            isAlbumView = {true}
           />
         </div>
       );

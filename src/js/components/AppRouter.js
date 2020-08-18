@@ -12,37 +12,31 @@ import SavedTracksPanel from './SavedTracksPanel';
 import Search from './Search';
 import Sidebar from './Sidebar';
 
-export default class AppRouter extends Component {
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    return (
-      <Provider store = {this.props.store}>
-      <div className="app-container">
-        <div id="frame" className="frame">
-          <Router>
-            <Sidebar />
-            <div className="main-panel">
-              <Link to="/search" className="search-button">Search</Link>
-              <Switch>
-                <Route exact path='/' component={User} />
-                <Route exact path='/playlist/:id' component={PlaylistPanel} />
-                <Route exact path='/artist/:id' component={ArtistPanel} />
-                <Route exact path='/album/:id' component={AlbumPanel} />
-                <Route exact path='/album/:id/:trackid' component={AlbumPanel} />
-                <Route exact path='/savedalbums' component={SavedAlbumsPanel} />
-                <Route exact path='/savedtracks' component={SavedTracksPanel} />
-                <Route exact path='/search' component={Search} />
-                <Route exact path='/*' component={User} />
-              </Switch>
-              <MediaPlayer  />
-            </div>
-          </Router>
-        </div>
+const AppRouter = ({store}) => (
+  <Provider store = {store}>
+    <div className="app-container">
+      <div id="frame" className="frame">
+        <Router>
+          <Sidebar />
+          <div className="main-panel">
+            <Link to="/search" className="search-button">Search</Link>
+            <Switch>
+              <Route exact path='/' component={User} />
+              <Route exact path='/playlist/:id' component={PlaylistPanel} />
+              <Route exact path='/artist/:id' component={ArtistPanel} />
+              <Route exact path='/album/:id' component={AlbumPanel} />
+              <Route exact path='/album/:id/:trackid' component={AlbumPanel} />
+              <Route exact path='/savedalbums' component={SavedAlbumsPanel} />
+              <Route exact path='/savedtracks' component={SavedTracksPanel} />
+              <Route exact path='/search' component={Search} />
+              <Route exact path='/*' component={User} />
+            </Switch>
+            <MediaPlayer  />
+          </div>
+        </Router>
       </div>
-      </Provider>
-    )
-  }
-}
+    </div>
+  </Provider>
+)
+
+export default AppRouter;

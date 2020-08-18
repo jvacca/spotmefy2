@@ -5,50 +5,7 @@ import * as Actions from '../actions'
 import {Link} from 'react-router-dom';
 import TrackItem from './TrackItem';
 import * as Utils from '../utils';
-
-const SimpleTrackList = ({id, tracks, currentTrackIndex, onPlayTrack}) => {
-
-  return (
-    <ol>
-      <li className="header">
-        <p>
-          <span className="index">#</span>
-          <span className="like"></span>
-          <span className="song-name">TITLE</span>
-          <span className="artist-name">ARTISTS</span>
-          <span className="album-name">ALBUM</span>
-          <span className="date">DATE</span>
-          <span className="duration">DURATION</span>
-        </p>
-      </li>
-      {
-        tracks.map( (item, index) => {
-          let isActive = (currentTrackIndex === index)
-
-          return (
-            <TrackItem
-              key={index}
-              index={index + 1}
-              trackName={item.name}
-              trackData={item}
-              artists={item.artists}
-              albumName={item.album.name}
-              added_at={'1234'}
-              duration={item.duration_ms}
-              group_id={id}
-              album_id={item.album.id}
-              album_images={item.album.images}
-              songPath={item.preview_url}
-              active={isActive}
-              isAlbumView={false}
-              onPlayTrack = {onPlayTrack}
-            />
-          )
-        })
-      }
-    </ol>
-  )
-}
+import SimplerTrackList from './SimplerTrackList';
 
 const mapStateToProps = state => ({
   currentTrackIndex: state.queue.currentTrackIndex,
@@ -58,6 +15,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   playSingleTrack: (data) => dispatch(Actions.playSingleTrack(data)),
+  resetCurrentTrackIndex: () => dispatch(Actions.resetCurrentTrackIndex()),
   load: (which, id) => dispatch(Actions.fetchData(which, id))
 });
 
@@ -69,6 +27,7 @@ class UserComponent extends Component {
   }
 
   componentDidMount() {
+    this.props.resetCurrentTrackIndex();
     let callPromise = this.props.load('userprofile', null);
     let callPromise2 = this.props.load('history', null);
   }
@@ -98,11 +57,14 @@ class UserComponent extends Component {
             <h1>{user.display_name}</h1>
           </div>
           <h3>Top Tracks</h3>
-          <SimpleTrackList
+          <SimplerTrackList
             id = {''}
             tracks = {items}
+            artists = {''}
+            images = {''}
             currentTrackIndex = {this.props.currentTrackIndex}
             onPlayTrack = {this.onPlayTrack}
+            isAlbumView = {false}
           />
         </div>
       )
